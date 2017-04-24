@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "WeboLogInViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,17 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+    WeboLogInViewController *lvc = [[WeboLogInViewController alloc] init];
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:lvc];
+    
+    self.window.rootViewController = nc;
+    
+    self.window.backgroundColor = [UIColor whiteColor];
+    
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

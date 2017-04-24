@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		2619E1071EAEA3C3004CE6DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2619E1061EAEA3C3004CE6DD /* main.m */; };
 		2619E10A1EAEA3C3004CE6DD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2619E1091EAEA3C3004CE6DD /* AppDelegate.m */; };
-		2619E10D1EAEA3C3004CE6DD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2619E10C1EAEA3C3004CE6DD /* ViewController.m */; };
 		2619E1101EAEA3C3004CE6DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2619E10E1EAEA3C3004CE6DD /* Main.storyboard */; };
 		2619E1131EAEA3C3004CE6DD /* Webo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2619E1111EAEA3C3004CE6DD /* Webo.xcdatamodeld */; };
 		2619E1151EAEA3C3004CE6DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2619E1141EAEA3C3004CE6DD /* Assets.xcassets */; };
 		2619E1181EAEA3C3004CE6DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2619E1161EAEA3C3004CE6DD /* LaunchScreen.storyboard */; };
 		2619E1231EAEA3C3004CE6DD /* WeboTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2619E1221EAEA3C3004CE6DD /* WeboTests.m */; };
 		2619E12E1EAEA3C3004CE6DD /* WeboUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2619E12D1EAEA3C3004CE6DD /* WeboUITests.m */; };
+		2619E13D1EAEAC68004CE6DD /* WeboLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2619E13C1EAEAC68004CE6DD /* WeboLogInViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,8 +40,6 @@
 		2619E1061EAEA3C3004CE6DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2619E1081EAEA3C3004CE6DD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2619E1091EAEA3C3004CE6DD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		2619E10B1EAEA3C3004CE6DD /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		2619E10C1EAEA3C3004CE6DD /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		2619E10F1EAEA3C3004CE6DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2619E1121EAEA3C3004CE6DD /* Webo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Webo.xcdatamodel; sourceTree = "<group>"; };
 		2619E1141EAEA3C3004CE6DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -53,6 +51,8 @@
 		2619E1291EAEA3C3004CE6DD /* WeboUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeboUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2619E12D1EAEA3C3004CE6DD /* WeboUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeboUITests.m; sourceTree = "<group>"; };
 		2619E12F1EAEA3C3004CE6DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2619E13B1EAEAC68004CE6DD /* WeboLogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeboLogInViewController.h; path = Controller/WeboLogInViewController.h; sourceTree = "<group>"; };
+		2619E13C1EAEAC68004CE6DD /* WeboLogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeboLogInViewController.m; path = Controller/WeboLogInViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,8 +105,7 @@
 			children = (
 				2619E1081EAEA3C3004CE6DD /* AppDelegate.h */,
 				2619E1091EAEA3C3004CE6DD /* AppDelegate.m */,
-				2619E10B1EAEA3C3004CE6DD /* ViewController.h */,
-				2619E10C1EAEA3C3004CE6DD /* ViewController.m */,
+				2619E13E1EAEAC73004CE6DD /* Controller */,
 				2619E10E1EAEA3C3004CE6DD /* Main.storyboard */,
 				2619E1141EAEA3C3004CE6DD /* Assets.xcassets */,
 				2619E1161EAEA3C3004CE6DD /* LaunchScreen.storyboard */,
@@ -141,6 +140,15 @@
 				2619E12F1EAEA3C3004CE6DD /* Info.plist */,
 			);
 			path = WeboUITests;
+			sourceTree = "<group>";
+		};
+		2619E13E1EAEAC73004CE6DD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2619E13B1EAEAC68004CE6DD /* WeboLogInViewController.h */,
+				2619E13C1EAEAC68004CE6DD /* WeboLogInViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,8 +287,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2619E10D1EAEA3C3004CE6DD /* ViewController.m in Sources */,
 				2619E10A1EAEA3C3004CE6DD /* AppDelegate.m in Sources */,
+				2619E13D1EAEAC68004CE6DD /* WeboLogInViewController.m in Sources */,
 				2619E1131EAEA3C3004CE6DD /* Webo.xcdatamodeld in Sources */,
 				2619E1071EAEA3C3004CE6DD /* main.m in Sources */,
 			);
@@ -520,6 +528,7 @@
 				2619E1341EAEA3C3004CE6DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2619E1351EAEA3C3004CE6DD /* Build configuration list for PBXNativeTarget "WeboTests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +537,7 @@
 				2619E1371EAEA3C3004CE6DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2619E1381EAEA3C3004CE6DD /* Build configuration list for PBXNativeTarget "WeboUITests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +546,7 @@
 				2619E13A1EAEA3C3004CE6DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
