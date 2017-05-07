@@ -15,7 +15,17 @@
 		2619E1181EAEA3C3004CE6DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2619E1161EAEA3C3004CE6DD /* LaunchScreen.storyboard */; };
 		2619E1231EAEA3C3004CE6DD /* WeboTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2619E1221EAEA3C3004CE6DD /* WeboTests.m */; };
 		2619E12E1EAEA3C3004CE6DD /* WeboUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2619E12D1EAEA3C3004CE6DD /* WeboUITests.m */; };
-		2619E13D1EAEAC68004CE6DD /* WeboLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2619E13C1EAEAC68004CE6DD /* WeboLogInViewController.m */; };
+		261A1EA91EAFED7100D2B7FE /* WeboIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 261A1EA81EAFED7100D2B7FE /* WeboIcon@2x.png */; };
+		261A1EAB1EAFEE1900D2B7FE /* WeboIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 261A1EAA1EAFEE1900D2B7FE /* WeboIcon@3x.png */; };
+		266F31811EBF7E97001ECF24 /* UIImage+MRTImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31801EBF7E97001ECF24 /* UIImage+MRTImage.m */; };
+		266F319C1EBFBCCC001ECF24 /* MRTHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F319B1EBFBCCC001ECF24 /* MRTHomeViewController.m */; };
+		266F31A81EBFC020001ECF24 /* MRTMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31A71EBFC020001ECF24 /* MRTMessageViewController.m */; };
+		266F31AB1EBFC04A001ECF24 /* MRTDiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31AA1EBFC04A001ECF24 /* MRTDiscoverViewController.m */; };
+		266F31AE1EBFC06B001ECF24 /* MRTProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31AD1EBFC06B001ECF24 /* MRTProfileViewController.m */; };
+		266F31B11EBFCD28001ECF24 /* MRTLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31B01EBFCD28001ECF24 /* MRTLogInViewController.m */; };
+		266F31B41EBFCD3C001ECF24 /* MRTTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31B31EBFCD3C001ECF24 /* MRTTabBar.m */; };
+		266F31B71EBFCD4A001ECF24 /* MRTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31B61EBFCD4A001ECF24 /* MRTTabBarController.m */; };
+		8B489928D8866335C2391C79 /* libPods-Webo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C128BD0545A7FD9C0DB859C4 /* libPods-Webo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		16A373BDB4D13CB4712937FE /* Pods-Webo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Webo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Webo/Pods-Webo.debug.xcconfig"; sourceTree = "<group>"; };
 		2619E1021EAEA3C3004CE6DD /* Webo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Webo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2619E1061EAEA3C3004CE6DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2619E1081EAEA3C3004CE6DD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -51,8 +62,26 @@
 		2619E1291EAEA3C3004CE6DD /* WeboUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeboUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2619E12D1EAEA3C3004CE6DD /* WeboUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeboUITests.m; sourceTree = "<group>"; };
 		2619E12F1EAEA3C3004CE6DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2619E13B1EAEAC68004CE6DD /* WeboLogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeboLogInViewController.h; path = Controller/WeboLogInViewController.h; sourceTree = "<group>"; };
-		2619E13C1EAEAC68004CE6DD /* WeboLogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeboLogInViewController.m; path = Controller/WeboLogInViewController.m; sourceTree = "<group>"; };
+		261A1EA81EAFED7100D2B7FE /* WeboIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeboIcon@2x.png"; sourceTree = "<group>"; };
+		261A1EAA1EAFEE1900D2B7FE /* WeboIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeboIcon@3x.png"; sourceTree = "<group>"; };
+		266F317F1EBF7E97001ECF24 /* UIImage+MRTImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MRTImage.h"; sourceTree = "<group>"; };
+		266F31801EBF7E97001ECF24 /* UIImage+MRTImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MRTImage.m"; sourceTree = "<group>"; };
+		266F319A1EBFBCCC001ECF24 /* MRTHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTHomeViewController.h; path = Home/Controller/MRTHomeViewController.h; sourceTree = "<group>"; };
+		266F319B1EBFBCCC001ECF24 /* MRTHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTHomeViewController.m; path = Home/Controller/MRTHomeViewController.m; sourceTree = "<group>"; };
+		266F31A61EBFC020001ECF24 /* MRTMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTMessageViewController.h; path = Message/Controller/MRTMessageViewController.h; sourceTree = "<group>"; };
+		266F31A71EBFC020001ECF24 /* MRTMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTMessageViewController.m; path = Message/Controller/MRTMessageViewController.m; sourceTree = "<group>"; };
+		266F31A91EBFC04A001ECF24 /* MRTDiscoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTDiscoverViewController.h; path = Discover/Controller/MRTDiscoverViewController.h; sourceTree = "<group>"; };
+		266F31AA1EBFC04A001ECF24 /* MRTDiscoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTDiscoverViewController.m; path = Discover/Controller/MRTDiscoverViewController.m; sourceTree = "<group>"; };
+		266F31AC1EBFC06B001ECF24 /* MRTProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTProfileViewController.h; path = Profile/Controller/MRTProfileViewController.h; sourceTree = "<group>"; };
+		266F31AD1EBFC06B001ECF24 /* MRTProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTProfileViewController.m; path = Profile/Controller/MRTProfileViewController.m; sourceTree = "<group>"; };
+		266F31AF1EBFCD28001ECF24 /* MRTLogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTLogInViewController.h; path = LogIn/Controller/MRTLogInViewController.h; sourceTree = "<group>"; };
+		266F31B01EBFCD28001ECF24 /* MRTLogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTLogInViewController.m; path = LogIn/Controller/MRTLogInViewController.m; sourceTree = "<group>"; };
+		266F31B21EBFCD3C001ECF24 /* MRTTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTTabBar.h; path = TabBar/MRTTabBar/MRTTabBar.h; sourceTree = "<group>"; };
+		266F31B31EBFCD3C001ECF24 /* MRTTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTTabBar.m; path = TabBar/MRTTabBar/MRTTabBar.m; sourceTree = "<group>"; };
+		266F31B51EBFCD4A001ECF24 /* MRTTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTTabBarController.h; path = TabBar/Controller/MRTTabBarController.h; sourceTree = "<group>"; };
+		266F31B61EBFCD4A001ECF24 /* MRTTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTTabBarController.m; path = TabBar/Controller/MRTTabBarController.m; sourceTree = "<group>"; };
+		BA69F59417D1A198953C3BD9 /* Pods-Webo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Webo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Webo/Pods-Webo.release.xcconfig"; sourceTree = "<group>"; };
+		C128BD0545A7FD9C0DB859C4 /* libPods-Webo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Webo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B489928D8866335C2391C79 /* libPods-Webo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +117,8 @@
 				2619E1211EAEA3C3004CE6DD /* WeboTests */,
 				2619E12C1EAEA3C3004CE6DD /* WeboUITests */,
 				2619E1031EAEA3C3004CE6DD /* Products */,
+				C8AE40A5E7F03FB29C893179 /* Pods */,
+				87B097444AE84103A2FCF9A4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,11 +135,20 @@
 		2619E1041EAEA3C3004CE6DD /* Webo */ = {
 			isa = PBXGroup;
 			children = (
+				266F31871EBFB80E001ECF24 /* TabBar */,
+				266F31851EBFB7F0001ECF24 /* Home */,
+				266F31891EBFB816001ECF24 /* Message */,
+				266F31881EBFB811001ECF24 /* Discover */,
+				266F31951EBFBA5D001ECF24 /* Profile */,
+				2619E13E1EAEAC73004CE6DD /* LogIn */,
 				2619E1081EAEA3C3004CE6DD /* AppDelegate.h */,
 				2619E1091EAEA3C3004CE6DD /* AppDelegate.m */,
-				2619E13E1EAEAC73004CE6DD /* Controller */,
+				266F317F1EBF7E97001ECF24 /* UIImage+MRTImage.h */,
+				266F31801EBF7E97001ECF24 /* UIImage+MRTImage.m */,
 				2619E10E1EAEA3C3004CE6DD /* Main.storyboard */,
 				2619E1141EAEA3C3004CE6DD /* Assets.xcassets */,
+				261A1EA81EAFED7100D2B7FE /* WeboIcon@2x.png */,
+				261A1EAA1EAFEE1900D2B7FE /* WeboIcon@3x.png */,
 				2619E1161EAEA3C3004CE6DD /* LaunchScreen.storyboard */,
 				2619E1191EAEA3C3004CE6DD /* Info.plist */,
 				2619E1111EAEA3C3004CE6DD /* Webo.xcdatamodeld */,
@@ -142,13 +183,197 @@
 			path = WeboUITests;
 			sourceTree = "<group>";
 		};
-		2619E13E1EAEAC73004CE6DD /* Controller */ = {
+		2619E13E1EAEAC73004CE6DD /* LogIn */ = {
 			isa = PBXGroup;
 			children = (
-				2619E13B1EAEAC68004CE6DD /* WeboLogInViewController.h */,
-				2619E13C1EAEAC68004CE6DD /* WeboLogInViewController.m */,
+				266F31991EBFBB12001ECF24 /* Controller */,
+			);
+			name = LogIn;
+			sourceTree = "<group>";
+		};
+		266F31851EBFB7F0001ECF24 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				266F31931EBFB9DF001ECF24 /* Model */,
+				266F31921EBFB9DD001ECF24 /* View */,
+				266F31941EBFB9E1001ECF24 /* Controller */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		266F31871EBFB80E001ECF24 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				266F318B1EBFB925001ECF24 /* MRTTabBar */,
+				266F318A1EBFB8FA001ECF24 /* Controller */,
+			);
+			name = TabBar;
+			sourceTree = "<group>";
+		};
+		266F31881EBFB811001ECF24 /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				266F31901EBFB9B6001ECF24 /* Model */,
+				266F318F1EBFB9B3001ECF24 /* View */,
+				266F31911EBFB9B8001ECF24 /* Controller */,
+			);
+			name = Discover;
+			sourceTree = "<group>";
+		};
+		266F31891EBFB816001ECF24 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				266F318D1EBFB973001ECF24 /* Model */,
+				266F318C1EBFB96F001ECF24 /* View */,
+				266F318E1EBFB976001ECF24 /* Controller */,
+			);
+			name = Message;
+			sourceTree = "<group>";
+		};
+		266F318A1EBFB8FA001ECF24 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				266F31B51EBFCD4A001ECF24 /* MRTTabBarController.h */,
+				266F31B61EBFCD4A001ECF24 /* MRTTabBarController.m */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		266F318B1EBFB925001ECF24 /* MRTTabBar */ = {
+			isa = PBXGroup;
+			children = (
+				266F31B21EBFCD3C001ECF24 /* MRTTabBar.h */,
+				266F31B31EBFCD3C001ECF24 /* MRTTabBar.m */,
+			);
+			name = MRTTabBar;
+			sourceTree = "<group>";
+		};
+		266F318C1EBFB96F001ECF24 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		266F318D1EBFB973001ECF24 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		266F318E1EBFB976001ECF24 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				266F31A61EBFC020001ECF24 /* MRTMessageViewController.h */,
+				266F31A71EBFC020001ECF24 /* MRTMessageViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		266F318F1EBFB9B3001ECF24 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		266F31901EBFB9B6001ECF24 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		266F31911EBFB9B8001ECF24 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				266F31A91EBFC04A001ECF24 /* MRTDiscoverViewController.h */,
+				266F31AA1EBFC04A001ECF24 /* MRTDiscoverViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		266F31921EBFB9DD001ECF24 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		266F31931EBFB9DF001ECF24 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		266F31941EBFB9E1001ECF24 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				266F319A1EBFBCCC001ECF24 /* MRTHomeViewController.h */,
+				266F319B1EBFBCCC001ECF24 /* MRTHomeViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		266F31951EBFBA5D001ECF24 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				266F31981EBFBA6E001ECF24 /* Model */,
+				266F31971EBFBA6C001ECF24 /* View */,
+				266F31961EBFBA6A001ECF24 /* Controller */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		266F31961EBFBA6A001ECF24 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				266F31AC1EBFC06B001ECF24 /* MRTProfileViewController.h */,
+				266F31AD1EBFC06B001ECF24 /* MRTProfileViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		266F31971EBFBA6C001ECF24 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		266F31981EBFBA6E001ECF24 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		266F31991EBFBB12001ECF24 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				266F31AF1EBFCD28001ECF24 /* MRTLogInViewController.h */,
+				266F31B01EBFCD28001ECF24 /* MRTLogInViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		87B097444AE84103A2FCF9A4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C128BD0545A7FD9C0DB859C4 /* libPods-Webo.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C8AE40A5E7F03FB29C893179 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				16A373BDB4D13CB4712937FE /* Pods-Webo.debug.xcconfig */,
+				BA69F59417D1A198953C3BD9 /* Pods-Webo.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,9 +383,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2619E1321EAEA3C3004CE6DD /* Build configuration list for PBXNativeTarget "Webo" */;
 			buildPhases = (
+				E44C346C755AAE72B63B1583 /* [CP] Check Pods Manifest.lock */,
 				2619E0FE1EAEA3C3004CE6DD /* Sources */,
 				2619E0FF1EAEA3C3004CE6DD /* Frameworks */,
 				2619E1001EAEA3C3004CE6DD /* Resources */,
+				31E0A8FB789A7EF4DB509F28 /* [CP] Embed Pods Frameworks */,
+				4A35F0A5853F77241DD3C352 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -213,6 +441,7 @@
 		2619E0FA1EAEA3C3004CE6DD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = MRT;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = mrtanis;
 				TargetAttributes = {
@@ -260,8 +489,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				261A1EAB1EAFEE1900D2B7FE /* WeboIcon@3x.png in Resources */,
 				2619E1181EAEA3C3004CE6DD /* LaunchScreen.storyboard in Resources */,
 				2619E1151EAEA3C3004CE6DD /* Assets.xcassets in Resources */,
+				261A1EA91EAFED7100D2B7FE /* WeboIcon@2x.png in Resources */,
 				2619E1101EAEA3C3004CE6DD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,15 +513,70 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		31E0A8FB789A7EF4DB509F28 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Webo/Pods-Webo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4A35F0A5853F77241DD3C352 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Webo/Pods-Webo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E44C346C755AAE72B63B1583 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2619E0FE1EAEA3C3004CE6DD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				2619E10A1EAEA3C3004CE6DD /* AppDelegate.m in Sources */,
-				2619E13D1EAEAC68004CE6DD /* WeboLogInViewController.m in Sources */,
+				266F31B41EBFCD3C001ECF24 /* MRTTabBar.m in Sources */,
 				2619E1131EAEA3C3004CE6DD /* Webo.xcdatamodeld in Sources */,
+				266F31811EBF7E97001ECF24 /* UIImage+MRTImage.m in Sources */,
+				266F319C1EBFBCCC001ECF24 /* MRTHomeViewController.m in Sources */,
+				266F31AE1EBFC06B001ECF24 /* MRTProfileViewController.m in Sources */,
+				266F31B11EBFCD28001ECF24 /* MRTLogInViewController.m in Sources */,
+				266F31AB1EBFC04A001ECF24 /* MRTDiscoverViewController.m in Sources */,
 				2619E1071EAEA3C3004CE6DD /* main.m in Sources */,
+				266F31A81EBFC020001ECF24 /* MRTMessageViewController.m in Sources */,
+				266F31B71EBFCD4A001ECF24 /* MRTTabBarController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,8 +723,10 @@
 		};
 		2619E1331EAEA3C3004CE6DD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 16A373BDB4D13CB4712937FE /* Pods-Webo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 8K5W74R456;
 				INFOPLIST_FILE = Webo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -449,8 +737,10 @@
 		};
 		2619E1341EAEA3C3004CE6DD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BA69F59417D1A198953C3BD9 /* Pods-Webo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = 8K5W74R456;
 				INFOPLIST_FILE = Webo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

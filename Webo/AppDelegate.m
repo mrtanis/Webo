@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "WeboLogInViewController.h"
+#import "MRTLogInViewController.h"
+#import "MRTTabBarController.h"
 
 @interface AppDelegate ()
 
@@ -19,10 +20,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    WeboLogInViewController *lvc = [[WeboLogInViewController alloc] init];
-    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:lvc];
+    //MRTLogInViewController *lvc = [[MRTLogInViewController alloc] init];
+    //UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:lvc];
     
-    self.window.rootViewController = nc;
+    MRTTabBarController *tabBarC = [[MRTTabBarController alloc] init];
+    
+    self.window.rootViewController = tabBarC;
     
     self.window.backgroundColor = [UIColor whiteColor];
     
