@@ -8,6 +8,7 @@
 
 #import "MRTTabBarController.h"
 #import "MRTTabBar.h"
+#import "UIImage+MRTImage.h"
 #import "MRTHomeViewController.h"
 #import "MRTMessageViewController.h"
 #import "MRTDiscoverViewController.h"
@@ -53,12 +54,10 @@
     //添加首页
     MRTHomeViewController *homeVC = [[MRTHomeViewController alloc] init];
     [self setUpOneChildVC:homeVC image:[UIImage imageNamed:@"tabbar_home"] selectedImage:[UIImage imageNamed:@"tabbar_home_selected"] title:@"首页"];
-    [self addChildViewController:homeVC];
     
     //添加信息页
     MRTMessageViewController *messageVC = [[MRTMessageViewController alloc] init];
     [self setUpOneChildVC:messageVC image:[UIImage imageNamed:@"tabbar_message_center"] selectedImage:[UIImage imageNamed:@"tabbar_message_center_selected"] title:@"消息"];
-    [self addChildViewController:messageVC];
     
     //添加发现页
     MRTDiscoverViewController *discoverVC = [[MRTDiscoverViewController alloc] init];
