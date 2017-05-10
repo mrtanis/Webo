@@ -17,13 +17,16 @@
 		2619E12E1EAEA3C3004CE6DD /* WeboUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2619E12D1EAEA3C3004CE6DD /* WeboUITests.m */; };
 		261A1EA91EAFED7100D2B7FE /* WeboIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 261A1EA81EAFED7100D2B7FE /* WeboIcon@2x.png */; };
 		261A1EAB1EAFEE1900D2B7FE /* WeboIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 261A1EAA1EAFEE1900D2B7FE /* WeboIcon@3x.png */; };
-		266F31811EBF7E97001ECF24 /* UIImage+MRTImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31801EBF7E97001ECF24 /* UIImage+MRTImage.m */; };
+		2635DA061EC1155300EF24B6 /* MRTTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2635DA051EC1155300EF24B6 /* MRTTabBar.m */; };
+		2635DA091EC1175000EF24B6 /* MRTBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2635DA081EC1175000EF24B6 /* MRTBadgeView.m */; };
+		2635DA0C1EC1281100EF24B6 /* UIView+MRTFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 2635DA0B1EC1281100EF24B6 /* UIView+MRTFrame.m */; };
+		2635DA101EC1285E00EF24B6 /* UIImage+MRTImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2635DA0F1EC1285E00EF24B6 /* UIImage+MRTImage.m */; };
+		2635DA131EC12B8100EF24B6 /* MRTTabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2635DA121EC12B8100EF24B6 /* MRTTabBarButton.m */; };
 		266F319C1EBFBCCC001ECF24 /* MRTHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F319B1EBFBCCC001ECF24 /* MRTHomeViewController.m */; };
 		266F31A81EBFC020001ECF24 /* MRTMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31A71EBFC020001ECF24 /* MRTMessageViewController.m */; };
 		266F31AB1EBFC04A001ECF24 /* MRTDiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31AA1EBFC04A001ECF24 /* MRTDiscoverViewController.m */; };
 		266F31AE1EBFC06B001ECF24 /* MRTProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31AD1EBFC06B001ECF24 /* MRTProfileViewController.m */; };
 		266F31B11EBFCD28001ECF24 /* MRTLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31B01EBFCD28001ECF24 /* MRTLogInViewController.m */; };
-		266F31B41EBFCD3C001ECF24 /* MRTTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31B31EBFCD3C001ECF24 /* MRTTabBar.m */; };
 		266F31B71EBFCD4A001ECF24 /* MRTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31B61EBFCD4A001ECF24 /* MRTTabBarController.m */; };
 		8B489928D8866335C2391C79 /* libPods-Webo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C128BD0545A7FD9C0DB859C4 /* libPods-Webo.a */; };
 /* End PBXBuildFile section */
@@ -64,8 +67,16 @@
 		2619E12F1EAEA3C3004CE6DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		261A1EA81EAFED7100D2B7FE /* WeboIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeboIcon@2x.png"; sourceTree = "<group>"; };
 		261A1EAA1EAFEE1900D2B7FE /* WeboIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeboIcon@3x.png"; sourceTree = "<group>"; };
-		266F317F1EBF7E97001ECF24 /* UIImage+MRTImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MRTImage.h"; sourceTree = "<group>"; };
-		266F31801EBF7E97001ECF24 /* UIImage+MRTImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MRTImage.m"; sourceTree = "<group>"; };
+		2635DA041EC1155300EF24B6 /* MRTTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTTabBar.h; path = TabBar/View/MRTTabBar.h; sourceTree = "<group>"; };
+		2635DA051EC1155300EF24B6 /* MRTTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTTabBar.m; path = TabBar/View/MRTTabBar.m; sourceTree = "<group>"; };
+		2635DA071EC1175000EF24B6 /* MRTBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTBadgeView.h; path = TabBar/View/MRTBadgeView.h; sourceTree = "<group>"; };
+		2635DA081EC1175000EF24B6 /* MRTBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTBadgeView.m; path = TabBar/View/MRTBadgeView.m; sourceTree = "<group>"; };
+		2635DA0A1EC1281100EF24B6 /* UIView+MRTFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+MRTFrame.h"; path = "Category/UIView+MRTFrame.h"; sourceTree = "<group>"; };
+		2635DA0B1EC1281100EF24B6 /* UIView+MRTFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+MRTFrame.m"; path = "Category/UIView+MRTFrame.m"; sourceTree = "<group>"; };
+		2635DA0E1EC1285E00EF24B6 /* UIImage+MRTImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+MRTImage.h"; path = "Category/UIImage+MRTImage.h"; sourceTree = "<group>"; };
+		2635DA0F1EC1285E00EF24B6 /* UIImage+MRTImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+MRTImage.m"; path = "Category/UIImage+MRTImage.m"; sourceTree = "<group>"; };
+		2635DA111EC12B8100EF24B6 /* MRTTabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTTabBarButton.h; path = TabBar/View/MRTTabBarButton.h; sourceTree = "<group>"; };
+		2635DA121EC12B8100EF24B6 /* MRTTabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTTabBarButton.m; path = TabBar/View/MRTTabBarButton.m; sourceTree = "<group>"; };
 		266F319A1EBFBCCC001ECF24 /* MRTHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTHomeViewController.h; path = Home/Controller/MRTHomeViewController.h; sourceTree = "<group>"; };
 		266F319B1EBFBCCC001ECF24 /* MRTHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTHomeViewController.m; path = Home/Controller/MRTHomeViewController.m; sourceTree = "<group>"; };
 		266F31A61EBFC020001ECF24 /* MRTMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTMessageViewController.h; path = Message/Controller/MRTMessageViewController.h; sourceTree = "<group>"; };
@@ -76,8 +87,6 @@
 		266F31AD1EBFC06B001ECF24 /* MRTProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTProfileViewController.m; path = Profile/Controller/MRTProfileViewController.m; sourceTree = "<group>"; };
 		266F31AF1EBFCD28001ECF24 /* MRTLogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTLogInViewController.h; path = LogIn/Controller/MRTLogInViewController.h; sourceTree = "<group>"; };
 		266F31B01EBFCD28001ECF24 /* MRTLogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTLogInViewController.m; path = LogIn/Controller/MRTLogInViewController.m; sourceTree = "<group>"; };
-		266F31B21EBFCD3C001ECF24 /* MRTTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTTabBar.h; path = TabBar/MRTTabBar/MRTTabBar.h; sourceTree = "<group>"; };
-		266F31B31EBFCD3C001ECF24 /* MRTTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTTabBar.m; path = TabBar/MRTTabBar/MRTTabBar.m; sourceTree = "<group>"; };
 		266F31B51EBFCD4A001ECF24 /* MRTTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTTabBarController.h; path = TabBar/Controller/MRTTabBarController.h; sourceTree = "<group>"; };
 		266F31B61EBFCD4A001ECF24 /* MRTTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTTabBarController.m; path = TabBar/Controller/MRTTabBarController.m; sourceTree = "<group>"; };
 		BA69F59417D1A198953C3BD9 /* Pods-Webo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Webo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Webo/Pods-Webo.release.xcconfig"; sourceTree = "<group>"; };
@@ -143,8 +152,7 @@
 				2619E13E1EAEAC73004CE6DD /* LogIn */,
 				2619E1081EAEA3C3004CE6DD /* AppDelegate.h */,
 				2619E1091EAEA3C3004CE6DD /* AppDelegate.m */,
-				266F317F1EBF7E97001ECF24 /* UIImage+MRTImage.h */,
-				266F31801EBF7E97001ECF24 /* UIImage+MRTImage.m */,
+				2635DA0D1EC1281E00EF24B6 /* Category */,
 				2619E10E1EAEA3C3004CE6DD /* Main.storyboard */,
 				2619E1141EAEA3C3004CE6DD /* Assets.xcassets */,
 				261A1EA81EAFED7100D2B7FE /* WeboIcon@2x.png */,
@@ -191,6 +199,24 @@
 			name = LogIn;
 			sourceTree = "<group>";
 		};
+		2635DA001EC10D2300EF24B6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		2635DA0D1EC1281E00EF24B6 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				2635DA0A1EC1281100EF24B6 /* UIView+MRTFrame.h */,
+				2635DA0B1EC1281100EF24B6 /* UIView+MRTFrame.m */,
+				2635DA0E1EC1285E00EF24B6 /* UIImage+MRTImage.h */,
+				2635DA0F1EC1285E00EF24B6 /* UIImage+MRTImage.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
 		266F31851EBFB7F0001ECF24 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,7 +230,8 @@
 		266F31871EBFB80E001ECF24 /* TabBar */ = {
 			isa = PBXGroup;
 			children = (
-				266F318B1EBFB925001ECF24 /* MRTTabBar */,
+				2635DA001EC10D2300EF24B6 /* Model */,
+				266F318B1EBFB925001ECF24 /* View */,
 				266F318A1EBFB8FA001ECF24 /* Controller */,
 			);
 			name = TabBar;
@@ -239,13 +266,17 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
-		266F318B1EBFB925001ECF24 /* MRTTabBar */ = {
+		266F318B1EBFB925001ECF24 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				266F31B21EBFCD3C001ECF24 /* MRTTabBar.h */,
-				266F31B31EBFCD3C001ECF24 /* MRTTabBar.m */,
+				2635DA041EC1155300EF24B6 /* MRTTabBar.h */,
+				2635DA051EC1155300EF24B6 /* MRTTabBar.m */,
+				2635DA071EC1175000EF24B6 /* MRTBadgeView.h */,
+				2635DA081EC1175000EF24B6 /* MRTBadgeView.m */,
+				2635DA111EC12B8100EF24B6 /* MRTTabBarButton.h */,
+				2635DA121EC12B8100EF24B6 /* MRTTabBarButton.m */,
 			);
-			name = MRTTabBar;
+			name = View;
 			sourceTree = "<group>";
 		};
 		266F318C1EBFB96F001ECF24 /* View */ = {
@@ -567,14 +598,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				2619E10A1EAEA3C3004CE6DD /* AppDelegate.m in Sources */,
-				266F31B41EBFCD3C001ECF24 /* MRTTabBar.m in Sources */,
 				2619E1131EAEA3C3004CE6DD /* Webo.xcdatamodeld in Sources */,
-				266F31811EBF7E97001ECF24 /* UIImage+MRTImage.m in Sources */,
+				2635DA0C1EC1281100EF24B6 /* UIView+MRTFrame.m in Sources */,
 				266F319C1EBFBCCC001ECF24 /* MRTHomeViewController.m in Sources */,
 				266F31AE1EBFC06B001ECF24 /* MRTProfileViewController.m in Sources */,
+				2635DA061EC1155300EF24B6 /* MRTTabBar.m in Sources */,
+				2635DA091EC1175000EF24B6 /* MRTBadgeView.m in Sources */,
+				2635DA131EC12B8100EF24B6 /* MRTTabBarButton.m in Sources */,
 				266F31B11EBFCD28001ECF24 /* MRTLogInViewController.m in Sources */,
 				266F31AB1EBFC04A001ECF24 /* MRTDiscoverViewController.m in Sources */,
 				2619E1071EAEA3C3004CE6DD /* main.m in Sources */,
+				2635DA101EC1285E00EF24B6 /* UIImage+MRTImage.m in Sources */,
 				266F31A81EBFC020001ECF24 /* MRTMessageViewController.m in Sources */,
 				266F31B71EBFCD4A001ECF24 /* MRTTabBarController.m in Sources */,
 			);
