@@ -1,0 +1,17 @@
+//
+//  Webo-PrefixHeader.pch
+//  Webo
+//
+//  Created by mrtanis on 2017/5/12.
+//  Copyright © 2017年 mrtanis. All rights reserved.
+//
+
+#ifndef Webo_PrefixHeader_pch
+#define Webo_PrefixHeader_pch
+
+#import "UIView+MRTFrame.h"
+#import "UIImage+MRTImage.h"
+
+#define MRTKeyWindow [UIApplication sharedApplication].keyWindow
+
+#endif /* Webo_PrefixHeader_pch */

@@ -11,5 +11,5 @@
 @interface UIImage (MRTImage)
 
 + (instancetype)imageWithOriginalName:(NSString *)imageName;
-
++ (instancetype)imageWithStretchableName:(NSString *)imageName;
 @end

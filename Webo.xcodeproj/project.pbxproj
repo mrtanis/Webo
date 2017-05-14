@@ -17,6 +17,10 @@
 		2619E12E1EAEA3C3004CE6DD /* WeboUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2619E12D1EAEA3C3004CE6DD /* WeboUITests.m */; };
 		261A1EA91EAFED7100D2B7FE /* WeboIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 261A1EA81EAFED7100D2B7FE /* WeboIcon@2x.png */; };
 		261A1EAB1EAFEE1900D2B7FE /* WeboIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 261A1EAA1EAFEE1900D2B7FE /* WeboIcon@3x.png */; };
+		263461401EC478FD000D34A6 /* MRTNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2634613F1EC478FD000D34A6 /* MRTNavigationController.m */; };
+		263461431EC4C943000D34A6 /* UIBarButtonItem+MRTItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 263461421EC4C943000D34A6 /* UIBarButtonItem+MRTItem.m */; };
+		263461461EC4FC1E000D34A6 /* MRTMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 263461451EC4FC1E000D34A6 /* MRTMenuViewController.m */; };
+		263461491EC512B3000D34A6 /* MRTHomeTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 263461481EC512B3000D34A6 /* MRTHomeTitle.m */; };
 		2635DA061EC1155300EF24B6 /* MRTTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2635DA051EC1155300EF24B6 /* MRTTabBar.m */; };
 		2635DA091EC1175000EF24B6 /* MRTBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2635DA081EC1175000EF24B6 /* MRTBadgeView.m */; };
 		2635DA0C1EC1281100EF24B6 /* UIView+MRTFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 2635DA0B1EC1281100EF24B6 /* UIView+MRTFrame.m */; };
@@ -28,6 +32,9 @@
 		266F31AE1EBFC06B001ECF24 /* MRTProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31AD1EBFC06B001ECF24 /* MRTProfileViewController.m */; };
 		266F31B11EBFCD28001ECF24 /* MRTLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31B01EBFCD28001ECF24 /* MRTLogInViewController.m */; };
 		266F31B71EBFCD4A001ECF24 /* MRTTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266F31B61EBFCD4A001ECF24 /* MRTTabBarController.m */; };
+		2671DEA31EC6040E002F3D26 /* MRTCover.m in Sources */ = {isa = PBXBuildFile; fileRef = 2671DEA21EC6040E002F3D26 /* MRTCover.m */; };
+		2671DEA71EC61416002F3D26 /* MRTPopMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2671DEA61EC61416002F3D26 /* MRTPopMenu.m */; };
+		2671DEAA1EC66303002F3D26 /* MRTSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2671DEA91EC66303002F3D26 /* MRTSearchBar.m */; };
 		8B489928D8866335C2391C79 /* libPods-Webo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C128BD0545A7FD9C0DB859C4 /* libPods-Webo.a */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +74,14 @@
 		2619E12F1EAEA3C3004CE6DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		261A1EA81EAFED7100D2B7FE /* WeboIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeboIcon@2x.png"; sourceTree = "<group>"; };
 		261A1EAA1EAFEE1900D2B7FE /* WeboIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WeboIcon@3x.png"; sourceTree = "<group>"; };
+		2634613E1EC478FD000D34A6 /* MRTNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTNavigationController.h; path = TabBar/Controller/MRTNavigationController.h; sourceTree = "<group>"; };
+		2634613F1EC478FD000D34A6 /* MRTNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTNavigationController.m; path = TabBar/Controller/MRTNavigationController.m; sourceTree = "<group>"; };
+		263461411EC4C943000D34A6 /* UIBarButtonItem+MRTItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIBarButtonItem+MRTItem.h"; path = "Category/UIBarButtonItem+MRTItem.h"; sourceTree = "<group>"; };
+		263461421EC4C943000D34A6 /* UIBarButtonItem+MRTItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIBarButtonItem+MRTItem.m"; path = "Category/UIBarButtonItem+MRTItem.m"; sourceTree = "<group>"; };
+		263461441EC4FC1E000D34A6 /* MRTMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTMenuViewController.h; path = Home/Controller/MRTMenuViewController.h; sourceTree = "<group>"; };
+		263461451EC4FC1E000D34A6 /* MRTMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTMenuViewController.m; path = Home/Controller/MRTMenuViewController.m; sourceTree = "<group>"; };
+		263461471EC512B3000D34A6 /* MRTHomeTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTHomeTitle.h; path = Home/View/MRTHomeTitle.h; sourceTree = "<group>"; };
+		263461481EC512B3000D34A6 /* MRTHomeTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTHomeTitle.m; path = Home/View/MRTHomeTitle.m; sourceTree = "<group>"; };
 		2635DA041EC1155300EF24B6 /* MRTTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTTabBar.h; path = TabBar/View/MRTTabBar.h; sourceTree = "<group>"; };
 		2635DA051EC1155300EF24B6 /* MRTTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTTabBar.m; path = TabBar/View/MRTTabBar.m; sourceTree = "<group>"; };
 		2635DA071EC1175000EF24B6 /* MRTBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTBadgeView.h; path = TabBar/View/MRTBadgeView.h; sourceTree = "<group>"; };
@@ -89,6 +104,13 @@
 		266F31B01EBFCD28001ECF24 /* MRTLogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTLogInViewController.m; path = LogIn/Controller/MRTLogInViewController.m; sourceTree = "<group>"; };
 		266F31B51EBFCD4A001ECF24 /* MRTTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTTabBarController.h; path = TabBar/Controller/MRTTabBarController.h; sourceTree = "<group>"; };
 		266F31B61EBFCD4A001ECF24 /* MRTTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTTabBarController.m; path = TabBar/Controller/MRTTabBarController.m; sourceTree = "<group>"; };
+		2671DEA11EC6040E002F3D26 /* MRTCover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTCover.h; path = Home/View/MRTCover.h; sourceTree = "<group>"; };
+		2671DEA21EC6040E002F3D26 /* MRTCover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTCover.m; path = Home/View/MRTCover.m; sourceTree = "<group>"; };
+		2671DEA41EC60D44002F3D26 /* Webo-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Webo-PrefixHeader.pch"; sourceTree = "<group>"; };
+		2671DEA51EC61416002F3D26 /* MRTPopMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTPopMenu.h; path = Home/View/MRTPopMenu.h; sourceTree = "<group>"; };
+		2671DEA61EC61416002F3D26 /* MRTPopMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTPopMenu.m; path = Home/View/MRTPopMenu.m; sourceTree = "<group>"; };
+		2671DEA81EC66303002F3D26 /* MRTSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTSearchBar.h; path = Discover/View/MRTSearchBar.h; sourceTree = "<group>"; };
+		2671DEA91EC66303002F3D26 /* MRTSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTSearchBar.m; path = Discover/View/MRTSearchBar.m; sourceTree = "<group>"; };
 		BA69F59417D1A198953C3BD9 /* Pods-Webo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Webo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Webo/Pods-Webo.release.xcconfig"; sourceTree = "<group>"; };
 		C128BD0545A7FD9C0DB859C4 /* libPods-Webo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Webo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -152,6 +174,7 @@
 				2619E13E1EAEAC73004CE6DD /* LogIn */,
 				2619E1081EAEA3C3004CE6DD /* AppDelegate.h */,
 				2619E1091EAEA3C3004CE6DD /* AppDelegate.m */,
+				2671DEA41EC60D44002F3D26 /* Webo-PrefixHeader.pch */,
 				2635DA0D1EC1281E00EF24B6 /* Category */,
 				2619E10E1EAEA3C3004CE6DD /* Main.storyboard */,
 				2619E1141EAEA3C3004CE6DD /* Assets.xcassets */,
@@ -213,6 +236,8 @@
 				2635DA0B1EC1281100EF24B6 /* UIView+MRTFrame.m */,
 				2635DA0E1EC1285E00EF24B6 /* UIImage+MRTImage.h */,
 				2635DA0F1EC1285E00EF24B6 /* UIImage+MRTImage.m */,
+				263461411EC4C943000D34A6 /* UIBarButtonItem+MRTItem.h */,
+				263461421EC4C943000D34A6 /* UIBarButtonItem+MRTItem.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -262,6 +287,8 @@
 			children = (
 				266F31B51EBFCD4A001ECF24 /* MRTTabBarController.h */,
 				266F31B61EBFCD4A001ECF24 /* MRTTabBarController.m */,
+				2634613E1EC478FD000D34A6 /* MRTNavigationController.h */,
+				2634613F1EC478FD000D34A6 /* MRTNavigationController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -305,6 +332,8 @@
 		266F318F1EBFB9B3001ECF24 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2671DEA81EC66303002F3D26 /* MRTSearchBar.h */,
+				2671DEA91EC66303002F3D26 /* MRTSearchBar.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -328,6 +357,12 @@
 		266F31921EBFB9DD001ECF24 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				263461471EC512B3000D34A6 /* MRTHomeTitle.h */,
+				263461481EC512B3000D34A6 /* MRTHomeTitle.m */,
+				2671DEA11EC6040E002F3D26 /* MRTCover.h */,
+				2671DEA21EC6040E002F3D26 /* MRTCover.m */,
+				2671DEA51EC61416002F3D26 /* MRTPopMenu.h */,
+				2671DEA61EC61416002F3D26 /* MRTPopMenu.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -344,6 +379,8 @@
 			children = (
 				266F319A1EBFBCCC001ECF24 /* MRTHomeViewController.h */,
 				266F319B1EBFBCCC001ECF24 /* MRTHomeViewController.m */,
+				263461441EC4FC1E000D34A6 /* MRTMenuViewController.h */,
+				263461451EC4FC1E000D34A6 /* MRTMenuViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -601,16 +638,23 @@
 				2619E1131EAEA3C3004CE6DD /* Webo.xcdatamodeld in Sources */,
 				2635DA0C1EC1281100EF24B6 /* UIView+MRTFrame.m in Sources */,
 				266F319C1EBFBCCC001ECF24 /* MRTHomeViewController.m in Sources */,
+				2671DEAA1EC66303002F3D26 /* MRTSearchBar.m in Sources */,
 				266F31AE1EBFC06B001ECF24 /* MRTProfileViewController.m in Sources */,
+				263461401EC478FD000D34A6 /* MRTNavigationController.m in Sources */,
 				2635DA061EC1155300EF24B6 /* MRTTabBar.m in Sources */,
+				2671DEA31EC6040E002F3D26 /* MRTCover.m in Sources */,
 				2635DA091EC1175000EF24B6 /* MRTBadgeView.m in Sources */,
 				2635DA131EC12B8100EF24B6 /* MRTTabBarButton.m in Sources */,
+				2671DEA71EC61416002F3D26 /* MRTPopMenu.m in Sources */,
 				266F31B11EBFCD28001ECF24 /* MRTLogInViewController.m in Sources */,
 				266F31AB1EBFC04A001ECF24 /* MRTDiscoverViewController.m in Sources */,
+				263461461EC4FC1E000D34A6 /* MRTMenuViewController.m in Sources */,
 				2619E1071EAEA3C3004CE6DD /* main.m in Sources */,
 				2635DA101EC1285E00EF24B6 /* UIImage+MRTImage.m in Sources */,
 				266F31A81EBFC020001ECF24 /* MRTMessageViewController.m in Sources */,
+				263461491EC512B3000D34A6 /* MRTHomeTitle.m in Sources */,
 				266F31B71EBFCD4A001ECF24 /* MRTTabBarController.m in Sources */,
+				263461431EC4C943000D34A6 /* UIBarButtonItem+MRTItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -696,6 +740,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = "Webo/Webo-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -742,6 +787,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Webo/Webo-PrefixHeader.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

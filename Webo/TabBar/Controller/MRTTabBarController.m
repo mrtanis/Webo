@@ -13,6 +13,7 @@
 #import "MRTMessageViewController.h"
 #import "MRTDiscoverViewController.h"
 #import "MRTProfileViewController.h"
+#import "MRTNavigationController.h"
 
 @interface MRTTabBarController () <MRTTabBarDelegate>//遵守MRTTabBar代理协议
 @property (nonatomic, copy) NSMutableArray *items;
@@ -25,7 +26,7 @@
 + (void)initialize
 {
     //获取当前类下所有的tabBarItem
-    UITabBarItem *item = [UITabBarItem appearanceWhenContainedInInstancesOfClasses:@[[self class]]];
+    UITabBarItem *item = [UITabBarItem appearanceWhenContainedInInstancesOfClasses:@[self]];
     //新建富文本字典
     NSMutableDictionary *titleAttrs = [NSMutableDictionary dictionary];
     //设置文本颜色（还可以设置字体、阴影、阴影颜色等)
@@ -117,13 +118,19 @@
 {
     vc.tabBarItem.image = image;
     vc.tabBarItem.selectedImage = selctedImage;
-    vc.tabBarItem.title = title;
+    //vc.tabBarItem.title = title;
+    //此方法可同时为tabBarItem和navigationItem设置title
+    vc.title = title;
     vc.tabBarItem.badgeColor = [UIColor orangeColor];
     vc.tabBarItem.badgeValue = @"10";
     //将创建的视图控制器的tabBarItem加入items数组
     [self.items addObject:vc.tabBarItem];
-    
     [self addChildViewController:vc];
+    
+    //创建导航栏并加入tabBarController
+    MRTNavigationController *nav = [[MRTNavigationController alloc] initWithRootViewController:vc];
+    [self addChildViewController:nav];
+    
 }
 
 
