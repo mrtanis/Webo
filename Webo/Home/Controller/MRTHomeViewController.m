@@ -12,15 +12,34 @@
 #import "MRTCover.h"
 #import "MRTPopMenu.h"
 #import "MRTMenuViewController.h"
+#import "MRTOneViewController.h"
+#import "AFNetworking.h"
+#import "MRTAccountStore.h"
+#import "MRTAccount.h"
+#import "MRTStatus.h"
+#import "UIImageView+WebCache.h"
+#import "MJRefresh.h"
+#import "MRTHttpTool.h"
+#import "MRTStatusTool.h"
 
 @interface MRTHomeViewController () <MRTCoverDelegate>
 
 @property (nonatomic, weak) MRTHomeTitle *titleButton;
 @property (nonatomic, strong) MRTMenuViewController *menu;
-
+@property (nonatomic, copy) NSMutableArray *statuses;
 @end
 
 @implementation MRTHomeViewController
+
+//懒加载statuses数组
+- (NSMutableArray *)statuses
+{
+    if (!_statuses) {
+        _statuses = [[NSMutableArray alloc] init];
+    }
+    
+    return _statuses;
+}
 
 - (MRTMenuViewController *)menu
 {
@@ -36,7 +55,15 @@
     
     //设置导航栏
     [self setUpNavigationBar];
+    
+    //添加下拉刷新控件
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewStatus)];
+    [self.tableView.mj_header beginRefreshing];
+    
+    //添加上拉刷新旧微博控件
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreStatus)];
 }
+
 //设置导航栏
 - (void)setUpNavigationBar
 {
@@ -71,7 +98,14 @@
 //右按钮调用方法
 - (void)pop
 {
-    NSLog(@"%s", __func__);
+    //创建新的控制
+    MRTOneViewController *one = [[MRTOneViewController alloc] init];
+    
+    //push时隐藏系统自带tabBar
+    one.hidesBottomBarWhenPushed = YES;
+    
+    //push新的控制器
+    [self.navigationController pushViewController:one animated:YES];
 }
 //标题调用方法
 - (void)menuTitleClick:(UIButton *)button
@@ -105,25 +139,100 @@
     _titleButton.selected = NO;
 }
 
+#pragma mark 请求最新的微博
+
+- (void)loadNewStatus
+{
+    //创建一个空sinceId
+    NSString *sinceId = nil;
+    
+    //载入since_id之后的新微博数据
+    if (self.statuses.count) {
+        //将since_id设置为当前已保存的最新微博的idstr，idstr越大数据越新
+        sinceId = [self.statuses[0] idstr];
+    }
+    
+    //发送get请求
+    [MRTStatusTool newStatusWithSinceId:sinceId success:^(NSArray *statuses) {
+        
+        //结束下拉刷新
+        [self.tableView.mj_header endRefreshing];
+        
+        //根据statuses的长度创建一个indexSet
+        NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, statuses.count)];
+        
+        //将最新的微博数据插入最前面
+        [self.statuses insertObjects:statuses atIndexes:indexSet];
+        
+        //刷新表格数据
+        [self.tableView reloadData];
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@"error:%@", error);
+        
+    }];
+}
+
+#pragma mark 加载更多之前的微博数据
+- (void)loadMoreStatus
+{
+    //新建一个空的maxId
+    NSString *maxId = nil;
+    
+    if (self.statuses.count) {
+        //返回小于等于max_id的微博，所以要减一
+        long long max_id =[[[self.statuses lastObject] idstr] longLongValue] - 1;
+        maxId = [NSString stringWithFormat:@"%lld", max_id];
+    }
+    
+    //发送get请求
+    [MRTStatusTool moreStatusWithMaxId:maxId success:^(NSArray *statuses) {
+        
+        //结束上拉刷新
+        [self.tableView.mj_footer endRefreshing];
+        
+        //加入到statuses
+        [self.statuses addObjectsFromArray:statuses];
+        
+        //刷新表格
+        [self.tableView reloadData];
+
+    } failure:^(NSError *error) {
+        
+        NSLog(@"error:%@", error);
+    }];
+}
+
+    
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    return self.statuses.count;
 }
 
-/*
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    static NSString *ID = @"cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     
-    // Configure the cell...
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
+    }
+    
+    MRTStatus *status = self.statuses[indexPath.row];
+    cell.textLabel.text = status.user.name;
+    [cell.imageView sd_setImageWithURL:status.user.profile_image_url placeholderImage:[UIImage imageNamed:@"timeline_image_placeholder"]];
+    cell.detailTextLabel.text = status.text;
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

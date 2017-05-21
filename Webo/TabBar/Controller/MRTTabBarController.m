@@ -49,7 +49,9 @@
 - (void)setUpTabBar
 {
     //自定义tabBar
-    MRTTabBar *tabBar = [[MRTTabBar alloc] initWithFrame:self.tabBar.frame];
+    //MRTTabBar *tabBar = [[MRTTabBar alloc] initWithFrame:self.tabBar.frame];
+    //要把自定义tabBar加到系统tabBar上，frame是相对于整个屏幕，而现在需要基于tabBar，所以使用bounds，两者的初始坐标是不一样的
+    MRTTabBar *tabBar = [[MRTTabBar alloc] initWithFrame:self.tabBar.bounds];
     tabBar.backgroundColor = [UIColor whiteColor];
     
     //设置代理
@@ -59,10 +61,12 @@
     tabBar.items = self.items;
     
     //添加自定义tabBar
-    [self.view addSubview:tabBar];
+    //[self.view addSubview:tabBar];
+    //添加自定义tabBar为系统tabBar的子视图
+    [self.tabBar addSubview:tabBar];
     
     //移除系统的tabBar
-    [self.tabBar removeFromSuperview];
+    //[self.tabBar removeFromSuperview];
 }
 
 - (void)viewDidLoad {
@@ -78,6 +82,30 @@
     //利用KVC设置tabBar(KVC能在没有存取方法的情况下直接存取实例变量，只对对象有效）
     [self setValue:tabBar forKey:@"tabBar"];
      */
+}
+
+/*- (void)viewWillAppear:(BOOL)animated
+{
+    //移除系统tabBar自带的UITabBarButton
+    //因为UITabBarButton并不是在viewDidLoad添加的，在viewWillAppear中可以打印出所有UITabBarButton，所以在此移除系统UITabBarButton
+    for (UIView *tabBarButton in self.tabBar.subviews) {
+        if ([tabBarButton isKindOfClass:NSClassFromString(@"UITabBarButton")]) {
+            [tabBarButton removeFromSuperview];
+        }
+    }
+}*/
+
+//删除系统tabBarButton
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    for (UIView *tabBarButton in self.tabBar.subviews)
+    {
+        if ([tabBarButton isKindOfClass:NSClassFromString(@"UITabBarButton")]) {
+            [tabBarButton removeFromSuperview];
+        }
+    }
 }
 
 - (void)tabBar:(MRTTabBar *)tabBar didClickButton:(NSInteger)index

@@ -9,6 +9,9 @@
 #import "AppDelegate.h"
 #import "MRTLogInViewController.h"
 #import "MRTTabBarController.h"
+#import "MRTNewFeatureController.h"
+#import "MRTOAuthViewController.h"
+#import "MRTRootVCPicker.h"
 
 @interface AppDelegate ()
 
@@ -19,13 +22,33 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    /*
+    //获取当前版本号
+    NSString *currentVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleVersion"];
+    //获取上个版本号
+    NSString *lastVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"WeboVersion"];
     
-    //MRTLogInViewController *lvc = [[MRTLogInViewController alloc] init];
-    //UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:lvc];
+    //判断当前版本是否为新版本，如果为新版本则进入新特性介绍界面，否则直接进入tabBarController
+    if ([currentVersion isEqualToString:lastVersion]) {
+        MRTTabBarController *tabBarVc = [[MRTTabBarController alloc] init];
+        
+        self.window.rootViewController = tabBarVc;
+    } else {
+        MRTNewFeatureController *newFeatureVc = [[MRTNewFeatureController alloc] init];
+        
+        //若为新版本则保存最新版本号
+        [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:@"WeboVersion"];
+        
+        self.window.rootViewController = newFeatureVc;
+    }
     
-    MRTTabBarController *tabBarC = [[MRTTabBarController alloc] init];
     
-    self.window.rootViewController = tabBarC;
+    MRTOAuthViewController *oauthVc = [[MRTOAuthViewController alloc] init];
+    
+    self.window.rootViewController = oauthVc;
+    */
+    
+    [MRTRootVCPicker chooseRootVC:self.window];
     
     self.window.backgroundColor = [UIColor whiteColor];
     
