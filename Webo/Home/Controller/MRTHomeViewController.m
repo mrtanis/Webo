@@ -21,12 +21,15 @@
 #import "MJRefresh.h"
 #import "MRTHttpTool.h"
 #import "MRTStatusTool.h"
+#import "MRTUserInfoTool.h"
+#import "MRTStatusCell.h"
+#import "MRTStatusFrame.h"
 
 @interface MRTHomeViewController () <MRTCoverDelegate>
 
 @property (nonatomic, weak) MRTHomeTitle *titleButton;
 @property (nonatomic, strong) MRTMenuViewController *menu;
-@property (nonatomic, copy) NSMutableArray *statuses;
+@property (nonatomic, copy) NSMutableArray *statusFrames;
 @end
 
 @implementation MRTHomeViewController
@@ -34,11 +37,11 @@
 //懒加载statuses数组
 - (NSMutableArray *)statuses
 {
-    if (!_statuses) {
-        _statuses = [[NSMutableArray alloc] init];
+    if (!_statusFrames) {
+        _statusFrames = [[NSMutableArray alloc] init];
     }
     
-    return _statuses;
+    return _statusFrames;
 }
 
 - (MRTMenuViewController *)menu
@@ -53,6 +56,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    //获取当前用户昵称
+    [MRTUserInfoTool userInfoWithSuccess:^(MRTUser *user) {
+        //将导航栏标题设置为用户昵称
+        //[self.titleButton setTitle:user.name forState:UIControlStateNormal];
+        
+        //获取账户
+        MRTAccount *account = [MRTAccountStore account];
+        
+        //为账户昵称赋值
+        account.name = user.name;
+        
+        //保存账户
+        [MRTAccountStore saveAccount:account];
+        
+    } failure:^(NSError *error) {
+        NSLog(@"error:%@", error);
+    }];
+    
     //设置导航栏
     [self setUpNavigationBar];
     
@@ -62,6 +84,9 @@
     
     //添加上拉刷新旧微博控件
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreStatus)];
+    
+    //取消分割线
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 //设置导航栏
@@ -77,7 +102,9 @@
     MRTHomeTitle *titleButton = [MRTHomeTitle buttonWithType:UIButtonTypeCustom];
     _titleButton = titleButton;
     
-    [titleButton setTitle:@"首页" forState:UIControlStateNormal];
+    //条件为真会返回[MRTAccountStore account].name
+    NSString *title = [MRTAccountStore account].name ? :@"首页";
+    [titleButton setTitle:title forState:UIControlStateNormal];
     [titleButton setImage:[UIImage imageNamed:@"navigationbar_arrow_down"] forState:UIControlStateNormal];
     [titleButton setImage:[UIImage imageNamed:@"navigationbar_arrow_up"] forState:UIControlStateSelected];
     
@@ -149,20 +176,34 @@
     //载入since_id之后的新微博数据
     if (self.statuses.count) {
         //将since_id设置为当前已保存的最新微博的idstr，idstr越大数据越新
-        sinceId = [self.statuses[0] idstr];
+        sinceId = [[self.statusFrames[0] status] idstr];
     }
     
     //发送get请求
     [MRTStatusTool newStatusWithSinceId:sinceId success:^(NSArray *statuses) {
+        //显示微博更新数
+        [self showNewStatusCount:(int)statuses.count];
         
         //结束下拉刷新
         [self.tableView.mj_header endRefreshing];
+        
+        //创建newStatusFrames数组
+        NSMutableArray *newStatusFrames = [[NSMutableArray alloc] init];
+        
+        for (MRTStatus *status in statuses) {
+            //创建statusFrame
+            MRTStatusFrame *statusFrame = [[MRTStatusFrame alloc] init];
+            //给statusFrame的status属性赋值
+            statusFrame.status = status;
+            //将statusFrame加入newStatusFrame数组
+            [newStatusFrames addObject:statusFrame];
+        }
         
         //根据statuses的长度创建一个indexSet
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, statuses.count)];
         
         //将最新的微博数据插入最前面
-        [self.statuses insertObjects:statuses atIndexes:indexSet];
+        [self.statusFrames insertObjects:newStatusFrames atIndexes:indexSet];
         
         //刷新表格数据
         [self.tableView reloadData];
@@ -180,9 +221,9 @@
     //新建一个空的maxId
     NSString *maxId = nil;
     
-    if (self.statuses.count) {
+    if (self.statusFrames.count) {
         //返回小于等于max_id的微博，所以要减一
-        long long max_id =[[[self.statuses lastObject] idstr] longLongValue] - 1;
+        long long max_id =[[[[self.statusFrames lastObject] status] idstr] longLongValue] - 1;
         maxId = [NSString stringWithFormat:@"%lld", max_id];
     }
     
@@ -192,8 +233,21 @@
         //结束上拉刷新
         [self.tableView.mj_footer endRefreshing];
         
-        //加入到statuses
-        [self.statuses addObjectsFromArray:statuses];
+        //创建oldStatusFrames数组
+        NSMutableArray *oldStatusFrames = [[NSMutableArray alloc] init];
+        
+        for (MRTStatus *status in statuses) {
+            //创建statusFrame
+            MRTStatusFrame *statusFrame = [[MRTStatusFrame alloc] init];
+            //给statusFrame的status属性赋值
+            statusFrame.status = status;
+            //将statusFrame加入到oldStatusFrame数组
+            [oldStatusFrames addObject:statusFrame];
+        }
+        
+        
+        //加入到statusFrame
+        [self.statusFrames addObjectsFromArray:oldStatusFrames];
         
         //刷新表格
         [self.tableView reloadData];
@@ -204,7 +258,49 @@
     }];
 }
 
+#pragma mark 点击首页刷新
+- (void)refresh
+{
+    [self.tableView.mj_header beginRefreshing];
+}
+
+#pragma mark 显示刷新微博数
+- (void)showNewStatusCount:(int)count
+{
+    //没有新微博则不显示
+    if (!count) return;
     
+    //label初始位置隐藏在导航栏内
+    CGFloat width = self.view.width;
+    CGFloat height = 35;
+    CGFloat x = 0;
+    CGFloat y = CGRectGetMaxY(self.navigationController.navigationBar.frame) - height;
+    
+    UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(x, y, width, height)];
+    countLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"timeline_new_status_background"]];
+    countLabel.text = [NSString stringWithFormat:@"更新了%d条微博", count];
+    countLabel.textAlignment = NSTextAlignmentCenter;
+    countLabel.textColor = [UIColor whiteColor];
+    
+    //将label插入到导航栏下面
+    [self.navigationController.view insertSubview:countLabel belowSubview:self.navigationController.navigationBar];
+    //加入动画
+    [UIView animateWithDuration:0.25 animations:^{
+        
+        //向下平移，距离为height
+        countLabel.transform = CGAffineTransformMakeTranslation(0, height);
+        
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.25 delay:1 options:UIViewAnimationOptionCurveLinear animations:^{
+            //恢复label最初的位置
+            countLabel.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished) {
+            //将label移除
+            [countLabel removeFromSuperview];
+        }];
+    }];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -212,27 +308,36 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.statuses.count;
+    return self.statusFrames.count;
 }
 
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *ID = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    MRTStatusCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
+        cell = [[MRTStatusCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
     }
     
-    MRTStatus *status = self.statuses[indexPath.row];
-    cell.textLabel.text = status.user.name;
-    [cell.imageView sd_setImageWithURL:status.user.profile_image_url placeholderImage:[UIImage imageNamed:@"timeline_image_placeholder"]];
-    cell.detailTextLabel.text = status.text;
-    
+    MRTStatusFrame *statusFrame = self.statusFrames[indexPath.row];
+    cell.statusFrame = statusFrame;
+    //cell.textLabel.text = status.user.name;
+    //[cell.imageView sd_setImageWithURL:status.user.profile_image_url placeholderImage:[UIImage imageNamed:@"timeline_image_placeholder"]];
+    //cell.detailTextLabel.text = status.text;
     return cell;
 }
 
+//返回cell高度
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //获取statusFrame
+    MRTStatusFrame *statusFrame = self.statusFrames[indexPath.row];
+    
+    //返回cell高度
+    return statusFrame.cellHeight;
+}
 
 /*
 // Override to support conditional editing of the table view.

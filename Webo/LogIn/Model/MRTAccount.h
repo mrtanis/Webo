@@ -28,6 +28,10 @@ uid = 2902236063;
 //过期时间 = 当前保存时间 + 有效期
 @property (nonatomic, strong) NSDate *expires_date;
 
+
+//添加用户昵称
+@property (nonatomic, copy) NSString *name;
+
 + (instancetype)accountWithDict:(NSDictionary *)dict;
 
 @end

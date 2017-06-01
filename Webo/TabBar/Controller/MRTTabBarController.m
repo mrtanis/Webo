@@ -14,9 +14,16 @@
 #import "MRTDiscoverViewController.h"
 #import "MRTProfileViewController.h"
 #import "MRTNavigationController.h"
+#import "MRTUnreadTool.h"
 
 @interface MRTTabBarController () <MRTTabBarDelegate>//遵守MRTTabBar代理协议
 @property (nonatomic, copy) NSMutableArray *items;
+
+@property (nonatomic, weak) MRTHomeViewController *homeVC;
+@property (nonatomic, weak) MRTMessageViewController *messageVC;
+@property (nonatomic, weak) MRTDiscoverViewController *discoverVC;
+@property (nonatomic, weak) MRTProfileViewController *profileVC;
+
 @end
 
 @implementation MRTTabBarController
@@ -75,6 +82,12 @@
     [self setUpAllChildVC];
     
     [self setUpTabBar];
+    
+    //设置未读消息数
+    [self getUnreadNumber];
+    
+    //设置每隔两秒请求未读数
+    [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(getUnreadNumber) userInfo:nil repeats:YES];
     /*
     //使用自定义tabBar
     MRTTabBar *tabBar = [[MRTTabBar alloc] initWithFrame:self.tabBar.frame];
@@ -110,6 +123,11 @@
 
 - (void)tabBar:(MRTTabBar *)tabBar didClickButton:(NSInteger)index
 {
+    //在首页的时候点击首页图标刷新
+    if (index == 0 && self.selectedIndex == index) {
+        [_homeVC refresh];
+    }
+    
     //设置序号选中相应的tabBarItem
     self.selectedIndex = index;
 }
@@ -126,20 +144,28 @@
     //UIViewController *homeVC = [[UIViewController alloc] init];
     [self setUpOneChildVC:homeVC image:[UIImage imageNamed:@"tabbar_home"] selectedImage:[UIImage imageWithOriginalName:@"tabbar_home_selected"] title:@"首页"];
     
+    _homeVC = homeVC;
+    
     //添加信息页
     MRTMessageViewController *messageVC = [[MRTMessageViewController alloc] init];
-    //UIViewController *messageVC = [[UIViewController alloc] init];
+    
     [self setUpOneChildVC:messageVC image:[UIImage imageNamed:@"tabbar_message_center"] selectedImage:[UIImage imageWithOriginalName:@"tabbar_message_center_selected"] title:@"消息"];
+    
+    _messageVC = messageVC;
     
     //添加发现页
     MRTDiscoverViewController *discoverVC = [[MRTDiscoverViewController alloc] init];
-    //UIViewController *discoverVC = [[UIViewController alloc] init];
+    
     [self setUpOneChildVC:discoverVC image:[UIImage imageNamed:@"tabbar_discover"] selectedImage:[UIImage imageWithOriginalName:@"tabbar_discover_selected"] title:@"发现"];
+    
+    _discoverVC = discoverVC;
     
     //添加个人页面
     MRTProfileViewController *profileVC = [[MRTProfileViewController alloc] init];
-    //UIViewController *profileVC = [[UIViewController alloc] init];
+    
     [self setUpOneChildVC:profileVC image:[UIImage imageNamed:@"tabbar_profile"] selectedImage:[UIImage imageWithOriginalName:@"tabbar_profile_selected"] title:@"我"];
+    
+    _profileVC = profileVC;
 }
 
 - (void)setUpOneChildVC:(UIViewController *)vc image:(UIImage *)image selectedImage:(UIImage *)selctedImage title:(NSString *)title
@@ -150,7 +176,7 @@
     //此方法可同时为tabBarItem和navigationItem设置title
     vc.title = title;
     vc.tabBarItem.badgeColor = [UIColor orangeColor];
-    vc.tabBarItem.badgeValue = @"10";
+    
     //将创建的视图控制器的tabBarItem加入items数组
     [self.items addObject:vc.tabBarItem];
     [self addChildViewController:vc];
@@ -159,6 +185,29 @@
     MRTNavigationController *nav = [[MRTNavigationController alloc] initWithRootViewController:vc];
     [self addChildViewController:nav];
     
+}
+
+#pragma mark 获取未读消息数
+- (void)getUnreadNumber
+{
+    [MRTUnreadTool unreadWithSuccess:^(MRTUnreadResult *result) {
+        //设置首页微博未读数
+        _homeVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d", result.status];
+        
+        //设置消息页未读数
+        _messageVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d", result.messageCount];
+        
+        //设置个人页未读数
+        _profileVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d", result.follower];
+        
+        //设置应用图标未读数（只显示消息数和个人页未读数，微博未读数太多了）
+        [UIApplication sharedApplication].applicationIconBadgeNumber = result.totalCount;
+        
+    } failure:^(NSError *error) {
+        
+        NSLog(@"error:%@", error);
+        
+    }];
 }
 
 

@@ -12,4 +12,13 @@
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) NSURL *profile_image_url;
+
+// 用户类型, 大于2代表是会员
+@property (nonatomic) int mbtype;
+
+//会员等级
+@property (nonatomic) int mbrank;
+
+@property (nonatomic) BOOL vip;
+
 @end

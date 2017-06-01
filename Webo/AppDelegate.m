@@ -13,7 +13,12 @@
 #import "MRTOAuthViewController.h"
 #import "MRTRootVCPicker.h"
 
+#import <UserNotifications/UserNotifications.h>
+#import <AVFoundation/AVFoundation.h>
+
 @interface AppDelegate ()
+
+@property (nonatomic, strong) AVAudioPlayer *player;
 
 @end
 
@@ -22,31 +27,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    /*
-    //获取当前版本号
-    NSString *currentVersion = [NSBundle mainBundle].infoDictionary[@"CFBundleVersion"];
-    //获取上个版本号
-    NSString *lastVersion = [[NSUserDefaults standardUserDefaults] objectForKey:@"WeboVersion"];
     
-    //判断当前版本是否为新版本，如果为新版本则进入新特性介绍界面，否则直接进入tabBarController
-    if ([currentVersion isEqualToString:lastVersion]) {
-        MRTTabBarController *tabBarVc = [[MRTTabBarController alloc] init];
-        
-        self.window.rootViewController = tabBarVc;
-    } else {
-        MRTNewFeatureController *newFeatureVc = [[MRTNewFeatureController alloc] init];
-        
-        //若为新版本则保存最新版本号
-        [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:@"WeboVersion"];
-        
-        self.window.rootViewController = newFeatureVc;
-    }
-    
-    
-    MRTOAuthViewController *oauthVc = [[MRTOAuthViewController alloc] init];
-    
-    self.window.rootViewController = oauthVc;
+    //改变applicationIconBadgeNumber需要注册通知，ios8~ios9使用
+    /*UIUserNotificationSettings *setting = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge categories:nil];
+    [application registerUserNotificationSettings:setting];
     */
+    
+    //ios10采用新的通知中心，目前这种获取授权可以达到改变applicationIconBadgeNumber的效果
+    UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge)
+                          completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                              // Enable or disable features based on authorization.
+                          }];
     
     [MRTRootVCPicker chooseRootVC:self.window];
     
@@ -59,14 +51,39 @@
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    //开启后台处理多媒体事件
+    //[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setActive:YES error:nil];
+    //后台播放
+    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+    
+    
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"silence.mp3" withExtension:nil];
+    
+    if (!_player.isPlaying) {
+        
+        AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+        
+        [player prepareToPlay];
+        
+        //无限播放
+        player.numberOfLoops = -1;
+        
+        [player play];
+        
+        _player = player;
+    }
 }
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    //开启一个后台任务，优先级较低，假如系统要关闭应用，首先考虑这个任务
+    UIBackgroundTaskIdentifier ID = [application beginBackgroundTaskWithExpirationHandler:^{
+        //当后台任务结束时调用
+        [application endBackgroundTask:ID];
+    }];
 }
 
 

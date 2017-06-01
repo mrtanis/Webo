@@ -10,4 +10,6 @@
 
 @interface MRTHomeViewController : UITableViewController
 
+- (void)refresh;
+
 @end
