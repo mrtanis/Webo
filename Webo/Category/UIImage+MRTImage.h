@@ -12,4 +12,5 @@
 
 + (instancetype)imageWithOriginalName:(NSString *)imageName;
 + (instancetype)imageWithStretchableName:(NSString *)imageName;
++ (UIImage *)getImageFromURL:(NSURL *)url;
 @end

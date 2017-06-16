@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-//我们需要用协议来申明哪些方法是被委托出去了
+//我们需要用协议来申明哪些方法是被委托（代理）出去了
 @class MRTTabBar;
 @protocol MRTTabBarDelegate <NSObject>
 
 @optional//可选方法，与之对应的是@required（必须实现）
 - (void)tabBar:(MRTTabBar *)tabBar didClickButton:(NSInteger)index;
-
+//点击➕号时的代理方法
+- (void)tabBarDidClickPlusButton:(MRTTabBar *)tabBar;
 @end
 
 @interface MRTTabBar : UIView

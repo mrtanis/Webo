@@ -22,4 +22,5 @@
      success:(nullable void (^)(NSURLSessionDataTask * _Nullable task, id _Nullable responseObject))success
      failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error))failure;
 
++(void) UPLOAD:(NSString*_Nullable)url parameters:(id _Nullable )parameters uploadData:(NSData*_Nullable)imageData success:(void(^_Nullable)(id _Nullable responseObject))success failure:(void(^_Nullable)(NSError* _Nullable error))failure;
 @end

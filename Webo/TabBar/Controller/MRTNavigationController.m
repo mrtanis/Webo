@@ -21,9 +21,12 @@
     UIBarButtonItem *item = [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[self]];
     
     //设置导航条按钮的文字颜色,同样通过富文本设置
-    NSMutableDictionary *titleAttrs = [NSMutableDictionary dictionary];
-    titleAttrs[NSForegroundColorAttributeName] = [UIColor orangeColor];
-    [item setTitleTextAttributes:titleAttrs forState:UIControlStateNormal];
+    NSMutableDictionary *titleNormal = [NSMutableDictionary dictionary];
+    titleNormal[NSForegroundColorAttributeName] = [UIColor darkTextColor];
+    [item setTitleTextAttributes:titleNormal forState:UIControlStateNormal];
+    //NSMutableDictionary *titleHighlighted = [NSMutableDictionary dictionary];
+    //titleHighlighted[NSForegroundColorAttributeName] = [UIColor orangeColor];
+    //[item setTitleTextAttributes:titleHighlighted forState:UIControlStateHighlighted];
 }
 
 - (void)viewDidLoad {

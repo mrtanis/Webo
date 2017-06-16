@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MRTStatusFrame.h"
 
-@interface MRTStatusToolBar : UIView
+@interface MRTStatusToolBar : UIImageView
 
 @property (nonatomic, strong) MRTStatusFrame *statusFrame;
 

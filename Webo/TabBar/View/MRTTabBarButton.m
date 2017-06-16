@@ -35,12 +35,12 @@
     
     if (self) {
         //设置字体颜色
-        [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [self setTitleColor:[UIColor orangeColor] forState:UIControlStateSelected];
+        [self setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
+        [self setTitleColor:[UIColor darkTextColor] forState:UIControlStateSelected];
         //设置文字居中
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         //设置字体
-        self.titleLabel.font = [UIFont systemFontOfSize:12];
+        self.titleLabel.font = [UIFont systemFontOfSize:10];
         //设置图片居中
         self.imageView.contentMode = UIViewContentModeCenter;
     }
@@ -61,13 +61,13 @@
     
     //设置标题
     CGFloat titleX = 0;
-    CGFloat titleY = imageHeight - 3;
+    CGFloat titleY = imageHeight - 5;
     CGFloat titleWidth = self.bounds.size.width;
     CGFloat titleHeight = self.bounds.size.height - titleY;
     self.titleLabel.frame = CGRectMake(titleX, titleY, titleWidth, titleHeight);
     
     //设置角标
-    self.badgeView.x = self.width - self.badgeView.width - 10;
+    self.badgeView.x = self.width - self.badgeView.width - 15;
     self.badgeView.y = 0;
 }
 

@@ -10,4 +10,6 @@
 
 @interface MRTPicture : NSObject
 
+@property (nonatomic, strong) NSURL *thumbnail_pic;
+
 @end

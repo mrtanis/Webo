@@ -11,7 +11,7 @@
 #import "MRTUser.h"
 #import "MRTPicture.h"
 
-@interface MRTStatus : NSObject
+@interface MRTStatus : NSObject <MJKeyValue>
 
 @property (nonatomic, copy) NSString *created_at;
 @property (nonatomic, copy) NSString *idstr;
@@ -23,5 +23,6 @@
 @property (nonatomic, assign) int comments_count;
 @property (nonatomic, assign) int attitudes_count;
 @property (nonatomic, strong) NSArray *pic_urls;
+
 
 @end

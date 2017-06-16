@@ -35,7 +35,7 @@
 @implementation MRTHomeViewController
 
 //懒加载statuses数组
-- (NSMutableArray *)statuses
+- (NSMutableArray *)statusFrames
 {
     if (!_statusFrames) {
         _statusFrames = [[NSMutableArray alloc] init];
@@ -174,7 +174,7 @@
     NSString *sinceId = nil;
     
     //载入since_id之后的新微博数据
-    if (self.statuses.count) {
+    if (self.statusFrames.count) {
         //将since_id设置为当前已保存的最新微博的idstr，idstr越大数据越新
         sinceId = [[self.statusFrames[0] status] idstr];
     }

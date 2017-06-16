@@ -10,6 +10,25 @@
 
 @implementation MBProgressHUD (MRT)
 
++ (void)show:(NSString *)text icon:(NSString *)icon view:(UIView *)view
+{
+    if (view == nil) view = [[UIApplication sharedApplication].windows lastObject];
+    
+    //快速显示一个提示信息
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    hud.label.text = text;
+    //设置图片
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"MBProgressHUD.bundle/%@", icon]]];
+    //设置模式
+    hud.mode = MBProgressHUDModeCustomView;
+    
+    //隐藏时从父控件中移除
+    hud.removeFromSuperViewOnHide = YES;
+    
+    //0.7秒后再消失
+    [hud hideAnimated:YES afterDelay:0.7];
+}
+
 + (MBProgressHUD *)showMessage:(NSString *)message
 {
     return [self showMessage:message toView:nil];
@@ -26,8 +45,27 @@
     //开启蒙板效果
     hud.backgroundView.style = MBProgressHUDBackgroundStyleBlur;
     
-    
     return hud;
+}
+
++ (void)showSuccess:(NSString *)success
+{
+    [self showSuccess:success toView:nil];
+}
+
++ (void)showError:(NSString *)error
+{
+    [self showError:error toView:nil];
+}
+
++ (void)showSuccess:(NSString *)success toView:(UIView *)view
+{
+    [self show:success icon:@"success.png" view:view];
+}
+
++ (void)showError:(NSString *)error toView:(UIView *)view
+{
+    [self show:error icon:@"error.png" view:view];
 }
 
 + (void)hideHUD

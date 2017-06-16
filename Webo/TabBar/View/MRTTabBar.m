@@ -69,6 +69,8 @@
         //根据按钮的图片和文字调整按钮的合适尺寸，应该在将按钮加入父视图之前调用此方法
         [button sizeToFit];
         
+        [button addTarget:self action:@selector(plusClick) forControlEvents:UIControlEventTouchUpInside];
+        
         _plusButton = button;
         
         [self addSubview:_plusButton];
@@ -77,13 +79,21 @@
     return  _plusButton;
 }
 
+#pragma mark 点击➕号时调用
+- (void)plusClick
+{
+    if ([_delegate respondsToSelector:@selector(tabBarDidClickPlusButton:)]) {
+        [_delegate tabBarDidClickPlusButton:self];
+    }
+}
+
 //覆盖layoutSubviews方法，设置各按钮位置
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     
     CGFloat barWidth = self.bounds.size.width;
-    CGFloat barHeight = self.bounds.size.height;
+    CGFloat barHeight = 45;
     
     CGFloat btnWidth = barWidth / (self.items.count + 1);
     CGFloat btnHeight = barHeight;

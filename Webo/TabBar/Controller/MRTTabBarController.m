@@ -15,14 +15,18 @@
 #import "MRTProfileViewController.h"
 #import "MRTNavigationController.h"
 #import "MRTUnreadTool.h"
+#import "MRTPlusButtonClickView.h"
+#import "MRTTextViewController.h"
 
-@interface MRTTabBarController () <MRTTabBarDelegate>//遵守MRTTabBar代理协议
+@interface MRTTabBarController () <MRTTabBarDelegate, MRTPlusButtonClickViewDelegate>//遵守代理协议
 @property (nonatomic, copy) NSMutableArray *items;
 
 @property (nonatomic, weak) MRTHomeViewController *homeVC;
 @property (nonatomic, weak) MRTMessageViewController *messageVC;
 @property (nonatomic, weak) MRTDiscoverViewController *discoverVC;
 @property (nonatomic, weak) MRTProfileViewController *profileVC;
+
+@property (nonatomic, weak) MRTPlusButtonClickView *plusBtnClickView;
 
 @end
 
@@ -58,8 +62,9 @@
     //自定义tabBar
     //MRTTabBar *tabBar = [[MRTTabBar alloc] initWithFrame:self.tabBar.frame];
     //要把自定义tabBar加到系统tabBar上，frame是相对于整个屏幕，而现在需要基于tabBar，所以使用bounds，两者的初始坐标是不一样的
+    //CGRect tabBarFrame = CGRectMake(0, MRTScreen_Height - 50, MRTScreen_Width, 50);
     MRTTabBar *tabBar = [[MRTTabBar alloc] initWithFrame:self.tabBar.bounds];
-    tabBar.backgroundColor = [UIColor whiteColor];
+    tabBar.backgroundColor = [UIColor clearColor];
     
     //设置代理
     tabBar.delegate = self;
@@ -113,6 +118,12 @@
 {
     [super viewWillLayoutSubviews];
     
+    //调整tabBar高度
+    CGRect tabBarFrame = self.tabBar.frame;
+    tabBarFrame.size.height = 45;
+    tabBarFrame.origin.y = MRTScreen_Height - tabBarFrame.size.height;
+    self.tabBar.frame = tabBarFrame;
+    
     for (UIView *tabBarButton in self.tabBar.subviews)
     {
         if ([tabBarButton isKindOfClass:NSClassFromString(@"UITabBarButton")]) {
@@ -121,6 +132,7 @@
     }
 }
 
+//tabBar按钮点击时调用
 - (void)tabBar:(MRTTabBar *)tabBar didClickButton:(NSInteger)index
 {
     //在首页的时候点击首页图标刷新
@@ -130,6 +142,30 @@
     
     //设置序号选中相应的tabBarItem
     self.selectedIndex = index;
+}
+
+//tabBar➕号点击时调用
+- (void)tabBarDidClickPlusButton:(MRTTabBar *)tabBar
+{
+    MRTPlusButtonClickView *plusBtnClickView = [[MRTPlusButtonClickView alloc] initWithFrame:self.view.frame];
+    plusBtnClickView.userInteractionEnabled = YES;
+    plusBtnClickView.delegate = self;
+    [self.view addSubview:plusBtnClickView];
+    
+    _plusBtnClickView = plusBtnClickView;
+}
+
+//点击加号弹出页面上的按钮时调用
+- (void)plusViewDidClickButton:(NSInteger)index
+{
+    NSLog(@"执行点击文字按钮代理方法");
+    if (index == 1) {
+        
+        MRTTextViewController *textVC = [[MRTTextViewController alloc] init];
+        MRTNavigationController *navVC = [[MRTNavigationController alloc] initWithRootViewController:textVC];
+        [self.plusBtnClickView removeFromSuperview];
+        [self presentViewController:navVC animated:YES completion:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

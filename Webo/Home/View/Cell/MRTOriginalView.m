@@ -9,6 +9,7 @@
 #import "MRTOriginalView.h"
 #import "UIImageView+WebCache.h"
 #import "MRTStatus.h"
+#import "MRTPictureView.h"
 
 @interface MRTOriginalView()
 
@@ -23,6 +24,8 @@
 @property (nonatomic, weak) UILabel *sourceLabel;
 
 @property (nonatomic, weak) UILabel *textLabel;
+
+@property (nonatomic, weak) MRTPictureView *pictureView;
 
 @end
 
@@ -47,6 +50,10 @@
 {
     //头像
     UIImageView *iconView = [[UIImageView alloc] init];
+    //将头像设置为圆形
+    iconView.layer.cornerRadius = 20;
+    //裁减掉圆形外的图片
+    iconView.clipsToBounds = YES;
     [self addSubview:iconView];
     _iconView = iconView;
     
@@ -80,6 +87,12 @@
     textLabel.numberOfLines = 0;
     [self addSubview:textLabel];
     _textLabel = textLabel;
+    
+    //配图
+    MRTPictureView *picView = [[MRTPictureView alloc] init];
+    [self addSubview:picView];
+    _pictureView = picView;
+    
 }
 
 - (void)setStatusFrame:(MRTStatusFrame *)statusFrame
@@ -99,7 +112,7 @@
 {
     //头像
     _iconView.frame = self.statusFrame.originalIconFrame;
-    
+
     //昵称
     _nameLabel.frame = self.statusFrame.originalNameFrame;
     
@@ -138,6 +151,9 @@
     //正文
     _textLabel.frame = self.statusFrame.originalTextFrame;
 
+    //配图
+    _pictureView.frame = self.statusFrame.originalPictureFrame;
+    _pictureView.onePicSize = self.statusFrame.originalOnePicSize;
 }
 
 - (void)setUpData
@@ -145,7 +161,7 @@
     MRTStatus *status = self.statusFrame.status;
     
     //头像
-    [_iconView sd_setImageWithURL:status.user.profile_image_url placeholderImage:[UIImage imageNamed:@"timeline_image_placeholder"]];
+    [_iconView sd_setImageWithURL:status.user.avatar_large placeholderImage:[UIImage imageNamed:@"timeline_image_placeholder"]];
     
     //昵称
     _nameLabel.text = status.user.name;
@@ -164,6 +180,7 @@
     //时间
     _timeLabel.text = status.created_at;
     _timeLabel.textColor = [UIColor grayColor];
+    
     //来源
     _sourceLabel.text = status.source;
     NSLog(@"source:%@", status.source);
@@ -171,6 +188,9 @@
     
     //正文
     _textLabel.text = status.text;
+    
+    //配图
+    _pictureView.pic_urls = status.pic_urls;
 }
 
 @end

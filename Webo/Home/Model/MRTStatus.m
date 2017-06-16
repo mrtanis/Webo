@@ -12,6 +12,12 @@
 
 @implementation MRTStatus
 
+//自动把数组中的字典转换成对应的模型
++(NSDictionary*)objectClassInArray
+{
+    return @{@"pic_urls":[MRTPicture class]};
+}
+
 //读取微博创建时间时进行计算，返回对应字符串
 
 - (NSString *)created_at

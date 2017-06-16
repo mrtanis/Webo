@@ -16,11 +16,12 @@
 
 //cell相关常用数据
 #define MRTScreen_Width [UIScreen mainScreen].bounds.size.width
+#define MRTScreen_Height [UIScreen mainScreen].bounds.size.height
 #define MRTStatusCellMargin 10
 #define MRTNameFont [UIFont systemFontOfSize:16]
 #define MRTTimeFont [UIFont systemFontOfSize:12]
 #define MRTSourceFont [UIFont systemFontOfSize:12]
 #define MRTTextFont [UIFont systemFontOfSize:16]
-
+#define MRTStatusToolBarFont [UIFont systemFontOfSize:13]
 
 #endif /* Webo_PrefixHeader_pch */

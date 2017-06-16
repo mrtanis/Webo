@@ -123,7 +123,6 @@ static NSString * const reuseIdentifier = @"Cell";
             break;
     }
     
-    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     NSString *imageName = [NSString stringWithFormat:@"new_feature_%ld", indexPath.row + 1];
     NSLog(@"%@", imageName);
     cell.image = [UIImage imageNamed:imageName];

@@ -10,6 +10,7 @@
 #import "MRTOriginalView.h"
 #import "MRTRetweetView.h"
 #import "MRTStatusToolBar.h"
+#import "MRTPictureView.h"
 
 
 
@@ -18,6 +19,7 @@
 @property (nonatomic, weak) MRTOriginalView *originalView;
 @property (nonatomic, weak) MRTRetweetView *retweetView;
 @property (nonatomic, weak) MRTStatusToolBar *statusToolBar;
+@property (nonatomic, weak) MRTPictureView *pictureView;
 @end
 
 @implementation MRTStatusCell
@@ -51,10 +53,16 @@
     [self addSubview:retweetView];
     _retweetView = retweetView;
     
+    //配图
+    MRTPictureView *picView = [[MRTPictureView alloc] init];
+    [self addSubview:picView];
+    _pictureView = picView;
+    
     //工具条
     MRTStatusToolBar *toolBar = [[MRTStatusToolBar alloc] init];
     [self addSubview:toolBar];
     _statusToolBar = toolBar;
+    
 }
 
 - (void)setStatusFrame:(MRTStatusFrame *)statusFrame
@@ -69,6 +77,7 @@
     //设置转发微博frame
     _retweetView.frame = statusFrame.retweetViewFrame;
     _retweetView.statusFrame = statusFrame;
+    
     
     //设置工具条frame
     _statusToolBar.frame = statusFrame.toolBarFrame;
