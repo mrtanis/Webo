@@ -68,6 +68,10 @@
     self.placeHolder.textColor = [UIColor grayColor];
     
     [self.placeHolder sizeToFit];
+    
+    if (self.text.length) {
+        self.placeHolder.hidden = YES;
+    }
 }
 
 //设置子控件位置
@@ -88,8 +92,49 @@
         self.rightItem.enabled = YES;
     } else {
         self.placeHolder.hidden = NO;
-        self.rightItem.enabled = NO;
+        if (!_repostFlag) self.rightItem.enabled = NO;
+        
     }
+    
+    
+    /*
+    //根据文字调整overview的位置，避免遮挡文字
+    NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
+    
+    textAttrs[NSFontAttributeName] = [UIFont systemFontOfSize:16];
+    
+    CGSize textSize = [self.text boundingRectWithSize:CGSizeMake(self.width, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:textAttrs context:nil].size;*/
+    CGSize textSize = self.contentSize;
+    CGRect rect = self.overview.frame;
+    //判断是发微博的图片视图还是转发的overview
+    CGFloat boundaryHeight = rect.size.height == 80 ? 130 : 100;
+    if (boundaryHeight < ceil(textSize.height) + 30)
+    {
+        rect.origin.y = ceil(textSize.height) + 30;
+        self.overview.frame = rect;
+        
+    } else {
+        rect.origin.y = boundaryHeight;
+        self.overview.frame = rect;
+    }
+    NSLog(@"self.y:%f,self.height:%f,offset.y:%f", self.y, self.height, self.contentOffset.y);
+    NSLog(@"overview.y:%f,overview.height:%f", self.overview.y, self.overview.height);
+    NSLog(@"contentsize.height:%f", self.contentSize.height);
+    /*
+    //如果overview移出了textView的frame，则增加textView的height
+    if (_overview.y + _overview.height > self.height) {
+        
+        CGRect rect = self.frame;
+        rect.size.height = _overview.y + _overview.height;
+        
+        self.frame = rect;
+    } else if (self.y + _overview.y + _overview.height < MRTScreen_Height - 44) {//如果overview没有超出textView的原始frame，则恢复textView的原始frame
+        CGFloat differFromOrigin = self.y + self.height - (MRTScreen_Height - 44);
+        CGRect rect = self.frame;
+        rect.size.height -= differFromOrigin;
+        self.frame = rect;
+    }
+    */
 }
 
 

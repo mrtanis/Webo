@@ -52,7 +52,10 @@ static MRTAccount *_account = nil;
         //现在日期在过期期限之前：NSOrderedAscending  未过期
         //现在日期在过期期限之后：NSOrderedDescending  过期
         //现在日期与过期期限相同：NSOrderedSame 相当于过期
-        if ([[NSDate date] compare:_account.expires_date] != NSOrderedAscending) return nil;
+        if ([[NSDate date] compare:_account.expires_date] != NSOrderedAscending) {
+
+            return nil;
+        }
     }
     
     return _account;

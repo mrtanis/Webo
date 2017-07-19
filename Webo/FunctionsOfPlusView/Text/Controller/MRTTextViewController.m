@@ -20,6 +20,7 @@
 
 @property (nonatomic, weak) MRTTextView *textView;
 @property (nonatomic) CGFloat viewMoveDistance;
+@property (nonatomic) BOOL viewDidMoved;
 @property (nonatomic, weak) MRTTextToolBar *toolBar;
 @property (nonatomic) CGFloat keyboardHeight;
 @property (nonatomic, weak) MRTTextAddPhotos *photosView;
@@ -48,7 +49,6 @@
     
     [self setUpToolBar];
     
-    [self setUpPhotos];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeTextViewFrame:) name:UIKeyboardWillShowNotification object:nil];//使用第三方键盘是此方法会调用三次
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resumeTextViewFrame:) name:UIKeyboardWillHideNotification object:nil];
@@ -112,7 +112,11 @@
 #pragma mark 添加textView
 - (void)setUpTextView
 {
-    MRTTextView *textView = [[MRTTextView alloc] initWithFrame:self.view.bounds];
+    CGRect rect = self.view.bounds;
+    rect.size.height -= 44;//减去工具栏高度
+    MRTTextView *textView = [[MRTTextView alloc] initWithFrame:rect];
+    
+    textView.repostFlag = NO;
     
     //将导航栏右侧发送按钮赋值给textView的rightItem属性
     textView.rightItem = self.navigationItem.rightBarButtonItem;
@@ -152,10 +156,18 @@
 #pragma mark 设置添加图片界面
 - (void)setUpPhotos
 {
-    MRTTextAddPhotos *photosView = [[MRTTextAddPhotos alloc] initWithFrame:CGRectMake(10, 70, MRTScreen_Width - 20, self.view.height - 70)];
+    CGFloat photoY;
+    if (_textView.contentSize.height > 100 + 30) {
+        photoY = _textView.contentSize.height + 30;
+    } else {
+        photoY = 100;
+    }
+    
+    MRTTextAddPhotos *photosView = [[MRTTextAddPhotos alloc] initWithFrame:CGRectMake(10, photoY, MRTScreen_Width - 20, MRTScreen_Width - 20)];
     
     photosView.backgroundColor = [UIColor clearColor];
     [self.textView addSubview:photosView];
+    self.textView.overview = photosView;
     _photosView = photosView;
 }
 
@@ -215,10 +227,11 @@
         //获取当前textView的frame
         CGRect textViewFrame = self.textView.frame;
         //如果光标被键盘遮挡，则上移textView
-        if (keyboardRectEnd.origin.y < point.y) {
-            self.viewMoveDistance = (point.y - keyboardRectEnd.origin.y) + 40;//行高为20，40为两行
+        if (keyboardRectEnd.origin.y - 44 < point.y) {
+            self.viewMoveDistance = (point.y - keyboardRectEnd.origin.y) + 40 + 44;//行高为20，40为两行，44为工具栏高度
             textViewFrame.origin.y = textViewFrame.origin.y - self.viewMoveDistance;
             self.textView.frame = textViewFrame;
+            _viewDidMoved = YES;
         }
     }];
 }
@@ -234,16 +247,43 @@
     }
     
     //如果textView被上移过则恢复
-    if (self.textView.y + self.textView.height != MRTScreen_Height) {
+    if (_textView.y != 0) {
         NSDictionary *userInfo = notification.userInfo;
         
         [UIView animateWithDuration:[userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue] animations:^{
             CGRect textViewFrame = self.textView.frame;
-            textViewFrame.origin.y = textViewFrame.origin.y + self.viewMoveDistance;
+            textViewFrame.origin.y = 0;
+            //textViewFrame.origin.y = textViewFrame.origin.y + self.viewMoveDistance;
             self.textView.frame = textViewFrame;
+            _viewDidMoved = NO;
         }];
     }
 }
+
+#pragma mark textView发生改变时执行该代理方法
+- (void)textViewDidChange:(UITextView *)textView
+{
+    
+    /*
+    //如果键盘已弹出且textView未被上移过
+    if (_toolBar.y + _toolBar.height != MRTScreen_Height && textView.y + textView.height == MRTScreen_Height) {
+        
+        //获取光标位置
+        CGPoint cursorPosition = [textView caretRectForPosition:textView.selectedTextRange.end].origin;
+        //转换为相对window的位置
+        CGPoint point = [textView convertPoint:cursorPosition toView:self.view];
+        //获取当前textView的frame
+        CGRect textViewFrame = textView.frame;
+        //如果光标被键盘遮挡，则上移textView
+        if (_toolBar.y < point.y) {
+            self.viewMoveDistance = (point.y - _toolBar.y) + 40;//行高为20，40为两行
+            textViewFrame.origin.y = textViewFrame.origin.y - self.viewMoveDistance;
+            textView.frame = textViewFrame;
+        }
+    }*/
+      
+}
+
 
 #pragma mark 发送微博
 - (void)sendWebo
@@ -287,6 +327,7 @@
         NSLog(@"发送成功");
         
     } failure:^(NSError *error) {
+        [MBProgressHUD showError:@"发送失败"];
         NSLog(@"error:%@", error);
     }];
 }
@@ -310,6 +351,10 @@
     NSLog(@"%@", info);
     
     UIImage *image = info[UIImagePickerControllerOriginalImage];
+    
+    //创建配图视图
+    [self setUpPhotos];
+    
     //传递图片
     self.photosView.image = image;
     //保存图片到数组

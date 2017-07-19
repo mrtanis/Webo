@@ -32,7 +32,7 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nullable error) {
         
         if (failure) failure(error);
-    }];
+    } checkCache:NO toHead:YES];
 }
 
 

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MRTPicture : NSObject
+@interface MRTPicture : NSObject<NSCoding>
 
 @property (nonatomic, strong) NSURL *thumbnail_pic;
 

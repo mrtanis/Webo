@@ -13,19 +13,25 @@
 #import "MRTPopMenu.h"
 #import "MRTMenuViewController.h"
 #import "MRTOneViewController.h"
-#import "AFNetworking.h"
+//#import "AFNetworking.h"
 #import "MRTAccountStore.h"
 #import "MRTAccount.h"
 #import "MRTStatus.h"
 #import "UIImageView+WebCache.h"
 #import "MJRefresh.h"
-#import "MRTHttpTool.h"
+//#import "MRTHttpTool.h"
 #import "MRTStatusTool.h"
 #import "MRTUserInfoTool.h"
 #import "MRTStatusCell.h"
 #import "MRTStatusFrame.h"
+#import "MRTCommentViewController.h"
+#import "MRTNavigationController.h"
+#import "MBProgressHUD+MRT.h"
+#import "MRTWriteCommentViewController.h"
+#import "MRTWriteRepostController.h"
+#import "MRTCacheManager.h"
 
-@interface MRTHomeViewController () <MRTCoverDelegate>
+@interface MRTHomeViewController () <MRTCoverDelegate, MRTStatusCellDelegate>
 
 @property (nonatomic, weak) MRTHomeTitle *titleButton;
 @property (nonatomic, strong) MRTMenuViewController *menu;
@@ -34,9 +40,12 @@
 
 @implementation MRTHomeViewController
 
-//懒加载statuses数组
+#pragma mark 懒加载statusFrame数组
 - (NSMutableArray *)statusFrames
 {
+    if (!_statusFrames) {
+        _statusFrames = [NSKeyedUnarchiver unarchiveObjectWithFile:[self timelineArchivePath]];
+    }
     if (!_statusFrames) {
         _statusFrames = [[NSMutableArray alloc] init];
     }
@@ -53,9 +62,12 @@
     return _menu;
 }
 
+#pragma mark 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //微博背景颜色
+    self.tableView.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1];
     
     //获取当前用户昵称
     [MRTUserInfoTool userInfoWithSuccess:^(MRTUser *user) {
@@ -79,17 +91,27 @@
     [self setUpNavigationBar];
     
     //添加下拉刷新控件
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewStatus)];
-    [self.tableView.mj_header beginRefreshing];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshWithOutCacheCheck)];
+    //[self loadNewStatusCheckCache:YES];
+    if (_statusFrames.count == 0) {
+        [self loadNewStatusCheckCache:NO];
+    }
     
     //添加上拉刷新旧微博控件
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreStatus)];
     
     //取消分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveTimeline) name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
-//设置导航栏
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark 设置导航栏
 - (void)setUpNavigationBar
 {
     
@@ -117,12 +139,13 @@
     self.navigationItem.titleView = titleButton;
 }
 
-//左按钮调用方法
+#pragma mark 左按钮调用方法
 - (void)friendSearch
 {
     NSLog(@"%s", __func__);
 }
-//右按钮调用方法
+
+#pragma mark 右按钮调用方法
 - (void)pop
 {
     //创建新的控制
@@ -134,7 +157,8 @@
     //push新的控制器
     [self.navigationController pushViewController:one animated:YES];
 }
-//标题调用方法
+
+#pragma mark 标题调用方法
 - (void)menuTitleClick:(UIButton *)button
 {
     //巧妙地在选中与被选中的状态中切换
@@ -166,10 +190,24 @@
     _titleButton.selected = NO;
 }
 
+#pragma mark 忽略缓存刷新方式
+
+- (void)refreshWithOutCacheCheck
+{
+    [self loadNewStatusCheckCache:NO];
+}
+
 #pragma mark 请求最新的微博
 
-- (void)loadNewStatus
+- (void)loadNewStatusCheckCache:(BOOL)checkCache
 {
+    NSUInteger count = self.statusFrames.count;
+    if (count >= 180) {
+        for (NSUInteger i = count; i > count - 20; i--) {
+            
+            [self.statusFrames removeObjectAtIndex:i - 1];
+        }
+    }
     //创建一个空sinceId
     NSString *sinceId = nil;
     
@@ -182,7 +220,9 @@
     //发送get请求
     [MRTStatusTool newStatusWithSinceId:sinceId success:^(NSArray *statuses) {
         //显示微博更新数
-        [self showNewStatusCount:(int)statuses.count];
+        if (!checkCache) {
+            [self showNewStatusCount:(int)statuses.count];
+        }
         
         //结束下拉刷新
         [self.tableView.mj_header endRefreshing];
@@ -209,53 +249,68 @@
         [self.tableView reloadData];
         
     } failure:^(NSError *error) {
+        //结束下拉刷新
+        [self.tableView.mj_header endRefreshing];
+        //显示失败提示
+        [MBProgressHUD showError:@"刷新失败"];
         
         NSLog(@"error:%@", error);
         
-    }];
+    } checkCache:checkCache];
 }
 
 #pragma mark 加载更多之前的微博数据
 - (void)loadMoreStatus
 {
-    //新建一个空的maxId
-    NSString *maxId = nil;
-    
-    if (self.statusFrames.count) {
-        //返回小于等于max_id的微博，所以要减一
-        long long max_id =[[[[self.statusFrames lastObject] status] idstr] longLongValue] - 1;
-        maxId = [NSString stringWithFormat:@"%lld", max_id];
-    }
-    
-    //发送get请求
-    [MRTStatusTool moreStatusWithMaxId:maxId success:^(NSArray *statuses) {
-        
+    NSUInteger count = self.statusFrames.count;
+    if (count > 180) {
         //结束上拉刷新
         [self.tableView.mj_footer endRefreshing];
+    } else {
+        //新建一个空的maxId
+        NSString *maxId = nil;
         
-        //创建oldStatusFrames数组
-        NSMutableArray *oldStatusFrames = [[NSMutableArray alloc] init];
-        
-        for (MRTStatus *status in statuses) {
-            //创建statusFrame
-            MRTStatusFrame *statusFrame = [[MRTStatusFrame alloc] init];
-            //给statusFrame的status属性赋值
-            statusFrame.status = status;
-            //将statusFrame加入到oldStatusFrame数组
-            [oldStatusFrames addObject:statusFrame];
+        if (self.statusFrames.count) {
+            //返回小于等于max_id的微博，所以要减一
+            long long max_id =[[[[self.statusFrames lastObject] status] idstr] longLongValue] - 1;
+            maxId = [NSString stringWithFormat:@"%lld", max_id];
         }
         
-        
-        //加入到statusFrame
-        [self.statusFrames addObjectsFromArray:oldStatusFrames];
-        
-        //刷新表格
-        [self.tableView reloadData];
-
-    } failure:^(NSError *error) {
-        
-        NSLog(@"error:%@", error);
-    }];
+        //发送get请求
+        [MRTStatusTool moreStatusWithMaxId:maxId success:^(NSArray *statuses) {
+            
+            //结束上拉刷新
+            [self.tableView.mj_footer endRefreshing];
+            
+            //创建oldStatusFrames数组
+            NSMutableArray *oldStatusFrames = [[NSMutableArray alloc] init];
+            
+            for (MRTStatus *status in statuses) {
+                //创建statusFrame
+                MRTStatusFrame *statusFrame = [[MRTStatusFrame alloc] init];
+                //给statusFrame的status属性赋值
+                statusFrame.status = status;
+                //将statusFrame加入到oldStatusFrame数组
+                [oldStatusFrames addObject:statusFrame];
+            }
+            
+            
+            //加入到statusFrame
+            [self.statusFrames addObjectsFromArray:oldStatusFrames];
+            
+            //刷新表格
+            [self.tableView reloadData];
+            
+        } failure:^(NSError *error) {
+            //结束上拉刷新
+            [self.tableView.mj_footer endRefreshing];
+            //显示失败提示
+            [MBProgressHUD showError:@"加载失败"];
+            
+            NSLog(@"error:%@", error);
+        }];
+    }
+    
 }
 
 #pragma mark 点击首页刷新
@@ -301,6 +356,27 @@
     }];
 }
 
+#pragma mark - 保存timeline数组到缓存(doc目录)
+- (void)saveTimeline
+{
+    NSString *path = [self timelineArchivePath];
+    //[self.statusFrames removeAllObjects];
+    [NSKeyedArchiver archiveRootObject:self.statusFrames toFile:path];
+}
+
+- (NSString *)timelineArchivePath
+{
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    //从documentDirectories数组获取第一个，也是唯一文档目录路径
+    NSString *documentDirectory = [documentDirectories firstObject];
+    
+    NSString *path = [documentDirectory stringByAppendingPathComponent:@"timeline.data"];
+    
+    return path;
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -323,6 +399,10 @@
     
     MRTStatusFrame *statusFrame = self.statusFrames[indexPath.row];
     cell.statusFrame = statusFrame;
+    cell.statusToolBar.hidden = NO;
+    
+    //设置控制器为statusToolBar的代理，以便相应工具栏点击
+    cell.delegate = self;
     //cell.textLabel.text = status.user.name;
     //[cell.imageView sd_setImageWithURL:status.user.profile_image_url placeholderImage:[UIImage imageNamed:@"timeline_image_placeholder"]];
     //cell.detailTextLabel.text = status.text;
@@ -338,6 +418,78 @@
     //返回cell高度
     return statusFrame.cellHeight;
 }
+
+#pragma mark UITableViewDelegate 方法
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
+    //不滚动到评论区
+    commentVC.scorllToComment = NO;
+    
+    
+    MRTStatusCell *statusCell = [self.tableView cellForRowAtIndexPath:indexPath];
+
+    commentVC.statusCell = statusCell;
+    
+    //隐藏系统自带tabBar
+    commentVC.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:commentVC animated:YES];
+}
+
+#pragma mark 执行cell代理方法,点击工具栏
+- (void)statusCell:(MRTStatusCell *)statusCell didClickButton:(NSInteger)index
+{
+    if (index == 0) {
+        MRTWriteRepostController *writeRepostVC = [[MRTWriteRepostController alloc] init];
+        
+        writeRepostVC.statusCell = statusCell;
+        
+        MRTNavigationController *navVC = [[MRTNavigationController alloc] initWithRootViewController:writeRepostVC];
+        
+        [self presentViewController:navVC animated:YES completion:nil];
+        
+    }
+    
+    if (index == 1) {
+        //如果有评论就进入查看
+        if (statusCell.statusFrame.status.comments_count) {
+            MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
+            commentVC.statusCell = statusCell;
+            
+            //滚动到评论区
+            commentVC.scorllToComment = YES;
+            
+            //隐藏系统自带tabBar
+            commentVC.hidesBottomBarWhenPushed = YES;
+            
+            [self.navigationController pushViewController:commentVC animated:YES];
+        } else {//没有评论就进入发评论界面
+            MRTWriteCommentViewController *writeCommentVC = [[MRTWriteCommentViewController alloc] init];
+            writeCommentVC.statusCell = statusCell;
+            
+            MRTNavigationController *navVC = [[MRTNavigationController alloc] initWithRootViewController:writeCommentVC];
+            
+            [self presentViewController:navVC animated:YES completion:nil];
+        }
+    }
+}
+
+#pragma mark 执行cell代理方法,点击textView
+- (void)textViewDidClickCell:(MRTStatusCell *)statusCell
+{
+    MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
+    commentVC.statusCell = statusCell;
+    
+    //滚动到评论区
+    commentVC.scorllToComment = NO;
+    
+    //隐藏系统自带tabBar
+    commentVC.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:commentVC animated:YES];
+}
+
 
 /*
 // Override to support conditional editing of the table view.

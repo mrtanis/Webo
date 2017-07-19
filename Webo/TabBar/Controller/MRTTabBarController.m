@@ -47,7 +47,7 @@
 }
  */
 
-//懒加载items
+#pragma mark 懒加载items
 - (NSMutableArray *)items
 {
     if (!_items) {
@@ -57,6 +57,7 @@
     return _items;
 }
 
+#pragma mark 设置tabBar
 - (void)setUpTabBar
 {
     //自定义tabBar
@@ -89,10 +90,10 @@
     [self setUpTabBar];
     
     //设置未读消息数
-    [self getUnreadNumber];
+    //[self getUnreadNumber];
     
     //设置每隔两秒请求未读数
-    [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(getUnreadNumber) userInfo:nil repeats:YES];
+    //[NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(getUnreadNumber) userInfo:nil repeats:YES];
     /*
     //使用自定义tabBar
     MRTTabBar *tabBar = [[MRTTabBar alloc] initWithFrame:self.tabBar.frame];
@@ -113,7 +114,7 @@
     }
 }*/
 
-//删除系统tabBarButton
+#pragma mark 删除系统tabBarButton
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
@@ -132,7 +133,7 @@
     }
 }
 
-//tabBar按钮点击时调用
+#pragma mark tabBar按钮点击时调用
 - (void)tabBar:(MRTTabBar *)tabBar didClickButton:(NSInteger)index
 {
     //在首页的时候点击首页图标刷新
@@ -144,7 +145,7 @@
     self.selectedIndex = index;
 }
 
-//tabBar➕号点击时调用
+#pragma mark tabBar➕号点击时调用
 - (void)tabBarDidClickPlusButton:(MRTTabBar *)tabBar
 {
     MRTPlusButtonClickView *plusBtnClickView = [[MRTPlusButtonClickView alloc] initWithFrame:self.view.frame];
@@ -155,7 +156,7 @@
     _plusBtnClickView = plusBtnClickView;
 }
 
-//点击加号弹出页面上的按钮时调用
+#pragma mark 点击加号弹出页面上的按钮时调用
 - (void)plusViewDidClickButton:(NSInteger)index
 {
     NSLog(@"执行点击文字按钮代理方法");
@@ -173,6 +174,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark 设置子控制器
 - (void)setUpAllChildVC
 {
     //添加首页

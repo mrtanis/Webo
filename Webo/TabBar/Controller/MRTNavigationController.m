@@ -9,7 +9,7 @@
 #import "MRTNavigationController.h"
 #import "UIBarButtonItem+MRTItem.h"
 
-@interface MRTNavigationController () <UINavigationControllerDelegate>
+@interface MRTNavigationController () <UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) id popDelegate;
 @end
 

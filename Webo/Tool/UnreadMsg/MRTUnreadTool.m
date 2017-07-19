@@ -32,7 +32,7 @@
         
         if (failure) failure(error);
         
-    }];
+    } checkCache:NO toHead:YES];
 }
 
 @end

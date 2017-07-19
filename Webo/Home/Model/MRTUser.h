@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MRTUser : NSObject
+@interface MRTUser : NSObject<NSCoding>
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) NSURL *profile_image_url;

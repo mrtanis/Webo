@@ -10,7 +10,7 @@
 #import "MRTStatus.h"
 
 
-@interface MRTStatusFrame : NSObject
+@interface MRTStatusFrame : NSObject<NSCoding>
 //微博数据
 @property (nonatomic, strong) MRTStatus *status;
 
@@ -58,6 +58,8 @@
 
 //cell的高度
 @property (nonatomic) CGFloat cellHeight;
+//不含工具栏的cell高度
+@property (nonatomic) CGFloat noBarCellHeight;
 
 
 //@property (nonatomic, copy) NSMutableAttributedString *textStr;

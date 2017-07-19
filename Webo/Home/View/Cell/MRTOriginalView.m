@@ -11,11 +11,9 @@
 #import "MRTStatus.h"
 #import "MRTPictureView.h"
 
-@interface MRTOriginalView()
+@interface MRTOriginalView() <UITextViewDelegate>
 
-@property (nonatomic, weak) UIImageView *iconView;
 
-@property (nonatomic, weak) UILabel *nameLabel;
 
 @property (nonatomic, weak) UIImageView *vipView;
 
@@ -23,7 +21,7 @@
 
 @property (nonatomic, weak) UILabel *sourceLabel;
 
-@property (nonatomic, weak) UILabel *textLabel;
+
 
 @property (nonatomic, weak) MRTPictureView *pictureView;
 
@@ -40,7 +38,8 @@
         //设置子控件
         [self setUpAllChildView];
         self.userInteractionEnabled = YES;
-        self.image = [UIImage imageWithStretchableName:@"timeline_card_top_background"];
+        //self.image = [UIImage imageWithStretchableName:@"timeline_card_top_background"];
+        self.backgroundColor = [UIColor whiteColor];
     }
     
     return self;
@@ -81,12 +80,28 @@
     _sourceLabel = sourceLabel;
     
     //正文
-    UILabel *textLabel = [[UILabel alloc] init];
+    /*UILabel *textLabel = [[UILabel alloc] init];
     textLabel.font = MRTTextFont;
     textLabel.textColor = [UIColor darkTextColor];
     textLabel.numberOfLines = 0;
     [self addSubview:textLabel];
-    _textLabel = textLabel;
+    _textLabel = textLabel;*/
+    UITextView *textView = [[UITextView alloc] init];
+    textView.font = MRTTextFont;
+    textView.textColor = [UIColor darkTextColor];
+    textView.editable = NO;
+    textView.scrollEnabled = NO;
+    textView.userInteractionEnabled = YES;
+    
+    //textView.linkTextAttributes = @{NSForegroundColorAttributeName:[UIColor colorWithRed:0 green:0.5 blue:0.7 alpha:1]};
+    textView.dataDetectorTypes = UIDataDetectorTypeLink;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCell:)];
+    [textView addGestureRecognizer:tap];
+    
+    textView.delegate = self;
+    [self addSubview:textView];
+    _textView = textView;
     
     //配图
     MRTPictureView *picView = [[MRTPictureView alloc] init];
@@ -149,7 +164,8 @@
     //_sourceLabel.frame = self.statusFrame.originalSourceFrame;
     
     //正文
-    _textLabel.frame = self.statusFrame.originalTextFrame;
+    //_textLabel.frame = self.statusFrame.originalTextFrame;
+    _textView.frame = self.statusFrame.originalTextFrame;
 
     //配图
     _pictureView.frame = self.statusFrame.originalPictureFrame;
@@ -187,10 +203,36 @@
     _sourceLabel.textColor = [UIColor grayColor];
     
     //正文
-    _textLabel.text = status.text;
+    //_textLabel.attributedText = status.attrText;
+    _textView.attributedText = status.attrText;
     
     //配图
     _pictureView.pic_urls = status.pic_urls;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction
+{
+    if ([[URL scheme] rangeOfString:@"at"].location != NSNotFound) {
+        NSLog(@"点击昵称");
+        return NO;
+    }
+    if ([[URL scheme] rangeOfString:@"trend"].location != NSNotFound) {
+        NSLog(@"点击话题");
+        return NO;
+    }
+    if ([[URL scheme] rangeOfString:@"short"].location != NSNotFound) {
+        NSLog(@"点击短连接");
+        return NO;
+    }
+
+    return YES;
+}
+
+- (void)tapCell:(UITapGestureRecognizer *)tap
+{
+    if ([_delegate respondsToSelector:@selector(originalTextViewDidTapCell)]) {
+        [_delegate originalTextViewDidTapCell];
+    }
 }
 
 @end

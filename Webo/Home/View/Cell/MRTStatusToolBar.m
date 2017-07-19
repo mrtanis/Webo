@@ -10,9 +10,7 @@
 
 @interface MRTStatusToolBar()
 
-@property (nonatomic, weak) UIButton *retweetBtn;
-@property (nonatomic, weak) UIButton *commentBtn;
-@property (nonatomic, weak) UIButton *likeBtn;
+
 
 @property (nonatomic, copy) NSMutableArray *buttons;
 @property (nonatomic, copy) NSMutableArray *divideViews;
@@ -63,6 +61,7 @@
     //评论按钮
     UIButton *commentBtn = [self addButtonWithTitle:@"评论" image:[UIImage imageNamed:@"timeline_icon_comment"]];
     
+    
     _commentBtn = commentBtn;
     
     //点赞按钮
@@ -82,7 +81,7 @@
 
 }
 
-//根据图片和标题生成工具栏的按钮
+#pragma mark 根据图片和标题生成工具栏的按钮
 - (UIButton *)addButtonWithTitle:(NSString* )title image:(UIImage *)image
 {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -100,6 +99,7 @@
     return button;
 }
 
+#pragma mark 子控件布局
 - (void)layoutSubviews
 {
     [super layoutSubviews];
@@ -123,13 +123,14 @@
     }
 }
 
+#pragma mark 为statusFrame赋值时调用
 - (void)setStatusFrame:(MRTStatusFrame *)statusFrame
 {
     _statusFrame = statusFrame;
     
-    _retweetBtn.tag = 1;
-    _commentBtn.tag = 2;
-    _likeBtn.tag = 3;
+    _retweetBtn.tag = 0;
+    _commentBtn.tag = 1;
+    _likeBtn.tag = 2;
     
     [self setButton:_retweetBtn withNumber:statusFrame.status.reposts_count];
     [self setButton:_commentBtn withNumber:statusFrame.status.comments_count];
@@ -137,7 +138,7 @@
     
 }
 
-//设置按钮标题
+#pragma mark 设置按钮标题
 - (void)setButton:(UIButton *)button withNumber:(int)count
 {
     
@@ -151,13 +152,13 @@
     } else if (count == 0) {//数字为零时显示相应文字标题
         
         switch (button.tag) {
-            case 1:
+            case 0:
                 title = @"转发";
                 break;
-            case 2:
+            case 1:
                 title = @"评论";
                 break;
-            case 3:
+            case 2:
                 title = @"赞";
                 break;
                 
@@ -171,5 +172,7 @@
     
     [button setTitle:title forState:UIControlStateNormal];
 }
+
+
 
 @end

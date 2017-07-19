@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "MRTLogInViewController.h"
 #import "MRTTabBarController.h"
 #import "MRTNewFeatureController.h"
 #import "MRTOAuthViewController.h"
@@ -53,7 +52,7 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     //开启后台处理多媒体事件
     //[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    
+    /*
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setActive:YES error:nil];
     //后台播放
@@ -74,16 +73,18 @@
         [player play];
         
         _player = player;
-    }
+    }*/
 }
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     //开启一个后台任务，优先级较低，假如系统要关闭应用，首先考虑这个任务
+    /*
     UIBackgroundTaskIdentifier ID = [application beginBackgroundTaskWithExpirationHandler:^{
         //当后台任务结束时调用
         [application endBackgroundTask:ID];
     }];
+     */
 }
 
 

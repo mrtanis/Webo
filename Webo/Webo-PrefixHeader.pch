@@ -19,9 +19,11 @@
 #define MRTScreen_Height [UIScreen mainScreen].bounds.size.height
 #define MRTStatusCellMargin 10
 #define MRTNameFont [UIFont systemFontOfSize:16]
+#define MRTCommentNameFont [UIFont systemFontOfSize:14]
 #define MRTTimeFont [UIFont systemFontOfSize:12]
 #define MRTSourceFont [UIFont systemFontOfSize:12]
 #define MRTTextFont [UIFont systemFontOfSize:16]
+#define MRTCommentTextFont [UIFont systemFontOfSize:15]
 #define MRTStatusToolBarFont [UIFont systemFontOfSize:13]
 
 #endif /* Webo_PrefixHeader_pch */

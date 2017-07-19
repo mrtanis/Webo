@@ -8,12 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+
+
 @interface MRTTextView : UITextView
+
 
 @property (nonatomic, copy) NSString *placeHolderStr;
 
 @property (nonatomic) CGFloat keyboardHeight;
 
 @property (nonatomic, strong) UIBarButtonItem *rightItem;
+
+@property (nonatomic, weak) UIView *overview;
+
+
+//判断是否为发微博或者评论界面，如果是转发界面则发送按钮一直可用
+@property (nonatomic) BOOL repostFlag;
 
 @end

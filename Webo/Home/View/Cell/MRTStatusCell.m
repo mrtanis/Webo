@@ -8,22 +8,17 @@
 
 #import "MRTStatusCell.h"
 #import "MRTOriginalView.h"
-#import "MRTRetweetView.h"
-#import "MRTStatusToolBar.h"
-#import "MRTPictureView.h"
 
 
 
-@interface MRTStatusCell ()
+@interface MRTStatusCell () <MRTOriginalViewDelegate,MRTRetweetViewDelegate>
 
-@property (nonatomic, weak) MRTOriginalView *originalView;
-@property (nonatomic, weak) MRTRetweetView *retweetView;
-@property (nonatomic, weak) MRTStatusToolBar *statusToolBar;
-@property (nonatomic, weak) MRTPictureView *pictureView;
+
 @end
 
 @implementation MRTStatusCell
 
+#pragma mark 初始化
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     
@@ -34,22 +29,25 @@
         //添加子控件
         [self setUpAllChildView];
         //清空cell背景颜色
-        self.backgroundColor = [UIColor darkGrayColor];
+        self.backgroundColor = [UIColor clearColor];
+        
     }
     
     return self;
 }
 
-//添加子控件
+#pragma mark 添加子控件
 - (void)setUpAllChildView
 {
     //原创微博
     MRTOriginalView *originalView = [[MRTOriginalView alloc] init];
+    originalView.delegate = self;
     [self addSubview:originalView];
     _originalView = originalView;
     
     //转发微博
     MRTRetweetView *retweetView = [[MRTRetweetView alloc] init];
+    retweetView.delegate = self;
     [self addSubview:retweetView];
     _retweetView = retweetView;
     
@@ -60,11 +58,20 @@
     
     //工具条
     MRTStatusToolBar *toolBar = [[MRTStatusToolBar alloc] init];
+    
+    _retweetBtn = toolBar.retweetBtn;
+    [_retweetBtn addTarget:self action:@selector(didClickButton:) forControlEvents:UIControlEventTouchUpInside];
+    _commentBtn = toolBar.commentBtn;
+    [_commentBtn addTarget:self action:@selector(didClickButton:) forControlEvents:UIControlEventTouchUpInside];
+    _likeBtn = toolBar.likeBtn;
+    [_likeBtn addTarget:self action:@selector(didClickButton:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:toolBar];
+    
     _statusToolBar = toolBar;
     
 }
 
+#pragma mark 设置布局
 - (void)setStatusFrame:(MRTStatusFrame *)statusFrame
 {
     
@@ -84,7 +91,29 @@
     _statusToolBar.statusFrame = statusFrame;
 }
 
+#pragma mark 点击工具栏按钮执行代理方法
+- (void)didClickButton:(UIButton *)button
+{
+    if ([_delegate respondsToSelector:@selector(statusCell:didClickButton:)]) {
+        [_delegate statusCell:self didClickButton:button.tag];
+    }
+}
 
+#pragma mark 点击原创微博文字执行代理方法
+- (void)originalTextViewDidTapCell
+{
+    if ([_delegate respondsToSelector:@selector(textViewDidClickCell:)]) {
+        [_delegate textViewDidClickCell:self];
+    }
+}
+
+#pragma mark 点击转发微博微博文字执行代理方法
+- (void)retweetTextViewDidTapCell
+{
+    if ([_delegate respondsToSelector:@selector(textViewDidClickCell:)]) {
+        [_delegate textViewDidClickCell:self];
+    }
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

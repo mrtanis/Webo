@@ -16,7 +16,7 @@
 
 @implementation MRTStatusTool
 
-+ (void)newStatusWithSinceId:(NSString *)sinceId success:(void(^)(NSArray *statuses))success failure:(void(^)(NSError *error))failure
++ (void)newStatusWithSinceId:(NSString *)sinceId success:(void(^)(NSArray *statuses))success failure:(void(^)(NSError *error))failure checkCache:(BOOL)checkCache
 {
     //创建参数模型
     MRTStatusParameter *parameter = [[MRTStatusParameter alloc] init];
@@ -28,21 +28,28 @@
     if (sinceId) parameter.since_id = sinceId;
     
     //发送GET请求
-    [MRTHttpTool GET:@"https://api.weibo.com/2/statuses/home_timeline.json" parameters:parameter.mj_keyValues progress:nil success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
+    [MRTHttpTool GET:@"https://api.weibo.com/2/statuses/friends_timeline.json" parameters:parameter.mj_keyValues progress:nil success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         
-        NSLog(@"%@", responseObject);
+        //NSLog(@"%@", responseObject);
+        /*if ([responseObject isKindOfClass:[NSMutableData class]]) {
+            id jsonObj = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            MRTStatusResult *result = [MRTStatusResult mj_objectWithKeyValues:jsonObj];
+            if (success) success(result.statuses);
+        } else {*/
+            //新建返回数据模型
+            MRTStatusResult *result = [MRTStatusResult mj_objectWithKeyValues:responseObject];
+            
+            //将result.statuses作为实参传递给success block
+            if (success) success(result.statuses);
+        //}
         
-        //新建返回数据模型
-        MRTStatusResult *result = [MRTStatusResult mj_objectWithKeyValues:responseObject];
         
-        //将result.statuses作为实参传递给success block
-        if (success) success(result.statuses);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError *_Nullable error) {
         
         //将error作为实参传递给failure block
         if (failure) failure(error);
-    }];
+    } checkCache:checkCache toHead:YES];
 }
 
 + (void)moreStatusWithMaxId:(NSString *)maxId success:(void(^)(NSArray *statuses))success failure:(void(^)(NSError *error))failure
@@ -62,7 +69,7 @@
         //新建返回数据模型
         MRTStatusResult *result = [MRTStatusResult mj_objectWithKeyValues:responseObject];
         
-        NSLog(@"%@", responseObject);
+        //NSLog(@"%@", responseObject);
         
         //将result.statuses作为实参传递给success block
         if (success) success(result.statuses);
@@ -71,7 +78,7 @@
         
         //将error传递给failure block
         if (failure) failure(error);
-    }];
+    } checkCache:NO toHead:NO];
 
 }
 

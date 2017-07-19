@@ -11,6 +11,10 @@
 
 @implementation MRTStatusFrame
 
+//利用MJExtension快捷编码解码，默认编码解码全部属性，如需针对部分可调用
+//[Person setupIgnoredCodingPropertyNames:^NSArray *{return @[@"属性名"];}];
+//MJCodingImplementation
+
 //重写setStatus，计算控件Frame
 - (void)setStatus:(MRTStatus *)status
 {
@@ -37,7 +41,8 @@
     _toolBarFrame = CGRectMake(toolBar_X, toolBar_Y, tooBar_Width, tooBar_Height);
     
     //计算cell高度
-    _cellHeight = CGRectGetMaxY(_toolBarFrame);
+    _cellHeight = CGRectGetMaxY(_toolBarFrame) + 5;
+    _noBarCellHeight = _cellHeight - 35;
 }
 
 #pragma mark 计算原创微博frame
@@ -78,6 +83,11 @@
     NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
     //字体
     textAttrs[NSFontAttributeName] = MRTTextFont;
+    
+    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, text_Width, text_Width)];
+    textView.font = MRTTextFont;
+    textView.attributedText = self.status.attrText;
+    CGSize contentSize = textView.contentSize;
     //段落格式
     //NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
     //行间距
@@ -88,9 +98,11 @@
     
     //_textStr = attText;
     
-    CGRect text_Rect = [self.status.text boundingRectWithSize:CGSizeMake(text_Width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:textAttrs context:nil];
+    //CGRect text_Rect = [self.status.text boundingRectWithSize:CGSizeMake(text_Width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:textAttrs context:nil];
+    //CGRect text_Rect = [self.status.attrText boundingRectWithSize:CGSizeMake(text_Width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
     
-    _originalTextFrame = CGRectMake(text_X, text_Y, ceil(text_Rect.size.width), ceil(text_Rect.size.height));
+    //_originalTextFrame = CGRectMake(text_X, text_Y, ceil(text_Rect.size.width), ceil(text_Rect.size.height));
+    _originalTextFrame = CGRectMake(text_X, text_Y, contentSize.width, contentSize.height);
     
     CGFloat original_Height = CGRectGetMaxY(_originalTextFrame) + MRTStatusCellMargin;
     //配图
@@ -137,15 +149,24 @@
     NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
     //字体
     textAttrs[NSFontAttributeName] = MRTTextFont;
+    
+    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, text_Width, text_Width)];
+    textView.font = MRTTextFont;
+    textView.attributedText = self.status.retweeted_status.attrText;
+    CGSize contentSize = textView.contentSize;
+
     //段落格式
     //NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
     //行间距
     //paraStyle.lineSpacing = 10;
     //textAttrs[NSParagraphStyleAttributeName] = paraStyle;
     
-    CGRect text_Rect = [self.status.retweeted_status.text boundingRectWithSize:CGSizeMake(text_Width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:textAttrs context:nil];
+    //CGRect text_Rect = [self.status.retweeted_status.text boundingRectWithSize:CGSizeMake(text_Width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:textAttrs context:nil];
+    //CGRect text_Rect = [self.status.retweeted_status.attrText boundingRectWithSize:CGSizeMake(text_Width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
     
-    _retweetTextFrame = CGRectMake(text_X, text_Y, ceil(text_Rect.size.width), ceil(text_Rect.size.height));
+    //_retweetTextFrame = CGRectMake(text_X, text_Y, ceil(text_Rect.size.width), ceil(text_Rect.size.height));
+    
+    _retweetTextFrame = CGRectMake(text_X, text_Y, contentSize.width, contentSize.height);
     
     CGFloat retweet_Height = CGRectGetMaxY(_retweetTextFrame) + MRTStatusCellMargin;
     //配图
@@ -206,7 +227,60 @@
         return CGSizeMake(width, height);
     }
 }
+
+
+#pragma mark encode
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:_status forKey:@"status"];
+    [aCoder encodeCGRect:_originalViewFrame forKey:@"originalViewFrame"];
+    [aCoder encodeCGRect:_originalIconFrame forKey:@"originalIconFrame"];
+    [aCoder encodeCGRect:_originalNameFrame forKey:@"originalNameFrame"];
+    [aCoder encodeCGRect:_originalVipFrame forKey:@"originalVipFrame"];
+    [aCoder encodeCGRect:_originalTimeFrame forKey:@"originalTimeFrame"];
+    [aCoder encodeCGRect:_originalSourceFrame forKey:@"originalSourceFrame"];
+    [aCoder encodeCGRect:_originalTextFrame forKey:@"originalTextFrame"];
+    [aCoder encodeCGRect:_originalPictureFrame forKey:@"originalPictureFrame"];
+    [aCoder encodeCGSize:_originalOnePicSize forKey:@"originalOnePicSize"];
+    [aCoder encodeCGRect:_retweetViewFrame forKey:@"retweetViewFrame"];
+    [aCoder encodeCGRect:_retweetIconFrame forKey:@"retweetIconFrame"];
+    [aCoder encodeCGRect:_retweetNameFrame forKey:@"retweetNameFrame"];
+    [aCoder encodeCGRect:_retweetTextFrame forKey:@"retweetTextFrame"];
+    [aCoder encodeCGRect:_retweetPictureFrame forKey:@"retweetPictureFrame"];
+    [aCoder encodeCGSize:_retweetOnePicSize forKey:@"retweetOnePicSize"];
+    [aCoder encodeCGRect:_toolBarFrame forKey:@"toolBarFrame"];
+    [aCoder encodeFloat:_cellHeight forKey:@"cellHeight"];
+    [aCoder encodeFloat:_noBarCellHeight forKey:@"noBarCellHeight"];
+}
+#pragma mark decode
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
     
+    if (self) {
+        _status = [aDecoder decodeObjectForKey:@"status"];
+        _originalViewFrame = [aDecoder decodeCGRectForKey:@"originalViewFrame"];
+        _originalIconFrame = [aDecoder decodeCGRectForKey:@"originalIconFrame"];
+        _originalNameFrame = [aDecoder decodeCGRectForKey:@"originalNameFrame"];
+        _originalVipFrame = [aDecoder decodeCGRectForKey:@"originalVipFrame"];
+        _originalTimeFrame = [aDecoder decodeCGRectForKey:@"originalTimeFrame"];
+        _originalSourceFrame = [aDecoder decodeCGRectForKey:@"originalSourceFrame"];
+        _originalTextFrame = [aDecoder decodeCGRectForKey:@"originalTextFrame"];
+        _originalPictureFrame = [aDecoder decodeCGRectForKey:@"originalPictureFrame"];
+        _originalOnePicSize = [aDecoder decodeCGSizeForKey:@"originalOnePicSize"];
+        _retweetViewFrame = [aDecoder decodeCGRectForKey:@"retweetViewFrame"];
+        _retweetIconFrame = [aDecoder decodeCGRectForKey:@"retweetIconFrame"];
+        _retweetNameFrame = [aDecoder decodeCGRectForKey:@"retweetNameFrame"];
+        _retweetTextFrame = [aDecoder decodeCGRectForKey:@"retweetTextFrame"];
+        _retweetPictureFrame = [aDecoder decodeCGRectForKey:@"retweetPictureFrame"];
+        _retweetOnePicSize = [aDecoder decodeCGSizeForKey:@"retweetOnePicSize"];
+        _toolBarFrame = [aDecoder decodeCGRectForKey:@"toolBarFrame"];
+        _cellHeight = [aDecoder decodeFloatForKey:@"cellHeight"];
+        _noBarCellHeight = [aDecoder decodeFloatForKey:@"noBarCellHeight"];
+    }
+    
+    return self;
+}
 
 
 @end

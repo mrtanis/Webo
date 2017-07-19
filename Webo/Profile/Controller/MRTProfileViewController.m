@@ -7,6 +7,7 @@
 //
 
 #import "MRTProfileViewController.h"
+#import "MRTOAuthViewController.h"
 
 @interface MRTProfileViewController ()
 
@@ -25,6 +26,9 @@
 - (void)setting
 {
     NSLog(@"%s", __func__);
+    //进入授权界面
+    MRTOAuthViewController *oauthVC = [[MRTOAuthViewController alloc] init];
+    [self presentViewController:oauthVC animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
