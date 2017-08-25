@@ -7,12 +7,13 @@
 //
 
 #import "MRTMessageViewController.h"
+#import "MRTMessageSwitchView.h"
 
-@interface MRTMessageViewController ()
+@interface MRTMessageViewController () <MRTMessageSwitchViewDelegate>
 
 @end
 
-@implementation MRTMessageViewController
+@implementation MRTMessageViewController 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -21,6 +22,13 @@
     
     self.navigationItem.rightBarButtonItem = chat;
     
+    //重要！！！否则自己添加的tableView上面会留出导航栏高度的空白
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    MRTMessageSwitchView *switchView = [[MRTMessageSwitchView alloc] initWithFrame:CGRectMake(0, 64, MRTScreen_Width, self.view.height - 64)];
+    switchView.delegate = self;
+    
+    [self.view addSubview:switchView];
 }
 
 //点击发起聊天调用
@@ -34,17 +42,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    return 0;
+- (void)messageSwitchViewDidSendVC:(UIViewController *)VC present:(BOOL)present
+{
+    if (present) {
+        [self presentViewController:VC animated:YES completion:nil];
+    } else {
+        [self.navigationController pushViewController:VC animated:YES];
+    }
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    return 0;
-}
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -100,4 +107,7 @@
 }
 */
 
+
+
 @end
+    

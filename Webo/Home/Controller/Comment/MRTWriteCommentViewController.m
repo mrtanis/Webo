@@ -55,7 +55,12 @@
 #pragma mark 设置导航条
 - (void)setUpNavigationBar
 {
-    self.title = @"发评论";
+    if (_replyToComment) {
+        self.title = @"回复评论";
+    } else {
+        self.title = @"发评论";
+    }
+    
     NSMutableDictionary *titleAttrs = [NSMutableDictionary dictionary];
     titleAttrs[NSForegroundColorAttributeName] = [UIColor darkTextColor];
     self.navigationController.navigationBar.titleTextAttributes = titleAttrs;
@@ -254,18 +259,32 @@
 #pragma mark 发送评论
 - (void)sendComment
 {
-    //发送文字
-    [MRTCommentTool sendCommentWithText:self.textView.text ID:self.statusCell.statusFrame.status.idstr success:^{
-        //提示成功
-        [MBProgressHUD showSuccess:@"发送成功"];
-        
-        //回到首页
-        [self dismissViewControllerAnimated:YES completion:nil];
-        NSLog(@"发送成功");
-    } failure:^(NSError *error) {
-        [MBProgressHUD showError:@"发送失败"];
-        NSLog(@"error:%@", error);
-    }];
+    if (_replyToComment) {
+        [MRTCommentTool replyCommentWithText:self.textView.text ID:self.commentFrame.comment.status.idstr CID:self.commentFrame.comment.idstr success:^{
+            //提示成功
+            [MBProgressHUD showSuccess:@"发送成功"];
+            
+            //回到首页
+            [self dismissViewControllerAnimated:YES completion:nil];
+            NSLog(@"发送成功");
+        } failure:^(NSError *error) {
+            [MBProgressHUD showError:@"发送失败"];
+            NSLog(@"error:%@", error);
+        }];
+    } else {
+        //发送文字
+        [MRTCommentTool sendCommentWithText:self.textView.text ID:self.statusFrame.status.idstr success:^{
+            //提示成功
+            [MBProgressHUD showSuccess:@"发送成功"];
+            
+            //回到首页
+            [self dismissViewControllerAnimated:YES completion:nil];
+            NSLog(@"发送成功");
+        } failure:^(NSError *error) {
+            [MBProgressHUD showError:@"发送失败"];
+            NSLog(@"error:%@", error);
+        }];
+    }
 }
 
 #pragma mark 当textView开始拖动时执行该代理方法

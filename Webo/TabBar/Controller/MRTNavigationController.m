@@ -73,6 +73,8 @@
     }
 }
 
+
+
 //当导航控制器即将显示的时候调用
 /*- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {

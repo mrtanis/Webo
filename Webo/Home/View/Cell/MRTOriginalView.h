@@ -13,6 +13,7 @@
 
 @optional
 - (void)originalTextViewDidTapCell;
+- (void)playVideoWithUrl:(NSURL *)url allowRotate:(BOOL)allowRotate;
 
 @end
 

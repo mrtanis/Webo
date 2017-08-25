@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "MRTStatusCell.h"
+#import "MRTCommentFrame.h"
 
 @interface MRTWriteRepostController : UIViewController
 
-@property (nonatomic, weak) MRTStatusCell *statusCell;
+@property (nonatomic, strong) MRTStatusFrame *statusFrame;
+@property (nonatomic, strong) MRTCommentFrame *commentFrame;
 
 @end

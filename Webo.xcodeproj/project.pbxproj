@@ -51,6 +51,10 @@
 		2639FE0B1EF53AF10053C4FC /* MRTMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2639FE0A1EF53AF10053C4FC /* MRTMainView.m */; };
 		2639FE0E1EF5A8700053C4FC /* MRTCommentToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 2639FE0D1EF5A8700053C4FC /* MRTCommentToolBar.m */; };
 		2639FE111EF5BD920053C4FC /* MRTWriteCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2639FE101EF5BD920053C4FC /* MRTWriteCommentViewController.m */; };
+		263E4A731F3B5EDD008801F3 /* MRTMessageCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 263E4A721F3B5EDD008801F3 /* MRTMessageCommentCell.m */; };
+		263E4A761F3B5F3E008801F3 /* MRTMessageCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 263E4A751F3B5F3E008801F3 /* MRTMessageCommentView.m */; };
+		263E4A791F3B5F67008801F3 /* MRTMessageReplyCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 263E4A781F3B5F67008801F3 /* MRTMessageReplyCommentView.m */; };
+		263EBEB81F27A3E00083B0FF /* MRTMessageSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 263EBEB71F27A3E00083B0FF /* MRTMessageSwitchView.m */; };
 		263EE94F1ED1F24F00345397 /* MRTStatusParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 263EE94A1ED1F24F00345397 /* MRTStatusParameter.m */; };
 		263EE9501ED1F24F00345397 /* MRTStatusResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 263EE94C1ED1F24F00345397 /* MRTStatusResult.m */; };
 		263EE9511ED1F24F00345397 /* MRTStatusTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 263EE94E1ED1F24F00345397 /* MRTStatusTool.m */; };
@@ -63,6 +67,12 @@
 		263EE96F1ED2068A00345397 /* MRTUnreadTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 263EE96E1ED2068A00345397 /* MRTUnreadTool.m */; };
 		263EE9721ED22AD100345397 /* MRTUnreadParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 263EE9711ED22AD100345397 /* MRTUnreadParameter.m */; };
 		264953421ED63276008E4236 /* MRTStatusFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 264953411ED63276008E4236 /* MRTStatusFrame.m */; };
+		264C00B81F2218D500702E83 /* MRTMessageSwitchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 264C00B71F2218D500702E83 /* MRTMessageSwitchBar.m */; };
+		265ECC181F28B8A50077EADB /* MRTMessageStatusFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 265ECC171F28B8A50077EADB /* MRTMessageStatusFrame.m */; };
+		265ECC1B1F28B8D30077EADB /* MRTMessageCommentFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 265ECC1A1F28B8D30077EADB /* MRTMessageCommentFrame.m */; };
+		265ECC201F28E9250077EADB /* MRTMessageStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 265ECC1F1F28E9250077EADB /* MRTMessageStatusCell.m */; };
+		265ECC231F28EA9F0077EADB /* MRTMessageRetweetStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 265ECC221F28EA9F0077EADB /* MRTMessageRetweetStatusView.m */; };
+		265ECC261F28FA510077EADB /* MRTMessageOriginalStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 265ECC251F28FA510077EADB /* MRTMessageOriginalStatusView.m */; };
 		266896C51EC876C7009CCC25 /* MRTOneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266896C31EC876C7009CCC25 /* MRTOneViewController.m */; };
 		266896C61EC876C7009CCC25 /* MRTOneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266896C41EC876C7009CCC25 /* MRTOneViewController.xib */; };
 		266896CA1EC8B393009CCC25 /* MRTTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266896C81EC8B393009CCC25 /* MRTTwoViewController.m */; };
@@ -88,11 +98,21 @@
 		267A0C5E1ED4E60E00855520 /* MRTOriginalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 267A0C5D1ED4E60E00855520 /* MRTOriginalView.m */; };
 		267A0C611ED4E63A00855520 /* MRTRetweetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 267A0C601ED4E63A00855520 /* MRTRetweetView.m */; };
 		267A0C641ED4E74A00855520 /* MRTStatusToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 267A0C631ED4E74A00855520 /* MRTStatusToolBar.m */; };
+		267D10AF1F4C52E400F813C7 /* NSString+MRTConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = 267D10AE1F4C52E400F813C7 /* NSString+MRTConvert.m */; };
 		267FB3591F13D31400F23935 /* NSFileManager+MRTPathMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 267FB3581F13D31400F23935 /* NSFileManager+MRTPathMethod.m */; };
+		267FB7631F4648D7003EECA1 /* MRTVideoPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 267FB7621F4648D7003EECA1 /* MRTVideoPlayer.m */; };
 		2680FEC41EE8CA5F00DAC713 /* MRTPictureWithTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 2680FEC31EE8CA5F00DAC713 /* MRTPictureWithTag.m */; };
 		268293481EF14C2200C9FD7A /* MRTTextToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 268293471EF14C2200C9FD7A /* MRTTextToolBar.m */; };
+		268982FA1F3F4FC2003CCB8D /* MRTReplyCommentParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 268982F91F3F4FC2003CCB8D /* MRTReplyCommentParam.m */; };
+		268983001F3FB802003CCB8D /* MRTCommentPopMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 268982FF1F3FB802003CCB8D /* MRTCommentPopMenu.m */; };
+		268983031F3FCFB1003CCB8D /* MRTRepostFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 268983021F3FCFB1003CCB8D /* MRTRepostFrame.m */; };
+		268983061F3FD662003CCB8D /* MRTRepostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 268983051F3FD661003CCB8D /* MRTRepostCell.m */; };
+		268983091F3FD751003CCB8D /* MRTRepostMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 268983081F3FD751003CCB8D /* MRTRepostMainView.m */; };
 		26AFCEDA1EEB57DE006704FC /* MRTPlusButtonClickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AFCED91EEB57DE006704FC /* MRTPlusButtonClickView.m */; };
 		26AFCEDE1EEB5877006704FC /* MRTPlusClickViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AFCEDD1EEB5877006704FC /* MRTPlusClickViewButton.m */; };
+		26B1ECAC1F2F2E3C007059D3 /* MRTURL_object.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B1ECAB1F2F2E3C007059D3 /* MRTURL_object.m */; };
+		26B1ECAF1F2F2E5B007059D3 /* MRTObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B1ECAE1F2F2E5B007059D3 /* MRTObject.m */; };
+		26B1ECB21F2F332A007059D3 /* MRTImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B1ECB11F2F332A007059D3 /* MRTImage.m */; };
 		26D2EA221ECE5B4900B733EB /* MRTUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D2EA211ECE5B4900B733EB /* MRTUser.m */; };
 		26D2EA251ECE5B7700B733EB /* MRTStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D2EA241ECE5B7700B733EB /* MRTStatus.m */; };
 		26D2EA281ECE5B9C00B733EB /* MRTPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D2EA271ECE5B9C00B733EB /* MRTPicture.m */; };
@@ -201,6 +221,14 @@
 		2639FE0D1EF5A8700053C4FC /* MRTCommentToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTCommentToolBar.m; path = Home/View/Comment/MRTCommentToolBar.m; sourceTree = "<group>"; };
 		2639FE0F1EF5BD920053C4FC /* MRTWriteCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTWriteCommentViewController.h; path = Home/Controller/Comment/MRTWriteCommentViewController.h; sourceTree = "<group>"; };
 		2639FE101EF5BD920053C4FC /* MRTWriteCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTWriteCommentViewController.m; path = Home/Controller/Comment/MRTWriteCommentViewController.m; sourceTree = "<group>"; };
+		263E4A711F3B5EDD008801F3 /* MRTMessageCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTMessageCommentCell.h; path = Webo/Message/View/Cell/MRTMessageCommentCell.h; sourceTree = SOURCE_ROOT; };
+		263E4A721F3B5EDD008801F3 /* MRTMessageCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTMessageCommentCell.m; path = Webo/Message/View/Cell/MRTMessageCommentCell.m; sourceTree = SOURCE_ROOT; };
+		263E4A741F3B5F3E008801F3 /* MRTMessageCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTMessageCommentView.h; path = Webo/Message/View/Cell/MRTMessageCommentView.h; sourceTree = SOURCE_ROOT; };
+		263E4A751F3B5F3E008801F3 /* MRTMessageCommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTMessageCommentView.m; path = Webo/Message/View/Cell/MRTMessageCommentView.m; sourceTree = SOURCE_ROOT; };
+		263E4A771F3B5F67008801F3 /* MRTMessageReplyCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTMessageReplyCommentView.h; path = Webo/Message/View/Cell/MRTMessageReplyCommentView.h; sourceTree = SOURCE_ROOT; };
+		263E4A781F3B5F67008801F3 /* MRTMessageReplyCommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTMessageReplyCommentView.m; path = Webo/Message/View/Cell/MRTMessageReplyCommentView.m; sourceTree = SOURCE_ROOT; };
+		263EBEB61F27A3E00083B0FF /* MRTMessageSwitchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTMessageSwitchView.h; path = Message/View/MRTMessageSwitchView.h; sourceTree = "<group>"; };
+		263EBEB71F27A3E00083B0FF /* MRTMessageSwitchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTMessageSwitchView.m; path = Message/View/MRTMessageSwitchView.m; sourceTree = "<group>"; };
 		263EE9491ED1F24F00345397 /* MRTStatusParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTStatusParameter.h; path = Tool/Status/MRTStatusParameter.h; sourceTree = "<group>"; };
 		263EE94A1ED1F24F00345397 /* MRTStatusParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTStatusParameter.m; path = Tool/Status/MRTStatusParameter.m; sourceTree = "<group>"; };
 		263EE94B1ED1F24F00345397 /* MRTStatusResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTStatusResult.h; path = Tool/Status/MRTStatusResult.h; sourceTree = "<group>"; };
@@ -225,6 +253,18 @@
 		263EE9711ED22AD100345397 /* MRTUnreadParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTUnreadParameter.m; path = Tool/UnreadMsg/MRTUnreadParameter.m; sourceTree = "<group>"; };
 		264953401ED63276008E4236 /* MRTStatusFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTStatusFrame.h; path = Home/Model/MRTStatusFrame.h; sourceTree = "<group>"; };
 		264953411ED63276008E4236 /* MRTStatusFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTStatusFrame.m; path = Home/Model/MRTStatusFrame.m; sourceTree = "<group>"; };
+		264C00B61F2218D500702E83 /* MRTMessageSwitchBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTMessageSwitchBar.h; path = Message/View/MRTMessageSwitchBar.h; sourceTree = "<group>"; };
+		264C00B71F2218D500702E83 /* MRTMessageSwitchBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTMessageSwitchBar.m; path = Message/View/MRTMessageSwitchBar.m; sourceTree = "<group>"; };
+		265ECC161F28B8A50077EADB /* MRTMessageStatusFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTMessageStatusFrame.h; path = Message/Model/MRTMessageStatusFrame.h; sourceTree = "<group>"; };
+		265ECC171F28B8A50077EADB /* MRTMessageStatusFrame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTMessageStatusFrame.m; path = Message/Model/MRTMessageStatusFrame.m; sourceTree = "<group>"; };
+		265ECC191F28B8D30077EADB /* MRTMessageCommentFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTMessageCommentFrame.h; path = Message/Model/MRTMessageCommentFrame.h; sourceTree = "<group>"; };
+		265ECC1A1F28B8D30077EADB /* MRTMessageCommentFrame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTMessageCommentFrame.m; path = Message/Model/MRTMessageCommentFrame.m; sourceTree = "<group>"; };
+		265ECC1E1F28E9250077EADB /* MRTMessageStatusCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTMessageStatusCell.h; path = Webo/Message/View/Cell/MRTMessageStatusCell.h; sourceTree = SOURCE_ROOT; };
+		265ECC1F1F28E9250077EADB /* MRTMessageStatusCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTMessageStatusCell.m; path = Webo/Message/View/Cell/MRTMessageStatusCell.m; sourceTree = SOURCE_ROOT; };
+		265ECC211F28EA9F0077EADB /* MRTMessageRetweetStatusView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTMessageRetweetStatusView.h; path = Webo/Message/View/Cell/MRTMessageRetweetStatusView.h; sourceTree = SOURCE_ROOT; };
+		265ECC221F28EA9F0077EADB /* MRTMessageRetweetStatusView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTMessageRetweetStatusView.m; path = Webo/Message/View/Cell/MRTMessageRetweetStatusView.m; sourceTree = SOURCE_ROOT; };
+		265ECC241F28FA510077EADB /* MRTMessageOriginalStatusView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTMessageOriginalStatusView.h; path = Webo/Message/View/Cell/MRTMessageOriginalStatusView.h; sourceTree = SOURCE_ROOT; };
+		265ECC251F28FA510077EADB /* MRTMessageOriginalStatusView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTMessageOriginalStatusView.m; path = Webo/Message/View/Cell/MRTMessageOriginalStatusView.m; sourceTree = SOURCE_ROOT; };
 		266896C21EC876C7009CCC25 /* MRTOneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTOneViewController.h; path = Home/Controller/MRTOneViewController.h; sourceTree = "<group>"; };
 		266896C31EC876C7009CCC25 /* MRTOneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTOneViewController.m; path = Home/Controller/MRTOneViewController.m; sourceTree = "<group>"; };
 		266896C41EC876C7009CCC25 /* MRTOneViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MRTOneViewController.xib; path = Home/Controller/MRTOneViewController.xib; sourceTree = "<group>"; };
@@ -273,16 +313,36 @@
 		267A0C601ED4E63A00855520 /* MRTRetweetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTRetweetView.m; path = Home/View/Cell/MRTRetweetView.m; sourceTree = "<group>"; };
 		267A0C621ED4E74A00855520 /* MRTStatusToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTStatusToolBar.h; path = Home/View/Cell/MRTStatusToolBar.h; sourceTree = "<group>"; };
 		267A0C631ED4E74A00855520 /* MRTStatusToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTStatusToolBar.m; path = Home/View/Cell/MRTStatusToolBar.m; sourceTree = "<group>"; };
+		267D10AD1F4C52E400F813C7 /* NSString+MRTConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MRTConvert.h"; path = "Category/NSString+MRTConvert.h"; sourceTree = "<group>"; };
+		267D10AE1F4C52E400F813C7 /* NSString+MRTConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+MRTConvert.m"; path = "Category/NSString+MRTConvert.m"; sourceTree = "<group>"; };
 		267FB3571F13D31400F23935 /* NSFileManager+MRTPathMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSFileManager+MRTPathMethod.h"; path = "Category/NSFileManager+MRTPathMethod.h"; sourceTree = "<group>"; };
 		267FB3581F13D31400F23935 /* NSFileManager+MRTPathMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSFileManager+MRTPathMethod.m"; path = "Category/NSFileManager+MRTPathMethod.m"; sourceTree = "<group>"; };
+		267FB7611F4648D7003EECA1 /* MRTVideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTVideoPlayer.h; path = Home/View/Video/MRTVideoPlayer.h; sourceTree = "<group>"; };
+		267FB7621F4648D7003EECA1 /* MRTVideoPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTVideoPlayer.m; path = Home/View/Video/MRTVideoPlayer.m; sourceTree = "<group>"; };
 		2680FEC21EE8CA5F00DAC713 /* MRTPictureWithTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTPictureWithTag.h; path = Home/View/Cell/MRTPictureWithTag.h; sourceTree = "<group>"; };
 		2680FEC31EE8CA5F00DAC713 /* MRTPictureWithTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTPictureWithTag.m; path = Home/View/Cell/MRTPictureWithTag.m; sourceTree = "<group>"; };
 		268293461EF14C2200C9FD7A /* MRTTextToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTTextToolBar.h; path = FunctionsOfPlusView/Text/View/MRTTextToolBar.h; sourceTree = "<group>"; };
 		268293471EF14C2200C9FD7A /* MRTTextToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTTextToolBar.m; path = FunctionsOfPlusView/Text/View/MRTTextToolBar.m; sourceTree = "<group>"; };
+		268982F81F3F4FC2003CCB8D /* MRTReplyCommentParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTReplyCommentParam.h; path = Tool/Comment/ReplyComment/MRTReplyCommentParam.h; sourceTree = "<group>"; };
+		268982F91F3F4FC2003CCB8D /* MRTReplyCommentParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTReplyCommentParam.m; path = Tool/Comment/ReplyComment/MRTReplyCommentParam.m; sourceTree = "<group>"; };
+		268982FE1F3FB802003CCB8D /* MRTCommentPopMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTCommentPopMenu.h; path = Home/View/Comment/MRTCommentPopMenu.h; sourceTree = "<group>"; };
+		268982FF1F3FB802003CCB8D /* MRTCommentPopMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTCommentPopMenu.m; path = Home/View/Comment/MRTCommentPopMenu.m; sourceTree = "<group>"; };
+		268983011F3FCFB1003CCB8D /* MRTRepostFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTRepostFrame.h; path = Home/Model/Comment/MRTRepostFrame.h; sourceTree = "<group>"; };
+		268983021F3FCFB1003CCB8D /* MRTRepostFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTRepostFrame.m; path = Home/Model/Comment/MRTRepostFrame.m; sourceTree = "<group>"; };
+		268983041F3FD661003CCB8D /* MRTRepostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTRepostCell.h; path = Home/View/Comment/MRTRepostCell.h; sourceTree = "<group>"; };
+		268983051F3FD661003CCB8D /* MRTRepostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTRepostCell.m; path = Home/View/Comment/MRTRepostCell.m; sourceTree = "<group>"; };
+		268983071F3FD751003CCB8D /* MRTRepostMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTRepostMainView.h; path = Home/View/Comment/MRTRepostMainView.h; sourceTree = "<group>"; };
+		268983081F3FD751003CCB8D /* MRTRepostMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTRepostMainView.m; path = Home/View/Comment/MRTRepostMainView.m; sourceTree = "<group>"; };
 		26AFCED81EEB57DE006704FC /* MRTPlusButtonClickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTPlusButtonClickView.h; path = TabBar/View/PlusButtonClickView/MRTPlusButtonClickView.h; sourceTree = "<group>"; };
 		26AFCED91EEB57DE006704FC /* MRTPlusButtonClickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTPlusButtonClickView.m; path = TabBar/View/PlusButtonClickView/MRTPlusButtonClickView.m; sourceTree = "<group>"; };
 		26AFCEDC1EEB5877006704FC /* MRTPlusClickViewButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTPlusClickViewButton.h; path = TabBar/View/PlusButtonClickView/MRTPlusClickViewButton.h; sourceTree = "<group>"; };
 		26AFCEDD1EEB5877006704FC /* MRTPlusClickViewButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTPlusClickViewButton.m; path = TabBar/View/PlusButtonClickView/MRTPlusClickViewButton.m; sourceTree = "<group>"; };
+		26B1ECAA1F2F2E3C007059D3 /* MRTURL_object.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTURL_object.h; path = Message/Model/MRTURL_object.h; sourceTree = "<group>"; };
+		26B1ECAB1F2F2E3C007059D3 /* MRTURL_object.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTURL_object.m; path = Message/Model/MRTURL_object.m; sourceTree = "<group>"; };
+		26B1ECAD1F2F2E5B007059D3 /* MRTObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTObject.h; path = Message/Model/MRTObject.h; sourceTree = "<group>"; };
+		26B1ECAE1F2F2E5B007059D3 /* MRTObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTObject.m; path = Message/Model/MRTObject.m; sourceTree = "<group>"; };
+		26B1ECB01F2F332A007059D3 /* MRTImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTImage.h; path = Message/Model/MRTImage.h; sourceTree = "<group>"; };
+		26B1ECB11F2F332A007059D3 /* MRTImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTImage.m; path = Message/Model/MRTImage.m; sourceTree = "<group>"; };
 		26D2EA201ECE5B4900B733EB /* MRTUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTUser.h; path = Home/Model/MRTUser.h; sourceTree = "<group>"; };
 		26D2EA211ECE5B4900B733EB /* MRTUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTUser.m; path = Home/Model/MRTUser.m; sourceTree = "<group>"; };
 		26D2EA231ECE5B7700B733EB /* MRTStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTStatus.h; path = Home/Model/MRTStatus.h; sourceTree = "<group>"; };
@@ -429,6 +489,8 @@
 				26390BC11EE0C6C000724D40 /* NSDate+MJ.m */,
 				267FB3571F13D31400F23935 /* NSFileManager+MRTPathMethod.h */,
 				267FB3581F13D31400F23935 /* NSFileManager+MRTPathMethod.m */,
+				267D10AD1F4C52E400F813C7 /* NSString+MRTConvert.h */,
+				267D10AE1F4C52E400F813C7 /* NSString+MRTConvert.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -464,8 +526,14 @@
 				263867B21EF492C500470760 /* MRTCommentCell.m */,
 				2639FE091EF53AF10053C4FC /* MRTMainView.h */,
 				2639FE0A1EF53AF10053C4FC /* MRTMainView.m */,
+				268983071F3FD751003CCB8D /* MRTRepostMainView.h */,
+				268983081F3FD751003CCB8D /* MRTRepostMainView.m */,
+				268983041F3FD661003CCB8D /* MRTRepostCell.h */,
+				268983051F3FD661003CCB8D /* MRTRepostCell.m */,
 				2639FE0C1EF5A8700053C4FC /* MRTCommentToolBar.h */,
 				2639FE0D1EF5A8700053C4FC /* MRTCommentToolBar.m */,
+				268982FE1F3FB802003CCB8D /* MRTCommentPopMenu.h */,
+				268982FF1F3FB802003CCB8D /* MRTCommentPopMenu.m */,
 				2639D4DD1EF74630003A843F /* MRTSwitchBar.h */,
 				2639D4DE1EF74630003A843F /* MRTSwitchBar.m */,
 				26396B8B1EF9D3FD009E8390 /* MRTSendRepostOverview.h */,
@@ -481,6 +549,8 @@
 				263867B91EF4943500470760 /* MRTComment.m */,
 				263867B51EF4935600470760 /* MRTCommentFrame.h */,
 				263867B61EF4935600470760 /* MRTCommentFrame.m */,
+				268983011F3FCFB1003CCB8D /* MRTRepostFrame.h */,
+				268983021F3FCFB1003CCB8D /* MRTRepostFrame.m */,
 			);
 			name = Comment;
 			sourceTree = "<group>";
@@ -489,6 +559,7 @@
 			isa = PBXGroup;
 			children = (
 				2639D4D61EF6DAA9003A843F /* SendComment */,
+				268982F71F3F4F19003CCB8D /* ReplyComment */,
 				263867BC1EF4A0ED00470760 /* MRTCommentResult.h */,
 				263867BD1EF4A0ED00470760 /* MRTCommentResult.m */,
 				26396B7F1EF97F18009E8390 /* MRTRepostResult.h */,
@@ -525,6 +596,7 @@
 				263EE9441ED1F01A00345397 /* Account */,
 				263EE9431ED1EFFC00345397 /* Status */,
 				263867BB1EF4A08D00470760 /* Comment */,
+				2670C48D1F433EC500522D21 /* URLConvert */,
 			);
 			name = Tool;
 			sourceTree = "<group>";
@@ -591,6 +663,25 @@
 				263EE96E1ED2068A00345397 /* MRTUnreadTool.m */,
 			);
 			name = UnreadMsg;
+			sourceTree = "<group>";
+		};
+		265ECC1D1F28E84E0077EADB /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				265ECC1E1F28E9250077EADB /* MRTMessageStatusCell.h */,
+				265ECC1F1F28E9250077EADB /* MRTMessageStatusCell.m */,
+				265ECC241F28FA510077EADB /* MRTMessageOriginalStatusView.h */,
+				265ECC251F28FA510077EADB /* MRTMessageOriginalStatusView.m */,
+				265ECC211F28EA9F0077EADB /* MRTMessageRetweetStatusView.h */,
+				265ECC221F28EA9F0077EADB /* MRTMessageRetweetStatusView.m */,
+				263E4A711F3B5EDD008801F3 /* MRTMessageCommentCell.h */,
+				263E4A721F3B5EDD008801F3 /* MRTMessageCommentCell.m */,
+				263E4A741F3B5F3E008801F3 /* MRTMessageCommentView.h */,
+				263E4A751F3B5F3E008801F3 /* MRTMessageCommentView.m */,
+				263E4A771F3B5F67008801F3 /* MRTMessageReplyCommentView.h */,
+				263E4A781F3B5F67008801F3 /* MRTMessageReplyCommentView.m */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		266896CC1EC90B24009CCC25 /* NewFeature */ = {
@@ -743,6 +834,11 @@
 		266F318C1EBFB96F001ECF24 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				264C00B61F2218D500702E83 /* MRTMessageSwitchBar.h */,
+				264C00B71F2218D500702E83 /* MRTMessageSwitchBar.m */,
+				263EBEB61F27A3E00083B0FF /* MRTMessageSwitchView.h */,
+				263EBEB71F27A3E00083B0FF /* MRTMessageSwitchView.m */,
+				265ECC1D1F28E84E0077EADB /* Cell */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -750,6 +846,16 @@
 		266F318D1EBFB973001ECF24 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				265ECC161F28B8A50077EADB /* MRTMessageStatusFrame.h */,
+				265ECC171F28B8A50077EADB /* MRTMessageStatusFrame.m */,
+				265ECC191F28B8D30077EADB /* MRTMessageCommentFrame.h */,
+				265ECC1A1F28B8D30077EADB /* MRTMessageCommentFrame.m */,
+				26B1ECAA1F2F2E3C007059D3 /* MRTURL_object.h */,
+				26B1ECAB1F2F2E3C007059D3 /* MRTURL_object.m */,
+				26B1ECAD1F2F2E5B007059D3 /* MRTObject.h */,
+				26B1ECAE1F2F2E5B007059D3 /* MRTObject.m */,
+				26B1ECB01F2F332A007059D3 /* MRTImage.h */,
+				26B1ECB11F2F332A007059D3 /* MRTImage.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -793,6 +899,7 @@
 			children = (
 				263867A71EF3F10D00470760 /* Comment */,
 				267A0C581ED49EBB00855520 /* Cell */,
+				267FB75B1F46311F003EECA1 /* Video */,
 				263461471EC512B3000D34A6 /* MRTHomeTitle.h */,
 				263461481EC512B3000D34A6 /* MRTHomeTitle.m */,
 				2671DEA11EC6040E002F3D26 /* MRTCover.h */,
@@ -879,6 +986,13 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
+		2670C48D1F433EC500522D21 /* URLConvert */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = URLConvert;
+			sourceTree = "<group>";
+		};
 		267539D21ECDAB1600D6BB3A /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -949,6 +1063,24 @@
 				267A0C631ED4E74A00855520 /* MRTStatusToolBar.m */,
 			);
 			name = Cell;
+			sourceTree = "<group>";
+		};
+		267FB75B1F46311F003EECA1 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				267FB7611F4648D7003EECA1 /* MRTVideoPlayer.h */,
+				267FB7621F4648D7003EECA1 /* MRTVideoPlayer.m */,
+			);
+			name = Video;
+			sourceTree = "<group>";
+		};
+		268982F71F3F4F19003CCB8D /* ReplyComment */ = {
+			isa = PBXGroup;
+			children = (
+				268982F81F3F4FC2003CCB8D /* MRTReplyCommentParam.h */,
+				268982F91F3F4FC2003CCB8D /* MRTReplyCommentParam.m */,
+			);
+			name = ReplyComment;
 			sourceTree = "<group>";
 		};
 		26AFCEDB1EEB57F3006704FC /* PlusButtonClickView */ = {
@@ -1180,14 +1312,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				263EE9721ED22AD100345397 /* MRTUnreadParameter.m in Sources */,
+				265ECC201F28E9250077EADB /* MRTMessageStatusCell.m in Sources */,
+				26B1ECAF1F2F2E5B007059D3 /* MRTObject.m in Sources */,
 				2619E10A1EAEA3C3004CE6DD /* AppDelegate.m in Sources */,
 				267A0C641ED4E74A00855520 /* MRTStatusToolBar.m in Sources */,
 				263EE95A1ED1F28E00345397 /* MRTHttpTool.m in Sources */,
 				263EE9541ED1F25A00345397 /* MRTAccountStore.m in Sources */,
 				2619E1131EAEA3C3004CE6DD /* Webo.xcdatamodeld in Sources */,
 				26782CFA1EF29CA900BBD854 /* MRTTextTool.m in Sources */,
+				267D10AF1F4C52E400F813C7 /* NSString+MRTConvert.m in Sources */,
 				268293481EF14C2200C9FD7A /* MRTTextToolBar.m in Sources */,
 				263867BE1EF4A0ED00470760 /* MRTCommentResult.m in Sources */,
+				265ECC181F28B8A50077EADB /* MRTMessageStatusFrame.m in Sources */,
 				2635DA0C1EC1281100EF24B6 /* UIView+MRTFrame.m in Sources */,
 				263EE94F1ED1F24F00345397 /* MRTStatusParameter.m in Sources */,
 				26396B8D1EF9D3FD009E8390 /* MRTSendRepostOverview.m in Sources */,
@@ -1198,6 +1334,7 @@
 				266F31AE1EBFC06B001ECF24 /* MRTProfileViewController.m in Sources */,
 				2669E9091EEDE9C600F46A01 /* MRTTextViewController.m in Sources */,
 				26315FC31ECB0CA8001BC766 /* MRTOAuthViewController.m in Sources */,
+				265ECC261F28FA510077EADB /* MRTMessageOriginalStatusView.m in Sources */,
 				264953421ED63276008E4236 /* MRTStatusFrame.m in Sources */,
 				263461401EC478FD000D34A6 /* MRTNavigationController.m in Sources */,
 				2635DA061EC1155300EF24B6 /* MRTTabBar.m in Sources */,
@@ -1206,24 +1343,32 @@
 				26396B811EF97F19009E8390 /* MRTRepostResult.m in Sources */,
 				26396B841EF980B0009E8390 /* MRTSendRepostParam.m in Sources */,
 				2635DA091EC1175000EF24B6 /* MRTBadgeView.m in Sources */,
+				265ECC1B1F28B8D30077EADB /* MRTMessageCommentFrame.m in Sources */,
 				2639D4DF1EF74630003A843F /* MRTSwitchBar.m in Sources */,
 				263EE9571ED1F28000345397 /* MRTRootVCPicker.m in Sources */,
+				268983061F3FD662003CCB8D /* MRTRepostCell.m in Sources */,
 				267539D51ECDABB500D6BB3A /* MRTAccount.m in Sources */,
 				263867C11EF4A2B500470760 /* MRTCommentParam.m in Sources */,
+				268983031F3FCFB1003CCB8D /* MRTRepostFrame.m in Sources */,
 				26D2EA221ECE5B4900B733EB /* MRTUser.m in Sources */,
+				263E4A791F3B5F67008801F3 /* MRTMessageReplyCommentView.m in Sources */,
+				263E4A731F3B5EDD008801F3 /* MRTMessageCommentCell.m in Sources */,
 				267A0C5E1ED4E60E00855520 /* MRTOriginalView.m in Sources */,
 				263EE9691ED1FE4500345397 /* MRTUnreadResult.m in Sources */,
 				2635DA131EC12B8100EF24B6 /* MRTTabBarButton.m in Sources */,
 				267FB3591F13D31400F23935 /* NSFileManager+MRTPathMethod.m in Sources */,
 				2639D4D91EF6DAFE003A843F /* MRTSendCommentParam.m in Sources */,
+				26B1ECAC1F2F2E3C007059D3 /* MRTURL_object.m in Sources */,
 				2671DEA71EC61416002F3D26 /* MRTPopMenu.m in Sources */,
 				266896D81EC9118E009CCC25 /* MRTNewFeatureController.m in Sources */,
+				265ECC231F28EA9F0077EADB /* MRTMessageRetweetStatusView.m in Sources */,
 				26D2EA281ECE5B9C00B733EB /* MRTPicture.m in Sources */,
 				267A0C5B1ED49F2800855520 /* MRTStatusCell.m in Sources */,
 				267A0C611ED4E63A00855520 /* MRTRetweetView.m in Sources */,
 				263867AD1EF3F3AC00470760 /* MRTCommentViewController.m in Sources */,
 				2669E90C1EEDEA9900F46A01 /* MRTTextView.m in Sources */,
 				263EE9601ED1FAA100345397 /* MRTAccessToken.m in Sources */,
+				268983091F3FD751003CCB8D /* MRTRepostMainView.m in Sources */,
 				2639FE0B1EF53AF10053C4FC /* MRTMainView.m in Sources */,
 				263EE9501ED1F24F00345397 /* MRTStatusResult.m in Sources */,
 				266896C51EC876C7009CCC25 /* MRTOneViewController.m in Sources */,
@@ -1234,7 +1379,10 @@
 				26315FC61ECB4871001BC766 /* MBProgressHUD+MRT.m in Sources */,
 				2619E1071EAEA3C3004CE6DD /* main.m in Sources */,
 				2680FEC41EE8CA5F00DAC713 /* MRTPictureWithTag.m in Sources */,
+				264C00B81F2218D500702E83 /* MRTMessageSwitchBar.m in Sources */,
+				267FB7631F4648D7003EECA1 /* MRTVideoPlayer.m in Sources */,
 				267772B31F12A2F4001B47C9 /* MRTCacheManager.m in Sources */,
+				268983001F3FB802003CCB8D /* MRTCommentPopMenu.m in Sources */,
 				263867BA1EF4943500470760 /* MRTComment.m in Sources */,
 				2635DA101EC1285E00EF24B6 /* UIImage+MRTImage.m in Sources */,
 				266F31A81EBFC020001ECF24 /* MRTMessageViewController.m in Sources */,
@@ -1245,8 +1393,10 @@
 				26AFCEDA1EEB57DE006704FC /* MRTPlusButtonClickView.m in Sources */,
 				263867B71EF4935600470760 /* MRTCommentFrame.m in Sources */,
 				26383F961EF3208F003E4ED2 /* MRTTextAddPhotos.m in Sources */,
+				26B1ECB21F2F332A007059D3 /* MRTImage.m in Sources */,
 				263867B31EF492C500470760 /* MRTCommentCell.m in Sources */,
 				263EE9511ED1F24F00345397 /* MRTStatusTool.m in Sources */,
+				263EBEB81F27A3E00083B0FF /* MRTMessageSwitchView.m in Sources */,
 				263867B01EF4722E00470760 /* MRTCommentTitle.m in Sources */,
 				26396B871EF9B700009E8390 /* MRTWriteRepostController.m in Sources */,
 				266896CA1EC8B393009CCC25 /* MRTTwoViewController.m in Sources */,
@@ -1255,7 +1405,9 @@
 				263461431EC4C943000D34A6 /* UIBarButtonItem+MRTItem.m in Sources */,
 				263716C01ED3432A00E28F3B /* MRTUserInfoTool.m in Sources */,
 				26AFCEDE1EEB5877006704FC /* MRTPlusClickViewButton.m in Sources */,
+				263E4A761F3B5F3E008801F3 /* MRTMessageCommentView.m in Sources */,
 				263867C41EF4A43200470760 /* MRTCommentTool.m in Sources */,
+				268982FA1F3F4FC2003CCB8D /* MRTReplyCommentParam.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

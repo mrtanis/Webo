@@ -65,7 +65,7 @@
         }
         
         [button sizeToFit];
-        [_buttons addObject:button];
+        [self.buttons addObject:button];
         [self addSubview:button];
         
     }

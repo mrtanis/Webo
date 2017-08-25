@@ -88,20 +88,7 @@
     textView.font = MRTTextFont;
     textView.attributedText = self.status.attrText;
     CGSize contentSize = textView.contentSize;
-    //段落格式
-    //NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
-    //行间距
-    //paraStyle.lineSpacing = 10;
-    //textAttrs[NSParagraphStyleAttributeName] = paraStyle;
     
-    //NSMutableAttributedString *attText = [[NSMutableAttributedString alloc] initWithString:self.status.text attributes:textAttrs];
-    
-    //_textStr = attText;
-    
-    //CGRect text_Rect = [self.status.text boundingRectWithSize:CGSizeMake(text_Width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:textAttrs context:nil];
-    //CGRect text_Rect = [self.status.attrText boundingRectWithSize:CGSizeMake(text_Width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
-    
-    //_originalTextFrame = CGRectMake(text_X, text_Y, ceil(text_Rect.size.width), ceil(text_Rect.size.height));
     _originalTextFrame = CGRectMake(text_X, text_Y, contentSize.width, contentSize.height);
     
     CGFloat original_Height = CGRectGetMaxY(_originalTextFrame) + MRTStatusCellMargin;
@@ -116,7 +103,30 @@
         _originalPictureFrame = CGRectMake(pic_X, pic_Y, picSize.width, picSize.height);
         
         original_Height = CGRectGetMaxY(_originalPictureFrame) + MRTStatusCellMargin;
-    }
+    } /*else if (_status.pic_ids.count && _status.thumbnail_pic) {
+        
+        NSRange range1 = [_status.thumbnail_pic rangeOfString:@"thumbnail/" options:NSLiteralSearch];
+        NSRange range2 = NSMakeRange(range1.location + range1.length, _status.thumbnail_pic.length - range1.location - range1.length - 4);
+        
+        NSMutableArray *pics = [NSMutableArray array];
+        for (NSString *string in _status.pic_ids) {
+            NSString *newStr = [_status.thumbnail_pic stringByReplacingCharactersInRange:range2 withString:string];
+            MRTPicture *picture = [[MRTPicture alloc] init];
+            picture.thumbnail_pic = [NSURL URLWithString:newStr];
+            [pics addObject:picture];
+        }
+        _status.pic_urls = pics;
+        
+        CGFloat pic_X = MRTStatusCellMargin;
+        CGFloat pic_Y = CGRectGetMaxY(_originalTextFrame) + MRTStatusCellMargin;
+        CGSize picSize = [self pictureSizeWithCount:(int)_status.pic_urls.count picture:[self.status.pic_urls firstObject]];
+        //如果只有一张图，则为originalOnePicSize赋值
+        if (_status.pic_urls.count == 1) _originalOnePicSize = picSize;
+        
+        _originalPictureFrame = CGRectMake(pic_X, pic_Y, picSize.width, picSize.height);
+        
+        original_Height = CGRectGetMaxY(_originalPictureFrame) + MRTStatusCellMargin;
+    }*/
     
     //通过以上子控件的frame计算原创微博的frame
     CGFloat original_X = 0;
@@ -155,16 +165,6 @@
     textView.attributedText = self.status.retweeted_status.attrText;
     CGSize contentSize = textView.contentSize;
 
-    //段落格式
-    //NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
-    //行间距
-    //paraStyle.lineSpacing = 10;
-    //textAttrs[NSParagraphStyleAttributeName] = paraStyle;
-    
-    //CGRect text_Rect = [self.status.retweeted_status.text boundingRectWithSize:CGSizeMake(text_Width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:textAttrs context:nil];
-    //CGRect text_Rect = [self.status.retweeted_status.attrText boundingRectWithSize:CGSizeMake(text_Width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
-    
-    //_retweetTextFrame = CGRectMake(text_X, text_Y, ceil(text_Rect.size.width), ceil(text_Rect.size.height));
     
     _retweetTextFrame = CGRectMake(text_X, text_Y, contentSize.width, contentSize.height);
     
@@ -237,8 +237,6 @@
     [aCoder encodeCGRect:_originalIconFrame forKey:@"originalIconFrame"];
     [aCoder encodeCGRect:_originalNameFrame forKey:@"originalNameFrame"];
     [aCoder encodeCGRect:_originalVipFrame forKey:@"originalVipFrame"];
-    [aCoder encodeCGRect:_originalTimeFrame forKey:@"originalTimeFrame"];
-    [aCoder encodeCGRect:_originalSourceFrame forKey:@"originalSourceFrame"];
     [aCoder encodeCGRect:_originalTextFrame forKey:@"originalTextFrame"];
     [aCoder encodeCGRect:_originalPictureFrame forKey:@"originalPictureFrame"];
     [aCoder encodeCGSize:_originalOnePicSize forKey:@"originalOnePicSize"];
@@ -263,8 +261,6 @@
         _originalIconFrame = [aDecoder decodeCGRectForKey:@"originalIconFrame"];
         _originalNameFrame = [aDecoder decodeCGRectForKey:@"originalNameFrame"];
         _originalVipFrame = [aDecoder decodeCGRectForKey:@"originalVipFrame"];
-        _originalTimeFrame = [aDecoder decodeCGRectForKey:@"originalTimeFrame"];
-        _originalSourceFrame = [aDecoder decodeCGRectForKey:@"originalSourceFrame"];
         _originalTextFrame = [aDecoder decodeCGRectForKey:@"originalTextFrame"];
         _originalPictureFrame = [aDecoder decodeCGRectForKey:@"originalPictureFrame"];
         _originalOnePicSize = [aDecoder decodeCGSizeForKey:@"originalOnePicSize"];

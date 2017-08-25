@@ -10,7 +10,7 @@
 #import "MJExtension.h"
 #import "MRTUser.h"
 #import "MRTPicture.h"
-#import "MRTRetweeted_status.h"
+#import "MRTURL_object.h"
 
 @interface MRTStatus : NSObject <MJKeyValue, NSCoding>
 
@@ -28,5 +28,15 @@
 @property (nonatomic, assign) int attitudes_count;
 @property (nonatomic, strong) NSArray *pic_urls;
 
+//@我的微博中返回的视频、链接数据
+@property (nonatomic, strong) NSArray *url_objects;
+//@我的微博中返回原创或转发的图片数据
+@property (nonatomic, strong) NSArray *pic_ids;
+@property (nonatomic, copy) NSString *thumbnail_pic;
+
+
+//从正文中提取的短连接
+@property (nonatomic, copy) NSString *urlStr;
+@property (nonatomic, copy) NSString *videoStr;
 
 @end

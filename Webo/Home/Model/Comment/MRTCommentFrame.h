@@ -10,7 +10,7 @@
 #import "MRTComment.h"
 
 @interface MRTCommentFrame : NSObject
-//微博评论（转发也可借用）
+//微博评论
 @property (nonatomic, strong) MRTComment *comment;
 
 

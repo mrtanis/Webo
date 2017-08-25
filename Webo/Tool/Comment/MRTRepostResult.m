@@ -7,7 +7,7 @@
 //
 
 #import "MRTRepostResult.h"
-#import "MRTComment.h"
+#import "MRTStatus.h"
 
 @implementation MRTRepostResult
 
@@ -15,7 +15,7 @@
 //实现这个方法的目的：告诉MJExtension框架reposts数组里面装的是什么模型
 + (NSDictionary *)objectClassInArray
 {
-    return @{@"reposts":[MRTComment class]};
+    return @{@"reposts":[MRTStatus class]};
 }
 
 @end

@@ -116,15 +116,20 @@
     
     
     //如果是转发，则添加转发文字
-    if (_statusCell.statusFrame.status.retweeted_status) {
-        NSString *prefix = [NSString stringWithFormat:@"//@%@:", _statusCell.statusFrame.status.user.name];
-        NSString *repostStr = _statusCell.statusFrame.status.retweeted_status.text;
+    if (_statusFrame.status.retweeted_status) {
+        NSString *prefix = [NSString stringWithFormat:@"//@%@:", _statusFrame.status.user.name];
+        NSString *repostStr = _statusFrame.status.text;
+        if (_commentFrame) {
+            prefix = [NSString stringWithFormat:@"//@%@:", _commentFrame.comment.user.name];
+            repostStr = _commentFrame.comment.text;
+        }
         repostStr = [prefix stringByAppendingString:repostStr];
         
         textView.text = repostStr;
         
         textView.rightItem.enabled = YES;
-    }
+    } 
+        
     //设置光标位置到文本最前面
     textView.selectedRange = NSMakeRange(0, 0);
     
@@ -170,42 +175,49 @@
     MRTSendRepostOverview *overview = [[MRTSendRepostOverview alloc] initWithFrame:CGRectMake(10, 130, MRTScreen_Width - 20, 80)];
     overview.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:0.96];
     
-    //如果转发的微博不是原创
-    if (_statusCell.statusFrame.status.retweeted_status) {
-        
-        //如果有配图
-        if (_statusCell.statusFrame.status.retweeted_status.pic_urls.count) {
-            MRTPicture *pic = [_statusCell.statusFrame.status.retweeted_status.pic_urls firstObject];
-            NSString *midPic = [pic.thumbnail_pic.absoluteString stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
-            [overview setImageWithUrl:[NSURL URLWithString:midPic]];
-        } else {//没有配图则用头像
-            [overview setImageWithUrl:_statusCell.statusFrame.status.retweeted_status.user.avatar_large];
-        }
-        
-        //设置昵称
-        overview.name = _statusCell.retweetView.nameLabel.text;
-        //设置正文
-        overview.text = _statusCell.retweetView.textLabel.text;
-        
-    } else {//原创微博
-        //如果有配图
-        if (_statusCell.statusFrame.status.pic_urls.count) {
-            MRTPicture *pic = [_statusCell.statusFrame.status.pic_urls firstObject];
-            NSString *midPic = [pic.thumbnail_pic.absoluteString stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
-            [overview setImageWithUrl:[NSURL URLWithString:midPic]];
-        } else {//没有配图则用头像
-            [overview setImageWithUrl:_statusCell.statusFrame.status.user.avatar_large];
-        }
-        
-        //设置昵称
-        overview.name = _statusCell.originalView.nameLabel.text;
-        //设置正文
-        overview.text = _statusCell.originalView.textLabel.text;
+    MRTStatus *status = [[MRTStatus alloc] init];
+    if (self.statusFrame.status.retweeted_status) {
+        status = self.statusFrame.status.retweeted_status;
+    } else {
+        status = self.statusFrame.status;
     }
+    
+    MRTURL_object *url_object = [status.url_objects firstObject];
+    if (url_object.object.object.image) {
+        
+        MRTImage *image = url_object.object.object.image;
+        
+        
+        [overview setImageWithUrl:[NSURL URLWithString:image.url]];
+    } else if (status.thumbnail_pic) {
+        NSString *midlle = [status.thumbnail_pic stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
+        [overview setImageWithUrl:[NSURL URLWithString:midlle]];
+    } else {
+        NSLog(@"头像url：%@", status.user.avatar_large);
+        [overview setImageWithUrl:status.user.avatar_large];
+    }
+  
+        
+    //设置昵称
+    overview.name = status.user.name;
+    //设置正文
+    overview.text = status.text;
+    
     
     self.textView.overview = overview;
     
     [self.textView addSubview:overview];
+}
+
+#pragma mark 给commentFrame赋值时设置statusFrame
+- (void)setCommentFrame:(MRTCommentFrame *)commentFrame
+{
+    _commentFrame = commentFrame;
+    
+    MRTStatusFrame *statusFrame = [[MRTStatusFrame alloc] init];
+    statusFrame.status = commentFrame.comment.status;
+    
+    _statusFrame = statusFrame;
 }
 
 #pragma mark textView发生改变时执行该代理方法
@@ -315,8 +327,14 @@
 - (void)sendRepost
 {
     NSString *text = self.textView.text.length > 0 ? self.textView.text : @"转发微博";
+    NSString *idStr = @"";
+    if (self.statusFrame.status.retweeted_status) {
+        idStr = self.statusFrame.status.retweeted_status.idstr;
+    } else {
+        idStr = self.statusFrame.status.idstr;
+    }
     //发送文字
-    [MRTCommentTool sendRepostWithText:text ID:self.statusCell.statusFrame.status.idstr is_comment:0 success:^{
+    [MRTCommentTool sendRepostWithText:text ID:idStr is_comment:0 success:^{
         //提示成功
         [MBProgressHUD showSuccess:@"发送成功"];
         

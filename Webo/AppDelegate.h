@@ -15,6 +15,8 @@
 
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
 
+@property (nonatomic) BOOL allowRotate;
+
 - (void)saveContext;
 
 

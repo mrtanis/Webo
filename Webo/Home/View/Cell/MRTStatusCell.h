@@ -12,14 +12,16 @@
 #import "MRTStatusToolBar.h"
 #import "MRTPictureView.h"
 #import "MRTOriginalView.h"
-@class MRTStatusCell;
+
 
 @protocol MRTStatusCellDelegate <NSObject>
 
 @optional
-- (void)statusCell:(MRTStatusCell *)statusCell didClickButton:(NSInteger)index;
+- (void)statusCell:(MRTStatusFrame *)statusFrame didClickButton:(NSInteger)index;
 
-- (void)textViewDidClickCell:(MRTStatusCell *)statusCell;
+- (void)textViewDidClickCell:(MRTStatusFrame *)statusFrame;
+
+- (void)playVideoWithUrl:(NSURL *)url allowRotate:(BOOL)allowRotate;
 
 @end
 @interface MRTStatusCell : UITableViewCell
@@ -35,6 +37,8 @@
 @property (nonatomic, weak) UIButton *retweetBtn;
 @property (nonatomic, weak) UIButton *commentBtn;
 @property (nonatomic, weak) UIButton *likeBtn;
+
+@property (nonatomic) BOOL ignoreOriginalViewTap;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 

@@ -8,6 +8,8 @@
 
 #import "MRTRetweetView.h"
 #import "MRTPictureView.h"
+#import "NSString+MRTConvert.h"
+
 
 @interface MRTRetweetView() <UITextViewDelegate>
 
@@ -104,6 +106,26 @@
     }
     if ([[URL scheme] rangeOfString:@"short"].location != NSNotFound) {
         NSLog(@"点击短连接");
+        NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.statusFrame.status.retweeted_status.urlStr] encoding:NSUTF8StringEncoding error:nil];
+        NSLog(@"htmlStr:%@", htmlStr);
+        
+        NSMutableDictionary *urlDic = [NSString videoUrlFromString:htmlStr];
+        NSString *videoStr;
+        BOOL allowRotate;
+        if (urlDic[@"weibo"]) {
+            videoStr = urlDic[@"weibo"];
+            allowRotate = NO;
+        } else {
+            videoStr = urlDic[@"miaopai"];
+            allowRotate = YES;
+        }
+        
+        if (videoStr.length) {
+            if ([_delegate respondsToSelector:@selector(playVideoWithUrl:allowRotate:)]) {
+                [_delegate playVideoWithUrl:[NSURL URLWithString:videoStr] allowRotate:allowRotate];
+            }
+        }
+        
         return NO;
     }
 

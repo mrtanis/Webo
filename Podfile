@@ -7,4 +7,5 @@ target 'Webo' do
   pod 'SDWebImage', '~> 3.8'
   pod 'MJRefresh'
   pod 'MJPhotoBrowser'
+  pod 'Masonry'
 end

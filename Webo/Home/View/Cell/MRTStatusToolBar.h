@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MRTStatusFrame.h"
+#import "MRTMessageStatusFrame.h"
 @class MRTStatusToolBar;
 
 
@@ -16,6 +17,7 @@
 
 
 @property (nonatomic, strong) MRTStatusFrame *statusFrame;
+@property (nonatomic, strong) MRTMessageStatusFrame *messageStatusFrame;
 
 @property (nonatomic, weak) UIButton *retweetBtn;
 @property (nonatomic, weak) UIButton *commentBtn;

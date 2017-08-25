@@ -95,15 +95,15 @@
 - (void)didClickButton:(UIButton *)button
 {
     if ([_delegate respondsToSelector:@selector(statusCell:didClickButton:)]) {
-        [_delegate statusCell:self didClickButton:button.tag];
+        [_delegate statusCell:self.statusFrame didClickButton:button.tag];
     }
 }
 
 #pragma mark 点击原创微博文字执行代理方法
 - (void)originalTextViewDidTapCell
 {
-    if ([_delegate respondsToSelector:@selector(textViewDidClickCell:)]) {
-        [_delegate textViewDidClickCell:self];
+    if ([_delegate respondsToSelector:@selector(textViewDidClickCell:)] && _ignoreOriginalViewTap == NO) {
+        [_delegate textViewDidClickCell:self.statusFrame];
     }
 }
 
@@ -111,7 +111,19 @@
 - (void)retweetTextViewDidTapCell
 {
     if ([_delegate respondsToSelector:@selector(textViewDidClickCell:)]) {
-        [_delegate textViewDidClickCell:self];
+        //新建被转发微博的frame（作为原创微博的显示形式）
+        MRTStatusFrame *retweetFrame = [[MRTStatusFrame alloc] init];
+        retweetFrame.status = self.statusFrame.status.retweeted_status;
+        
+        [_delegate textViewDidClickCell:retweetFrame];
+    }
+}
+
+#pragma mark 点击视频链接代理方法
+- (void)playVideoWithUrl:(NSURL *)url allowRotate:(BOOL)allowRotate
+{
+    if ([_delegate respondsToSelector:@selector(playVideoWithUrl:allowRotate:)]) {
+        [_delegate playVideoWithUrl:url allowRotate:allowRotate];
     }
 }
 

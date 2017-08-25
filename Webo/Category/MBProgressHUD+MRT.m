@@ -48,6 +48,28 @@
     return hud;
 }
 
++ (MBProgressHUD *)showHUDToView:(UIView *)view
+{
+    if (view == nil) view = [[UIApplication sharedApplication].windows lastObject];
+    //仅仅显示菊花
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+
+    //隐藏时从父控件中移除
+    hud.removeFromSuperViewOnHide = YES;
+    
+    //修改为圆环模式
+    //hud.mode = MBProgressHUDModeAnnularDeterminate;
+    
+    //先将背景框改为solid才能直接改未加模糊的背景框颜色
+    hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+    //改变背景框颜色
+    hud.bezelView.color = [UIColor clearColor];
+    //改变动画颜色
+    hud.contentColor = [UIColor orangeColor];
+    
+    return hud;
+}
+
 + (void)showSuccess:(NSString *)success
 {
     [self showSuccess:success toView:nil];

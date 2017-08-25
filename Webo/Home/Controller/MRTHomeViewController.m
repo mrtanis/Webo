@@ -30,21 +30,29 @@
 #import "MRTWriteCommentViewController.h"
 #import "MRTWriteRepostController.h"
 #import "MRTCacheManager.h"
+#import "MRTVideoPlayer.h"
+#import "AppDelegate.h"
 
 @interface MRTHomeViewController () <MRTCoverDelegate, MRTStatusCellDelegate>
 
 @property (nonatomic, weak) MRTHomeTitle *titleButton;
 @property (nonatomic, strong) MRTMenuViewController *menu;
 @property (nonatomic, copy) NSMutableArray *statusFrames;
+
+@property (nonatomic, weak) MRTVideoPlayer *videoView;
 @end
 
 @implementation MRTHomeViewController
 
 #pragma mark 懒加载statusFrame数组
+- (NSString *)archivePath {
+    return [self timelineArchivePath];
+}
+
 - (NSMutableArray *)statusFrames
 {
     if (!_statusFrames) {
-        _statusFrames = [NSKeyedUnarchiver unarchiveObjectWithFile:[self timelineArchivePath]];
+        _statusFrames = [NSKeyedUnarchiver unarchiveObjectWithFile:[self archivePath]];
     }
     if (!_statusFrames) {
         _statusFrames = [[NSMutableArray alloc] init];
@@ -93,7 +101,7 @@
     //添加下拉刷新控件
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshWithOutCacheCheck)];
     //[self loadNewStatusCheckCache:YES];
-    if (_statusFrames.count == 0) {
+    if (self.statusFrames.count == 0) {
         [self loadNewStatusCheckCache:NO];
     }
     
@@ -214,7 +222,9 @@
     //载入since_id之后的新微博数据
     if (self.statusFrames.count) {
         //将since_id设置为当前已保存的最新微博的idstr，idstr越大数据越新
-        sinceId = [[self.statusFrames[0] status] idstr];
+        MRTStatusFrame *statusFrame = self.statusFrames[0];
+        
+        sinceId = [statusFrame.status idstr];
     }
     
     //发送get请求
@@ -263,6 +273,7 @@
 - (void)loadMoreStatus
 {
     NSUInteger count = self.statusFrames.count;
+    NSLog(@"微博数据达到%ld条", count);
     if (count > 180) {
         //结束上拉刷新
         [self.tableView.mj_footer endRefreshing];
@@ -272,13 +283,15 @@
         
         if (self.statusFrames.count) {
             //返回小于等于max_id的微博，所以要减一
-            long long max_id =[[[[self.statusFrames lastObject] status] idstr] longLongValue] - 1;
+            MRTStatusFrame *statusFrame = [self.statusFrames lastObject];
+            long long max_id =[[statusFrame.status idstr] longLongValue] - 1;
             maxId = [NSString stringWithFormat:@"%lld", max_id];
         }
-        
+        NSLog(@"maxId:%@", maxId);
         //发送get请求
         [MRTStatusTool moreStatusWithMaxId:maxId success:^(NSArray *statuses) {
             
+            NSLog(@"此次获取旧微博%ld条", statuses.count);
             //结束上拉刷新
             [self.tableView.mj_footer endRefreshing];
             
@@ -398,6 +411,7 @@
     }
     
     MRTStatusFrame *statusFrame = self.statusFrames[indexPath.row];
+    
     cell.statusFrame = statusFrame;
     cell.statusToolBar.hidden = NO;
     
@@ -422,6 +436,7 @@
 #pragma mark UITableViewDelegate 方法
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
     MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
     //不滚动到评论区
     commentVC.scorllToComment = NO;
@@ -429,21 +444,23 @@
     
     MRTStatusCell *statusCell = [self.tableView cellForRowAtIndexPath:indexPath];
 
-    commentVC.statusCell = statusCell;
+    commentVC.statusFrame = statusCell.statusFrame;
     
     //隐藏系统自带tabBar
     commentVC.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:commentVC animated:YES];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 #pragma mark 执行cell代理方法,点击工具栏
-- (void)statusCell:(MRTStatusCell *)statusCell didClickButton:(NSInteger)index
+- (void)statusCell:(MRTStatusFrame *)statusFrame didClickButton:(NSInteger)index
 {
     if (index == 0) {
         MRTWriteRepostController *writeRepostVC = [[MRTWriteRepostController alloc] init];
         
-        writeRepostVC.statusCell = statusCell;
+        writeRepostVC.statusFrame = statusFrame;
         
         MRTNavigationController *navVC = [[MRTNavigationController alloc] initWithRootViewController:writeRepostVC];
         
@@ -453,9 +470,9 @@
     
     if (index == 1) {
         //如果有评论就进入查看
-        if (statusCell.statusFrame.status.comments_count) {
+        if (statusFrame.status.comments_count) {
             MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
-            commentVC.statusCell = statusCell;
+            commentVC.statusFrame = statusFrame;
             
             //滚动到评论区
             commentVC.scorllToComment = YES;
@@ -466,7 +483,7 @@
             [self.navigationController pushViewController:commentVC animated:YES];
         } else {//没有评论就进入发评论界面
             MRTWriteCommentViewController *writeCommentVC = [[MRTWriteCommentViewController alloc] init];
-            writeCommentVC.statusCell = statusCell;
+            writeCommentVC.statusFrame = statusFrame;
             
             MRTNavigationController *navVC = [[MRTNavigationController alloc] initWithRootViewController:writeCommentVC];
             
@@ -476,10 +493,10 @@
 }
 
 #pragma mark 执行cell代理方法,点击textView
-- (void)textViewDidClickCell:(MRTStatusCell *)statusCell
+- (void)textViewDidClickCell:(MRTStatusFrame *)statusFrame
 {
     MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
-    commentVC.statusCell = statusCell;
+    commentVC.statusFrame = statusFrame;
     
     //滚动到评论区
     commentVC.scorllToComment = NO;
@@ -489,6 +506,41 @@
     
     [self.navigationController pushViewController:commentVC animated:YES];
 }
+
+#pragma mark 点击视频链接代理方法
+- (void)playVideoWithUrl:(NSURL *)url allowRotate:(BOOL)allowRotate
+{
+    
+    MRTVideoPlayer *videoView = [MRTVideoPlayer sharedInstance];
+    CGRect frame = CGRectZero;
+    /*
+    if (allowRotate) {
+        frame = CGRectMake(0, 64, MRTScreen_Width, MRTScreen_Width * 0.5625);
+        videoView.frame = frame;
+    } else {
+        frame = CGRectMake(MRTScreen_Width * 0.1, 64, MRTScreen_Width * 0.8, MRTScreen_Height * 0.8);
+        videoView.frame = frame;
+    }
+    */
+    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    [window addSubview:videoView];
+    [videoView playWithUrl:url allowRotate:allowRotate frame:frame];
+    //[self.view addSubview:videoView];
+    _videoView = videoView;
+    NSLog(@"播放器设置完成,地址:%@", url);
+}
+/*
+- (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    
+    NSLog(@"将要旋转屏幕");
+    [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        //
+    } completion:nil];
+    
+}*/
 
 
 /*

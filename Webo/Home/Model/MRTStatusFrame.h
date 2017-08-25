@@ -24,10 +24,7 @@
 @property (nonatomic) CGRect originalNameFrame;
 //vip frame
 @property (nonatomic) CGRect originalVipFrame;
-//时间frame
-@property (nonatomic) CGRect originalTimeFrame;
-//来源frame
-@property (nonatomic) CGRect originalSourceFrame;
+
 //正文frame
 @property (nonatomic) CGRect originalTextFrame;
 //图片frame
@@ -44,6 +41,7 @@
 @property (nonatomic) CGRect retweetIconFrame;
 //昵称frame
 @property (nonatomic) CGRect retweetNameFrame;
+
 //正文frame
 @property (nonatomic) CGRect retweetTextFrame;
 //图片frame

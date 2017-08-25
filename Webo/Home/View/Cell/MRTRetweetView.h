@@ -14,7 +14,7 @@
 
 @optional
 - (void)retweetTextViewDidTapCell;
-
+- (void)playVideoWithUrl:(NSURL *)url allowRotate:(BOOL)allowRotate;
 @end
 
 @interface MRTRetweetView : UIImageView

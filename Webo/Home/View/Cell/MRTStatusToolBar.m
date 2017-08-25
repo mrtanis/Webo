@@ -138,6 +138,21 @@
     
 }
 
+#pragma mark 为messageStatusFrame赋值时调用
+- (void)setMessageStatusFrame:(MRTMessageStatusFrame *)statusFrame
+{
+    _messageStatusFrame = statusFrame;
+    
+    _retweetBtn.tag = 0;
+    _commentBtn.tag = 1;
+    _likeBtn.tag = 2;
+    
+    [self setButton:_retweetBtn withNumber:statusFrame.status.reposts_count];
+    [self setButton:_commentBtn withNumber:statusFrame.status.comments_count];
+    [self setButton:_likeBtn withNumber:statusFrame.status.attitudes_count];
+    
+}
+
 #pragma mark 设置按钮标题
 - (void)setButton:(UIButton *)button withNumber:(int)count
 {
