@@ -13,5 +13,8 @@
 + (NSString *)convertTime:(float)second;
 
 //从网页源代码中筛选出视频链接
-+ (NSMutableDictionary *)videoUrlFromString:(NSString *)htmlStr;
++ (NSString *)videoUrlFromString:(NSString *)htmlStr;
+
+//从网页源代码中筛选出视频链接
++ (NSString *)videoPicUrlFromString:(NSString *)htmlStr;
 @end

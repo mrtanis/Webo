@@ -7,11 +7,13 @@
 //
 
 #import "MRTTextView.h"
+#import "MRTTextAttachment.h"
+#import "NSAttributedString+MRTConvert.h"
+#import "NSMutableAttributedString+MRTConvert.h"
 
 @interface MRTTextView()
 
-//占位符
-@property (nonatomic, weak) UILabel *placeHolder;
+
 
 @end
 
@@ -24,9 +26,25 @@
     if (self) {
         self.font = [UIFont systemFontOfSize:16];
         self.textColor = [UIColor darkTextColor];
-        
+        NSMutableDictionary *textAttrDic = [NSMutableDictionary dictionary];
+        textAttrDic[NSFontAttributeName] = [UIFont systemFontOfSize:16];
+        textAttrDic[NSForegroundColorAttributeName] = [UIColor darkTextColor];
+        self.typingAttributes = textAttrDic;
+        self.allowsEditingTextAttributes = NO;
         //添加通知监听文本框输入
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChange) name:UITextViewTextDidChangeNotification object:nil];
+        
+        UIMenuController *menuController = [UIMenuController sharedMenuController];
+        menuController.menuItems = @[
+                                     [[UIMenuItem alloc] initWithTitle:@"剪切" action:@selector(mrt_cut:)],
+                                     [[UIMenuItem alloc] initWithTitle:@"拷贝" action:@selector(mrt_copy:)],
+                                     [[UIMenuItem alloc] initWithTitle:@"选择" action:@selector(mrt_select:)],
+                                     [[UIMenuItem alloc] initWithTitle:@"全选" action:@selector(mrt_selectAll:)],
+                                     [[UIMenuItem alloc] initWithTitle:@"粘贴" action:@selector(mrt_paste:)]
+                                     ];
+        [menuController setTargetRect:self.bounds inView:self];
+        [menuController setMenuVisible:NO];
+                                     
         
         //UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
         //_keyboardHeight = MRTScreen_Width - 50;
@@ -35,6 +53,7 @@
     
     return self;
 }
+
 
 //重写setFont，设置textVie字体的同时设置占位符的字体
 - (void)setFont:(UIFont *)font
@@ -120,6 +139,8 @@
     NSLog(@"self.y:%f,self.height:%f,offset.y:%f", self.y, self.height, self.contentOffset.y);
     NSLog(@"overview.y:%f,overview.height:%f", self.overview.y, self.overview.height);
     NSLog(@"contentsize.height:%f", self.contentSize.height);
+    NSLog(@"textView:%@", self);
+    
     /*
     //如果overview移出了textView的frame，则增加textView的height
     if (_overview.y + _overview.height > self.height) {
@@ -133,10 +154,147 @@
         CGRect rect = self.frame;
         rect.size.height -= differFromOrigin;
         self.frame = rect;
-    }
-    */
+    }*/
+    
 }
 
+//设置overView时调整insets
+- (void)setOverview:(UIView *)overview
+{
+    _overview = overview;
+    self.contentInset = UIEdgeInsetsMake(0, 0, overview.frame.size.height + 40, 0);
+    
+}
+
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    
+    if ((action == @selector(mrt_cut:) && self.selectedRange.length) || (action == @selector(mrt_copy:) && self.selectedRange.length) || (action == @selector(mrt_select:) && self.selectedRange.length == 0 && self.text.length) || (action == @selector(mrt_selectAll:) && self.selectedRange.length != self.text.length && self.text.length) || (action == @selector(mrt_paste:) && pasteboard.string.length)) {
+        
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (void)mrt_cut:(UIMenuController *)menuController
+{
+    NSMutableAttributedString *str = [[self.attributedText attributedSubstringFromRange:self.selectedRange] mutableCopy];
+    
+    NSString *plainString = [str getPlainEmoString];
+
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = plainString;
+    
+    
+    NSMutableAttributedString *wholeStr = [self.attributedText mutableCopy];
+    NSRange rangeCopy = NSMakeRange(self.selectedRange.location, 0);
+    [wholeStr deleteCharactersInRange:self.selectedRange];
+    self.attributedText = wholeStr;
+    
+    if (self.attributedText.length == 0) {
+        self.placeHolder.hidden = NO;
+        self.rightItem.enabled = NO;
+    }
+    self.selectedRange = rangeCopy;
+    /*
+    NSMutableString *text = [self.text mutableCopy];
+    [text replaceCharactersInRange:self.selectedRange withString:@""];
+    self.text = text;
+    if (text.length == 0) {
+        self.placeHolder.hidden = NO;
+    }
+    self.selectedRange = NSMakeRange(self.selectedRange.location, 0);
+     */
+}
+
+- (void)mrt_copy:(UIMenuController *)menuController
+{
+    NSMutableAttributedString *str = [[self.attributedText attributedSubstringFromRange:self.selectedRange] mutableCopy];
+    NSString *plainString = [str getPlainEmoString];
+
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = plainString;
+}
+
+- (void)mrt_select:(UIMenuController *)menuController
+{
+    NSInteger textLength = self.text.length;
+    NSInteger location = self.selectedRange.location;
+    
+    //开始分词
+    NSString *str = self.text;
+    CFStringTokenizerRef ref = CFStringTokenizerCreate(NULL, (__bridge CFStringRef)str, CFRangeMake(0, str.length), kCFStringTokenizerUnitWord, NULL);
+    NSInteger m;
+    if (location >= 3) {
+        m = 3;
+    } else {
+        m = location;
+    }
+    CFStringTokenizerGoToTokenAtIndex(ref, location);
+    CFRange range = CFStringTokenizerGetCurrentTokenRange(ref);
+    NSLog(@"第一次range(%ld,%ld), location:%ld", range.location, range.length, location);
+    if (range.location <= location && range.location + range.length >= location) {
+        NSLog(@"第1种情况");
+        NSRange nsRange = NSMakeRange(range.location, range.length);
+        NSLog(@"分词为：%@", [self.text substringWithRange:nsRange]);
+        self.selectedRange = nsRange;
+    } else {
+        NSLog(@"第2种情况");
+        if (location < textLength) {
+            NSLog(@"第2.1种情况");
+            self.selectedRange = NSMakeRange(location, 1);
+        } else {
+            NSLog(@"第2.2种情况");
+            self.selectedRange = NSMakeRange(location - 1, 1);
+        }
+    }
+    UIMenuController *menu = [UIMenuController sharedMenuController];
+    [menu setMenuVisible:YES animated:YES];
+    
+}
+
+- (void)mrt_selectAll:(UIMenuController *)menuController
+{
+    self.selectedRange = NSMakeRange(0, self.text.length);
+    UIMenuController *menu = [UIMenuController sharedMenuController];
+    [menu setMenuVisible:YES animated:YES];
+}
+
+- (void)mrt_paste:(UIMenuController *)menuController
+{
+    self.placeHolder.hidden = YES;
+    self.rightItem.enabled = YES;
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    //if (self.attributedText.length) {
+        NSMutableAttributedString *attText = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
+        NSMutableAttributedString *pasteStr = [[NSMutableAttributedString alloc] initWithString:pasteboard.string];
+        //如果粘贴板含有表情字符串，则替换为表情
+        
+        [pasteStr convertToAttributedEmoString];
+        
+        [attText replaceCharactersInRange:self.selectedRange withAttributedString:pasteStr];
+        NSMutableDictionary *textAttrDic = [NSMutableDictionary dictionary];
+        textAttrDic[NSFontAttributeName] = [UIFont systemFontOfSize:16];
+        textAttrDic[NSForegroundColorAttributeName] = [UIColor darkTextColor];
+        [attText addAttributes:textAttrDic range:NSMakeRange(0, attText.length)];
+        self.attributedText = attText;
+        self.selectedRange = NSMakeRange(self.selectedRange.location + pasteStr.length, 0);
+    /*} else {
+        
+        if (self.text.length) {
+            NSMutableString *str = [self.text mutableCopy];
+            [str replaceCharactersInRange:self.selectedRange withString:pasteboard.string];
+            self.text = str;
+            self.selectedRange = NSMakeRange(self.selectedRange.location + pasteboard.string.length, 0);
+        } else {
+            self.text = pasteboard.string;
+        }
+        
+    }*/
+}
 
 //dealloc时移除通知
 - (void)dealloc

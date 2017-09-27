@@ -37,6 +37,7 @@
 
 //从正文中提取的短连接
 @property (nonatomic, copy) NSString *urlStr;
-@property (nonatomic, copy) NSString *videoStr;
+//从短链接源代码中解析出的视频封面
+@property (nonatomic, copy) NSString *videoPosterStr;
 
 @end

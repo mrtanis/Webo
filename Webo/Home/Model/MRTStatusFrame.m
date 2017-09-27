@@ -8,6 +8,7 @@
 
 #import "MRTStatusFrame.h"
 #import "UIImageView+WebCache.h"
+#import "MRTUrl_object.h"
 
 @implementation MRTStatusFrame
 
@@ -33,7 +34,7 @@
         toolBar_Y = CGRectGetMaxY(_retweetViewFrame);
     }
     
-    //有了Y值就可以计算tooBar的frame了
+    //有了Y值就可以计算toolBar的frame了
     CGFloat toolBar_X = 0;
     CGFloat tooBar_Width = MRTScreen_Width;
     CGFloat tooBar_Height = 35;
@@ -78,7 +79,7 @@
     
     //正文
     CGFloat text_X = icon_X;
-    CGFloat text_Y = CGRectGetMaxY(_originalIconFrame) + MRTStatusCellMargin;
+    CGFloat text_Y = CGRectGetMaxY(_originalIconFrame);
     CGFloat text_Width = MRTScreen_Width - 2 * MRTStatusCellMargin;
     NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
     //字体
@@ -91,11 +92,12 @@
     
     _originalTextFrame = CGRectMake(text_X, text_Y, contentSize.width, contentSize.height);
     
-    CGFloat original_Height = CGRectGetMaxY(_originalTextFrame) + MRTStatusCellMargin;
+    CGFloat original_Height = CGRectGetMaxY(_originalTextFrame);
+    CGFloat poster_Y = CGRectGetMaxY(_originalTextFrame);
     //配图
     if (_status.pic_urls.count) {
         CGFloat pic_X = MRTStatusCellMargin;
-        CGFloat pic_Y = CGRectGetMaxY(_originalTextFrame) + MRTStatusCellMargin;
+        CGFloat pic_Y = CGRectGetMaxY(_originalTextFrame);
         CGSize picSize = [self pictureSizeWithCount:(int)_status.pic_urls.count picture:[self.status.pic_urls firstObject]];
         //如果只有一张图，则为originalOnePicSize赋值
         if (_status.pic_urls.count == 1) _originalOnePicSize = picSize;
@@ -128,6 +130,19 @@
         original_Height = CGRectGetMaxY(_originalPictureFrame) + MRTStatusCellMargin;
     }*/
     
+    //视频封面
+    MRTURL_object *url_object = [_status.url_objects firstObject];
+    if (_status.videoPosterStr.length || url_object.object.object.stream.hd_url.length) {
+        CGFloat poster_X = MRTStatusCellMargin;
+        CGFloat poster_W = MRTScreen_Width - 2 * MRTStatusCellMargin;
+        CGFloat poster_H = poster_W * 0.5625;
+        
+        _originalVideoPosterFrame = CGRectMake(poster_X, poster_Y, poster_W, poster_H);
+        
+        original_Height = CGRectGetMaxY(_originalVideoPosterFrame) + MRTStatusCellMargin;
+    }
+    
+    
     //通过以上子控件的frame计算原创微博的frame
     CGFloat original_X = 0;
     CGFloat original_Y = 0;
@@ -153,7 +168,7 @@
     
     //正文
     CGFloat text_X = name_X;
-    CGFloat text_Y = CGRectGetMaxY(_retweetNameFrame) + MRTStatusCellMargin;
+    CGFloat text_Y = CGRectGetMaxY(_retweetNameFrame);
     CGFloat text_Width = MRTScreen_Width - 2 * MRTStatusCellMargin;
     
     NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
@@ -168,11 +183,12 @@
     
     _retweetTextFrame = CGRectMake(text_X, text_Y, contentSize.width, contentSize.height);
     
-    CGFloat retweet_Height = CGRectGetMaxY(_retweetTextFrame) + MRTStatusCellMargin;
+    CGFloat poster_Y = CGRectGetMaxY(_retweetTextFrame);
+    CGFloat retweet_Height = CGRectGetMaxY(_retweetTextFrame);
     //配图
     if (_status.retweeted_status.pic_urls.count) {
         CGFloat pic_X = MRTStatusCellMargin;
-        CGFloat pic_Y = CGRectGetMaxY(_retweetTextFrame) + MRTStatusCellMargin;
+        CGFloat pic_Y = CGRectGetMaxY(_retweetTextFrame);
         CGSize picSize = [self pictureSizeWithCount:(int)_status.retweeted_status.pic_urls.count picture:[self.status.retweeted_status.pic_urls firstObject]];
         //如果只有一张图，则为retweetOnePicSize赋值
         if (_status.retweeted_status.pic_urls.count == 1) _retweetOnePicSize = picSize;
@@ -180,6 +196,18 @@
         _retweetPictureFrame = CGRectMake(pic_X, pic_Y, picSize.width, picSize.height);
         
         retweet_Height = CGRectGetMaxY(_retweetPictureFrame) + MRTStatusCellMargin;
+    }
+    
+    //视频封面
+    MRTURL_object *url_object = [_status.retweeted_status.url_objects firstObject];
+    if (_status.retweeted_status.videoPosterStr.length || url_object.object.object.stream.hd_url.length) {
+        CGFloat poster_X = MRTStatusCellMargin;
+        CGFloat poster_W = MRTScreen_Width - 2 * MRTStatusCellMargin;
+        CGFloat poster_H = poster_W * 0.5625;
+        
+        _retweetVideoPosterFrame = CGRectMake(poster_X, poster_Y, poster_W, poster_H);
+        
+        retweet_Height = CGRectGetMaxY(_retweetVideoPosterFrame) + MRTStatusCellMargin;
     }
 
     
@@ -240,12 +268,14 @@
     [aCoder encodeCGRect:_originalTextFrame forKey:@"originalTextFrame"];
     [aCoder encodeCGRect:_originalPictureFrame forKey:@"originalPictureFrame"];
     [aCoder encodeCGSize:_originalOnePicSize forKey:@"originalOnePicSize"];
+    [aCoder encodeCGRect:_originalVideoPosterFrame forKey:@"originalVideoPosterFrame"];
     [aCoder encodeCGRect:_retweetViewFrame forKey:@"retweetViewFrame"];
     [aCoder encodeCGRect:_retweetIconFrame forKey:@"retweetIconFrame"];
     [aCoder encodeCGRect:_retweetNameFrame forKey:@"retweetNameFrame"];
     [aCoder encodeCGRect:_retweetTextFrame forKey:@"retweetTextFrame"];
     [aCoder encodeCGRect:_retweetPictureFrame forKey:@"retweetPictureFrame"];
     [aCoder encodeCGSize:_retweetOnePicSize forKey:@"retweetOnePicSize"];
+    [aCoder encodeCGRect:_retweetVideoPosterFrame forKey:@"retweetVideoPosterFrame"];
     [aCoder encodeCGRect:_toolBarFrame forKey:@"toolBarFrame"];
     [aCoder encodeFloat:_cellHeight forKey:@"cellHeight"];
     [aCoder encodeFloat:_noBarCellHeight forKey:@"noBarCellHeight"];
@@ -264,12 +294,14 @@
         _originalTextFrame = [aDecoder decodeCGRectForKey:@"originalTextFrame"];
         _originalPictureFrame = [aDecoder decodeCGRectForKey:@"originalPictureFrame"];
         _originalOnePicSize = [aDecoder decodeCGSizeForKey:@"originalOnePicSize"];
+        _originalVideoPosterFrame = [aDecoder decodeCGRectForKey:@"originalVideoPosterFrame"];
         _retweetViewFrame = [aDecoder decodeCGRectForKey:@"retweetViewFrame"];
         _retweetIconFrame = [aDecoder decodeCGRectForKey:@"retweetIconFrame"];
         _retweetNameFrame = [aDecoder decodeCGRectForKey:@"retweetNameFrame"];
         _retweetTextFrame = [aDecoder decodeCGRectForKey:@"retweetTextFrame"];
         _retweetPictureFrame = [aDecoder decodeCGRectForKey:@"retweetPictureFrame"];
         _retweetOnePicSize = [aDecoder decodeCGSizeForKey:@"retweetOnePicSize"];
+        _retweetVideoPosterFrame = [aDecoder decodeCGRectForKey:@"retweetVideoPosterFrame"];
         _toolBarFrame = [aDecoder decodeCGRectForKey:@"toolBarFrame"];
         _cellHeight = [aDecoder decodeFloatForKey:@"cellHeight"];
         _noBarCellHeight = [aDecoder decodeFloatForKey:@"noBarCellHeight"];

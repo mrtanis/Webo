@@ -13,7 +13,7 @@
 
 @optional
 - (void)originalTextViewDidTapCell;
-- (void)playVideoWithUrl:(NSURL *)url allowRotate:(BOOL)allowRotate;
+- (void)playVideoWithUrl:(NSURL *)url onView:(UIView *)superView;
 
 @end
 
@@ -27,5 +27,6 @@
 @property (nonatomic, weak) UILabel *nameLabel;
 @property (nonatomic, weak) UILabel *textLabel;
 @property (nonatomic, weak) UITextView *textView;
+@property (nonatomic, weak) UIImageView *posterView;
 
 @end

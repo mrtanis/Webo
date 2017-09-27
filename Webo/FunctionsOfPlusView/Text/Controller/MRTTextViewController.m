@@ -15,6 +15,10 @@
 #import "MRTTextParam.h"
 #import "AFNetworking.h"
 #import "MJExtension.h"
+#import "MRTEmotionKeyboard.h"
+#import "NSAttributedString+MRTConvert.h"
+#import "MRTImagePickerController.h"
+#import "MRTNavigationController.h"
 
 @interface MRTTextViewController ()<UITextViewDelegate, MRTTextToolBarDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -22,9 +26,15 @@
 @property (nonatomic) CGFloat viewMoveDistance;
 @property (nonatomic) BOOL viewDidMoved;
 @property (nonatomic, weak) MRTTextToolBar *toolBar;
-@property (nonatomic) CGFloat keyboardHeight;
+
 @property (nonatomic, weak) MRTTextAddPhotos *photosView;
 @property (nonatomic, copy) NSMutableArray *photos;
+
+
+//键盘状态
+@property (nonatomic) CGFloat keyboardHeight;
+@property (nonatomic) BOOL emotionKeyboardShow;
+@property (nonatomic) BOOL normalKeyboardShow;
 
 @end
 
@@ -50,8 +60,11 @@
     [self setUpToolBar];
     
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeTextViewFrame:) name:UIKeyboardWillShowNotification object:nil];//使用第三方键盘是此方法会调用三次
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resumeTextViewFrame:) name:UIKeyboardWillHideNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeTextViewFrame:) name:UIKeyboardWillShowNotification object:nil];//使用第三方键盘是此方法会调用三次
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resumeTextViewFrame:) name:UIKeyboardWillHideNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
 //自动弹出键盘
@@ -114,7 +127,10 @@
 {
     CGRect rect = self.view.bounds;
     rect.size.height -= 44;//减去工具栏高度
+    rect.origin.x = 10;
+    rect.size.width = MRTScreen_Width - 20;
     MRTTextView *textView = [[MRTTextView alloc] initWithFrame:rect];
+    textView.delegate = self;
     
     textView.repostFlag = NO;
     
@@ -189,8 +205,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark 键盘弹出时执行此方法
+/*
+#pragma mark 键盘将要弹出时执行此方法
 - (void)changeTextViewFrame:(NSNotification *)notification
 {
     
@@ -211,12 +227,20 @@
         //如果不做判断，则工具栏在已经上移的状态下还会被上移
         if (self.toolBar.y + self.toolBar.height == MRTScreen_Height)
         {
-            //然后判断是不是第三次调用本方法，因为第三方键盘会调用三次本方法，只有最后一次键盘frame才是准确
-            if (keyboardRectBegin.size.height > 0 && (keyboardRectBegin.origin.y > keyboardRectEnd.origin.y) && (keyboardRectBegin.size.height < keyboardRectEnd.size.height)) {
+            //如果是表情键盘
+            if (_emotionKeyboardShow) {
                 CGRect toolBarFrame = self.toolBar.frame;
                 toolBarFrame.origin.y -= self.keyboardHeight;
                 self.toolBar.frame = toolBarFrame;
+            } else {//普通键盘
+                //判断是不是第三次调用本方法，因为第三方键盘会调用三次本方法，只有最后一次键盘frame才是准确
+                if (keyboardRectBegin.size.height > 0 && (keyboardRectBegin.origin.y > keyboardRectEnd.origin.y) && (keyboardRectBegin.size.height < keyboardRectEnd.size.height)) {
+                    CGRect toolBarFrame = self.toolBar.frame;
+                    toolBarFrame.origin.y -= self.keyboardHeight;
+                    self.toolBar.frame = toolBarFrame;
+                }
             }
+            
         }
         
         //接下来处理textView上移
@@ -236,13 +260,28 @@
     }];
 }
 
-#pragma mark 键盘关闭时恢复textView的frame
+#pragma mark 键盘已经弹出时执行此方法
+- (void)keyboardDidShow:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    CGRect keyboardRectEnd = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    if (keyboardRectEnd.origin.y + keyboardRectEnd.size.height == MRTScreen_Height) {
+        if (keyboardRectEnd.size.height == 220) {
+            _emotionKeyboardShow = YES;
+            _normalKeyboardShow = NO;
+        } else {
+            _emotionKeyboardShow = NO;
+            _normalKeyboardShow = YES;
+        }
+    }
+}
+
+#pragma mark 键盘将要关闭时恢复textView的frame
 - (void)resumeTextViewFrame:(NSNotification *)notification
 {
     //如果工具栏被上移过则恢复
     if (self.toolBar.y + self.toolBar.height != MRTScreen_Height) {
         CGRect toolBarFrame = self.toolBar.frame;
-        toolBarFrame.origin.y += self.keyboardHeight;
+        toolBarFrame.origin.y = MRTScreen_Height - toolBarFrame.size.height;
         self.toolBar.frame = toolBarFrame;
     }
     
@@ -259,6 +298,80 @@
         }];
     }
 }
+
+#pragma mark 键盘已经关闭时执行此方法
+- (void)keyboardDidHide:(NSNotification *)notification
+{
+    _emotionKeyboardShow = NO;
+    _normalKeyboardShow = NO;
+}
+*/
+
+- (void)keyboardWillChangeFrame:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    
+    //捕获键盘动画时间是关键，使上移textView和弹出键盘动画同步
+    [UIView animateWithDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue] animations:^{
+        //获取键盘frame
+        CGRect keyboardRectBegin = [userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+        CGRect keyboardRectEnd = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+        NSLog(@"keyboardRectBegin(%f,%f,%f,%f)", keyboardRectBegin.origin.x,keyboardRectBegin.origin.y,keyboardRectBegin.size.width,keyboardRectBegin.size.height);
+        NSLog(@"keyboardRectEnd(%f,%f,%f,%f)", keyboardRectEnd.origin.x,keyboardRectEnd.origin.y,keyboardRectEnd.size.width,keyboardRectEnd.size.height);
+        //保存键盘高度
+        //self.keyboardHeight = keyboardRectEnd.size.height;
+        CGRect toolBarFrame = self.toolBar.frame;
+        toolBarFrame.origin.y = keyboardRectEnd.origin.y - toolBarFrame.size.height;
+        _toolBar.frame = toolBarFrame;
+        
+        //接下来处理textView上移
+        //获取光标位置
+        CGPoint cursorPosition = [self.textView caretRectForPosition:self.textView.selectedTextRange.end].origin;
+        //转换为相对window的位置
+        CGPoint point = [self.textView convertPoint:cursorPosition toView:self.view];
+        //获取当前textView的frame
+        CGRect textViewFrame = self.textView.frame;
+        //关闭键盘时恢复textView
+        if (keyboardRectEnd.origin.y == MRTScreen_Height) {
+            CGRect textFrame = _textView.frame;
+            textFrame.origin.y = 0;
+            _textView.frame = textFrame;
+        } else if (keyboardRectEnd.origin.y - 44 < point.y) {
+            //如果光标被键盘遮挡，则上移textView
+            self.viewMoveDistance = (point.y - keyboardRectEnd.origin.y) + 40 + 44;//行高为20，40为两行，44为工具栏高度
+            textViewFrame.origin.y = textViewFrame.origin.y - self.viewMoveDistance;
+            self.textView.frame = textViewFrame;
+            _viewDidMoved = YES;
+        }
+    }];
+}
+
+#pragma mark 键盘将要关闭时恢复textView的frame
+- (void)resumeTextViewFrame:(NSNotification *)notification
+{
+    //如果工具栏被上移过则恢复
+    if (self.toolBar.y + self.toolBar.height != MRTScreen_Height) {
+        CGRect toolBarFrame = self.toolBar.frame;
+        toolBarFrame.origin.y = MRTScreen_Height - toolBarFrame.size.height;
+        self.toolBar.frame = toolBarFrame;
+    }
+    
+    //如果textView被上移过则恢复
+    if (_textView.y != 0) {
+        NSDictionary *userInfo = notification.userInfo;
+        
+        [UIView animateWithDuration:[userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue] animations:^{
+            CGRect textViewFrame = self.textView.frame;
+            textViewFrame.origin.y = 0;
+            //textViewFrame.origin.y = textViewFrame.origin.y + self.viewMoveDistance;
+            self.textView.frame = textViewFrame;
+            _viewDidMoved = NO;
+        }];
+    }
+}
+
+#pragma mark textView委托方法
+
 
 #pragma mark textView发生改变时执行该代理方法
 - (void)textViewDidChange:(UITextView *)textView
@@ -303,7 +416,8 @@
     self.navigationItem.rightBarButtonItem.enabled = NO;
     UIImage *image = self.photos[0];
     //没有输入文字则显示分享图片，微博不支持只发布图片
-    NSString *status = self.textView.text.length ? self.textView.text : @"分享图片";
+    NSString *plainText = [self.textView.attributedText getPlainEmoString];
+    NSString *status = self.textView.attributedText.length ? plainText : @"分享图片";
     
     [MRTTextTool weboWithStatus:status image:image success:^{
         [MBProgressHUD showSuccess:@"发送图片成功"];
@@ -317,8 +431,10 @@
 
 - (void)sendText
 {
+    NSString *plainText = [self.textView.attributedText getPlainEmoString];
+    
     //发送文字
-    [MRTTextTool weboWithStatus:self.textView.text success:^{
+    [MRTTextTool weboWithStatus:plainText success:^{
         //提示成功
         [MBProgressHUD showSuccess:@"发送成功"];
         
@@ -336,12 +452,34 @@
 - (void)textToolBar:(MRTTextToolBar *)toolBar didClickButton:(NSInteger)index
 {
     if (index == 0) {
+        
+        MRTImagePickerController *imagePicker = [[MRTImagePickerController alloc] init];
+        MRTNavigationController *nav = [[MRTNavigationController alloc] initWithRootViewController:imagePicker];
+        
+        [self presentViewController:nav animated:YES completion:nil];
+        
+        /*
         //弹出系统相册
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
         imagePicker.delegate = self;
         [self presentViewController:imagePicker animated:YES completion:nil];
+         */
+    }
+    if (index == 3) {
+        MRTEmotionKeyboard *emotionKeyboard = [[MRTEmotionKeyboard alloc] init];
+        emotionKeyboard.textView = _textView;
+        _emotionKeyboardShow = YES;
+        _textView.inputView = emotionKeyboard;
+        [_textView reloadInputViews];
+        [_textView becomeFirstResponder];
+    }
+    if (index == 4) {
+        _normalKeyboardShow = YES;
+        _textView.inputView = nil;
+        [_textView reloadInputViews];
+        [_textView becomeFirstResponder];
     }
 }
 

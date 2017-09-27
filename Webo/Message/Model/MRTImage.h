@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MJExtension.h"
 
-@interface MRTImage : NSObject <MJKeyValue>
+@interface MRTImage : NSObject <NSCoding, MJKeyValue>
 @property (nonatomic) int height;
 @property (nonatomic) int width;
 @property (nonatomic, copy) NSString *url;

@@ -9,12 +9,15 @@
 #import "MRTRetweetView.h"
 #import "MRTPictureView.h"
 #import "NSString+MRTConvert.h"
+#import "UIImageView+WebCache.h"
 
 
 @interface MRTRetweetView() <UITextViewDelegate>
 
 
 @property (nonatomic, weak) MRTPictureView *pictureView;
+
+@property (nonatomic, weak) UIButton *playButton;
 
 @end
 
@@ -70,6 +73,23 @@
     MRTPictureView *pictureView = [[MRTPictureView alloc] init];
     [self addSubview:pictureView];
     _pictureView = pictureView;
+    
+    //视频封面
+    UIImageView *posterView = [[UIImageView alloc] init];
+    posterView.clipsToBounds = YES;
+    posterView.contentMode = UIViewContentModeScaleAspectFill;
+    posterView.userInteractionEnabled = YES;
+    
+    UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [playButton setImage:[UIImage imageNamed:@"icon_bigplay"] forState:UIControlStateNormal];
+    [playButton sizeToFit];
+    playButton.frame = CGRectMake((MRTScreen_Width - 20) * 0.5 - playButton.width * 0.5, (MRTScreen_Width - 20) * 0.5625 * 0.5 - playButton.height * 0.5, playButton.width, playButton.height);
+    [playButton addTarget:self action:@selector(playVideo) forControlEvents:UIControlEventTouchUpInside];
+    [posterView addSubview:playButton];
+    _playButton = playButton;
+    
+    [self addSubview:posterView];
+    _posterView = posterView;
 }
 
 - (void)setStatusFrame:(MRTStatusFrame *)statusFrame
@@ -92,6 +112,27 @@
     _pictureView.frame = self.statusFrame.retweetPictureFrame;
     _pictureView.onePicSize = self.statusFrame.retweetOnePicSize;
     _pictureView.pic_urls = self.statusFrame.status.retweeted_status.pic_urls;
+    
+    //视频封面
+    _posterView.frame = self.statusFrame.retweetVideoPosterFrame;
+    
+    NSString *posterStr = nil;
+    MRTURL_object *url_object = [self.statusFrame.status.retweeted_status.url_objects firstObject];
+    if (!_statusFrame.isAtStatus) {
+        posterStr = self.statusFrame.status.retweeted_status.videoPosterStr;;
+    } else {
+        NSLog(@"有视频地址str:%@", url_object.object.object.image.url);
+        
+        NSLog(@"有视频地址url:%@",  [NSURL URLWithString:url_object.object.object.image.url]);
+        posterStr = url_object.object.object.image.url;
+    }
+    [_posterView sd_setImageWithURL:[NSURL URLWithString:posterStr] placeholderImage:[UIImage imageNamed:@"timeline_image_placeholder"] options:SDWebImageAllowInvalidSSLCertificates completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        if (image) {
+            NSLog(@"封面下载成功:%@",image);
+        } else {
+            NSLog(@"封面下载失败:%@", error);
+        }
+    }];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction
@@ -106,27 +147,13 @@
     }
     if ([[URL scheme] rangeOfString:@"short"].location != NSNotFound) {
         NSLog(@"点击短连接");
-        NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.statusFrame.status.retweeted_status.urlStr] encoding:NSUTF8StringEncoding error:nil];
-        NSLog(@"htmlStr:%@", htmlStr);
         
-        NSMutableDictionary *urlDic = [NSString videoUrlFromString:htmlStr];
-        NSString *videoStr;
-        BOOL allowRotate;
-        if (urlDic[@"weibo"]) {
-            videoStr = urlDic[@"weibo"];
-            allowRotate = NO;
-        } else {
-            videoStr = urlDic[@"miaopai"];
-            allowRotate = YES;
-        }
         
-        if (videoStr.length) {
-            if ([_delegate respondsToSelector:@selector(playVideoWithUrl:allowRotate:)]) {
-                [_delegate playVideoWithUrl:[NSURL URLWithString:videoStr] allowRotate:allowRotate];
-            }
-        }
+        //[self playVideo];
         
-        return NO;
+        //__unused NSString *pic = [NSString videoPicUrlFromString:htmlStr];
+        
+        return YES;
     }
 
     return YES;
@@ -139,5 +166,33 @@
     }
 }
 
+- (void)playVideo
+{
+    __weak typeof (self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        __strong typeof (weakSelf) strongSelf = weakSelf;
+        
+        NSString *videoStr = nil;
+        MRTURL_object *url_object = [strongSelf.statusFrame.status.retweeted_status.url_objects firstObject];
+        
+        if (url_object.object.object.stream.hd_url.length) {
+            videoStr = url_object.object.object.stream.hd_url;
+        } else {
+            NSData *htmlData = [NSData dataWithContentsOfURL:[NSURL URLWithString:strongSelf.statusFrame.status.retweeted_status.urlStr]];
+            
+            NSString *htmlStr = [[NSString alloc] initWithData:htmlData encoding:NSUTF8StringEncoding];
+            NSLog(@"htmlStr:%@", htmlStr);
+            
+            videoStr = [NSString videoUrlFromString:htmlStr];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (videoStr.length) {
+                if ([strongSelf.delegate respondsToSelector:@selector(playVideoWithUrl:onView:)]) {
+                    [strongSelf.delegate playVideoWithUrl:[NSURL URLWithString:videoStr] onView:_posterView];
+                }
+            }
+        });
+    });
+}
 
 @end

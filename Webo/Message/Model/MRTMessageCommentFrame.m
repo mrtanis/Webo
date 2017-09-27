@@ -29,7 +29,7 @@
     }
 }
 
-#pragma mark 计算评论frame
+#pragma mark 计算主评论frame
 - (void)setUpCommentViewFrame
 {
     //头像
@@ -62,7 +62,7 @@
     
     //正文
     CGFloat text_X = icon_X;
-    CGFloat text_Y = CGRectGetMaxY(_originalIconFrame) + MRTStatusCellMargin;
+    CGFloat text_Y = CGRectGetMaxY(_originalIconFrame);
     CGFloat text_Width = MRTScreen_Width - 2 * MRTStatusCellMargin;
     NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
     //字体
@@ -75,7 +75,7 @@
     
     _originalTextFrame = CGRectMake(text_X, text_Y, contentSize.width, contentSize.height);
     
-    CGFloat original_Height = CGRectGetMaxY(_originalTextFrame) + MRTStatusCellMargin;
+    CGFloat original_Height = CGRectGetMaxY(_originalTextFrame);
     //status概览
     if (self.comment.reply_comment == nil) {
         //配图
@@ -131,7 +131,7 @@
     
     //正文
     CGFloat text_X = MRTStatusCellMargin;
-    CGFloat text_Y = MRTStatusCellMargin;
+    CGFloat text_Y = 0;
     CGFloat text_Width = MRTScreen_Width - 2 * MRTStatusCellMargin;
     NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
     //字体

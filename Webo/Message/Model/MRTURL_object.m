@@ -10,4 +10,24 @@
 
 @implementation MRTURL_object
 
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:_object forKey:@"object"];
+    [aCoder encodeInt:_play_count forKey:@"play_count"];
+    [aCoder encodeObject:_url_ori forKey:@"url_ori"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    
+    if (self) {
+        _object = [aDecoder decodeObjectForKey:@"object"];
+        _play_count = [aDecoder decodeIntForKey:@"play_count"];
+        _url_ori = [aDecoder decodeObjectForKey:@"url_ori"];
+    }
+    
+    return self;
+}
+
 @end

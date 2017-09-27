@@ -187,7 +187,7 @@
     //添加信息页
     MRTMessageViewController *messageVC = [[MRTMessageViewController alloc] init];
     
-    [self setUpOneChildVC:messageVC image:[UIImage imageNamed:@"tabbar_message_center"] selectedImage:[UIImage imageWithOriginalName:@"tabbar_message_center_selected"] title:@"消息"];
+    [self setUpOneChildVC:messageVC image:[UIImage imageNamed:@"tabbar_message_center"] selectedImage:[UIImage imageWithOriginalName:@"tabbar_message_center_selected"] title:@"@me"];
     
     _messageVC = messageVC;
     

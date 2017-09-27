@@ -17,11 +17,11 @@
 @protocol MRTStatusCellDelegate <NSObject>
 
 @optional
-- (void)statusCell:(MRTStatusFrame *)statusFrame didClickButton:(NSInteger)index;
+- (void)statusCell:(MRTStatusFrame *)statusFrame didClickButton:(NSInteger)index indexPath:(NSIndexPath *)indexPath;
 
-- (void)textViewDidClickCell:(MRTStatusFrame *)statusFrame;
+- (void)textViewDidClickCell:(MRTStatusFrame *)statusFrame indexPath:(NSIndexPath *)indexPath;
 
-- (void)playVideoWithUrl:(NSURL *)url allowRotate:(BOOL)allowRotate;
+- (void)playVideoWithUrl:(NSURL *)url onView:(UIView *)superView indexPath:(NSIndexPath *)indexPath;
 
 @end
 @interface MRTStatusCell : UITableViewCell
@@ -37,6 +37,8 @@
 @property (nonatomic, weak) UIButton *retweetBtn;
 @property (nonatomic, weak) UIButton *commentBtn;
 @property (nonatomic, weak) UIButton *likeBtn;
+
+@property (nonatomic, strong) NSIndexPath *indexPath;
 
 @property (nonatomic) BOOL ignoreOriginalViewTap;
 

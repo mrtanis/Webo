@@ -31,6 +31,8 @@
 @property (nonatomic) CGRect originalPictureFrame;
 //只有单个配图时图片的size
 @property (nonatomic) CGSize originalOnePicSize;
+//视频封面
+@property (nonatomic) CGRect originalVideoPosterFrame;
 
 
 //转发微博frame
@@ -48,6 +50,8 @@
 @property (nonatomic) CGRect retweetPictureFrame;
 //只有单个配图时图片的size
 @property (nonatomic) CGSize retweetOnePicSize;
+//视频封面
+@property (nonatomic) CGRect retweetVideoPosterFrame;
 
 
 //工具条frame
@@ -60,6 +64,6 @@
 @property (nonatomic) CGFloat noBarCellHeight;
 
 
-//@property (nonatomic, copy) NSMutableAttributedString *textStr;
+@property (nonatomic) BOOL isAtStatus;
 
 @end

@@ -37,7 +37,13 @@
 @property (nonatomic, weak) MRTCommentPopMenu *popMenu;
 
 @property (nonatomic) BOOL switchFlag;
+@property (nonatomic) BOOL canRemoveSelf;
+@property (nonatomic) NSInteger removeCount;
 
+//在播放视频时从homeVC进入首先忽略滚动，待视图完全显示时再激活滚动判断，从而避免一进来视频就暂停
+@property (nonatomic) BOOL allowScrollJudge;
+//标志是否进入下一个commentVC
+@property (nonatomic) BOOL jumpToCommentVC;
 
 @end
 
@@ -69,6 +75,11 @@
     
     //默认显示评论
     _switchFlag = NO;
+    //设置removeCount为2，
+    //因为- (void)didMoveToParentViewController:(UIViewController *)parent是在调用了viewDidAppear之后调用的，
+    //所以第一次调用将removeCount减1，第二次才真正执行重置视频操作
+    //避免视频刚被加入就被重置删除
+    _removeCount = 2;
     
     CGRect rect = self.view.frame;
     rect.size.height -= 35;
@@ -99,6 +110,35 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (_videoView) {
+        NSLog(@"视频进入子控制器");
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        MRTStatusCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        NSLog(@"cell:%@", cell);
+        UIView *fatherView;
+        if (_statusFrame.status.retweeted_status.videoPosterStr.length) {
+            NSLog(@"转发视频");
+            fatherView = cell.retweetView.posterView;
+        } else {
+            NSLog(@"原创视频");
+            fatherView = cell.originalView.posterView;
+        }
+        _videoView.indexPath = indexPath;
+        _videoView.fatherView = fatherView;
+        _videoView.tableView = _tableView;
+        
+        [fatherView addSubview:_videoView];
+        _videoView.frame = fatherView.bounds;
+        
+        
+    }
+    _allowScrollJudge = YES;
+}
+
 
 #pragma mark 设置导航栏
 - (void)setUpNavigationBar
@@ -122,8 +162,12 @@
     
     //设置左侧按钮
     UIButton *left = [UIButton buttonWithType:UIButtonTypeCustom];
+    if (_leftTitle) {
+        [left setTitle:_leftTitle forState:UIControlStateNormal];
+    } else {
+        [left setTitle:@"返回" forState:UIControlStateNormal];
+    }
     
-    [left setTitle:@"首页" forState:UIControlStateNormal];
     left.titleLabel.font = [UIFont systemFontOfSize:15];
     [left setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
     [left setTitleColor:[UIColor orangeColor] forState:UIControlStateHighlighted];
@@ -475,9 +519,11 @@
 }
 
 #pragma mark 执行cell代理方法,点击textView
-- (void)textViewDidClickCell:(MRTStatusFrame *)statusFrame
+- (void)textViewDidClickCell:(MRTStatusFrame *)statusFrame indexPath:(NSIndexPath *)indexPath
 {
     MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
+    
+    commentVC.leftTitle = @"微博正文";
     commentVC.statusFrame = statusFrame;
     
     //滚动到评论区
@@ -486,14 +532,74 @@
     //隐藏系统自带tabBar
     commentVC.hidesBottomBarWhenPushed = YES;
     
+    
+    if (_videoView.isPlayerShow) {
+        NSLog(@"给子控制器视频属性赋值");
+        _jumpToCommentVC = YES;//跳转到下一个commentVC，避免视频videoView被删除
+        
+        [_videoView removeFromSuperview];
+        
+        commentVC.videoView = _videoView;
+        
+        _videoView = nil;
+    }
+    
     [self.navigationController pushViewController:commentVC animated:YES];
 }
 
 - (void)dismissSelf
 {
+    NSLog(@"调用dismissSelf");
+    //取消三秒后隐藏工具栏，当刚刚点击视频调出工具栏时马上返回上个控制器，如果不取消隐藏工具栏的操作，会发生自动布局错误（布局toolBar）
+    [_videoView cancelDelayHideToolBar];
+    _videoView.isPlayerShow = NO;
+    _videoView.tableView = nil;
+    [_videoView resetPlayer];
+    _videoView.allowRotate = NO;
+    
+    [_videoView removeFromSuperview];
+    
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
+//此方法在添加或者删除子控制器时都会调用，避免在添加时将视频删除，须设置判断
+- (void)didMoveToParentViewController:(UIViewController *)parent
+{
+    NSLog(@"调用didMoveToParentViewController");
+    if (_jumpToCommentVC) {
+        _jumpToCommentVC = NO;
+        NSLog(@"进入下一个commentVC");
+        return;
+    }
+    
+    if (_isFromAt_status) {
+        NSLog(@"isFromAt_status");
+        //取消三秒后隐藏工具栏，当刚刚点击视频调出工具栏时马上返回上个控制器，如果不取消隐藏工具栏的操作，会发生自动布局错误（布局toolBar）
+        [_videoView cancelDelayHideToolBar];
+        _videoView.isPlayerShow = NO;
+        _videoView.tableView = nil;
+        [_videoView resetPlayer];
+        _videoView.allowRotate = NO;
+        
+        [_videoView removeFromSuperview];
+    } else {
+        if (_removeCount < 2) {
+            NSLog(@"removeCount < 2");
+            //取消三秒后隐藏工具栏，当刚刚点击视频调出工具栏时马上返回上个控制器，如果不取消隐藏工具栏的操作，会发生自动布局错误（布局toolBar）
+            [_videoView cancelDelayHideToolBar];
+            _videoView.isPlayerShow = NO;
+            _videoView.tableView = nil;
+            [_videoView resetPlayer];
+            _videoView.allowRotate = NO;
+            
+            [_videoView removeFromSuperview];
+        }
+        _removeCount --;
+    }
+
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -676,16 +782,50 @@
     
 }
 
-//根据滚动位置显示或隐藏主视图的switchBar
+#pragma mark - 可见cell播放，不可见暂停
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    /*if (self.tableView.contentOffset.y < self.statusFrame.noBarCellHeight - 64) {
-        //隐藏主视图的switchBar
-        self.switchBarOnMainView.hidden = YES;
+    
+    MRTStatusCell *cell = [self.tableView cellForRowAtIndexPath:_videoView.indexPath];
+    if (![self.tableView.visibleCells containsObject:cell]) {
+        if (_videoView.isPlaying && _allowScrollJudge) {
+            
+            [_videoView pause];
+            NSLog(@"commentVC执行暂停");
+        }
+        
+        _videoView.allowRotate = NO;
+        
+    } else if (_videoView.isPlayerShow) {
+        _videoView.allowRotate = !_videoView.miniPortrait;
     }
-    if (self.tableView.contentOffset.y > self.statusFrame.noBarCellHeight - 64) {
-        //显示主视图的switchBar
-        self.switchBarOnMainView.hidden = NO;
-    }*/
+}
+
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (!_videoView.isPlaying && !_videoView.isReplayShow) {
+        MRTStatusCell *cell = [self.tableView cellForRowAtIndexPath:_videoView.indexPath];
+        if ([self.tableView.visibleCells containsObject:cell]) {
+            [_videoView play];
+        }
+    }
+}
+
+#pragma mark 点击视频链接代理方法
+- (void)playVideoWithUrl:(NSURL *)url onView:(UIView *)fatherView indexPath:(NSIndexPath *)indexPath
+{
+    
+    MRTVideoPlayer *videoView = [MRTVideoPlayer sharedInstance];
+    
+    //UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    //[window addSubview:videoView];
+    [fatherView addSubview:videoView];
+    
+    
+    //从commentVC播放视频重置indexPath
+    [videoView playWithUrl:url onView:fatherView tableView:self.tableView indexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    _videoView = videoView;
+    NSLog(@"播放器设置完成,地址:%@", url);
 }
 @end

@@ -178,7 +178,7 @@
     //发送GET请求
     [MRTHttpTool GET:@"https://api.weibo.com/2/comments/mentions.json" parameters:parameter.mj_keyValues progress:nil success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         
-        //NSLog(@"%@", responseObject);
+        NSLog(@"%@", responseObject);
         
         //新建返回数据模型
         MRTCommentResult *result = [MRTCommentResult mj_objectWithKeyValues:responseObject];

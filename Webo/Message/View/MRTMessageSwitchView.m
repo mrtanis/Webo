@@ -748,23 +748,26 @@
 - (void)textViewDidClickCell:(MRTStatusFrame *)statusFrame onlyOriginal:(BOOL)flag
 {
     
-        MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
-        //不滚动到评论区
-        commentVC.scorllToComment = NO;
-        //是否只显示主微博
-        
-        commentVC.onlyOriginal = flag;
-        
-        
-        commentVC.statusFrame = statusFrame;
-        
-        //隐藏系统自带tabBar
-        commentVC.hidesBottomBarWhenPushed = YES;
-        
-        
-        if ([_delegate respondsToSelector:@selector(messageSwitchViewDidSendVC:present:)]) {
-            [_delegate messageSwitchViewDidSendVC:commentVC present:NO];
-        }
+    MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
+    
+    commentVC.leftTitle = @"@me";
+    statusFrame.isAtStatus = YES;//直接设置视频地址，不用从网页中抓取
+    //不滚动到评论区
+    commentVC.scorllToComment = NO;
+    //是否只显示主微博
+    
+    commentVC.onlyOriginal = flag;
+    
+    
+    commentVC.statusFrame = statusFrame;
+    
+    //隐藏系统自带tabBar
+    commentVC.hidesBottomBarWhenPushed = YES;
+    
+    
+    if ([_delegate respondsToSelector:@selector(messageSwitchViewDidSendVC:present:)]) {
+        [_delegate messageSwitchViewDidSendVC:commentVC present:NO];
+    }
     
     
     
@@ -831,19 +834,19 @@
         NSString *path = [self timelineArchivePathWithIndex:i];
         //[self.statusFrames removeAllObjects];
         if (i == 0) {
-            [_at_statusFrames removeAllObjects];
+            //[_at_statusFrames removeAllObjects];
             [NSKeyedArchiver archiveRootObject:self.at_statusFrames toFile:path];
         }
         if (i == 1) {
-            [_at_commentFrames removeAllObjects];
+            //[_at_commentFrames removeAllObjects];
             [NSKeyedArchiver archiveRootObject:self.at_commentFrames toFile:path];
         }
         if (i == 2) {
-            [_in_commentFrames removeAllObjects];
+            //[_in_commentFrames removeAllObjects];
             [NSKeyedArchiver archiveRootObject:self.in_commentFrames toFile:path];
         }
         if (i == 3) {
-            [_out_commentFrames removeAllObjects];
+            //[_out_commentFrames removeAllObjects];
             [NSKeyedArchiver archiveRootObject:self.out_commentFrames toFile:path];
         }
         
@@ -991,6 +994,9 @@
 {
     if (tableView.tag == 0) {
         MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
+        
+        commentVC.leftTitle = @"@me";
+        commentVC.isFromAt_status = YES;
         //不滚动到评论区
         commentVC.scorllToComment = NO;
         //只显示主微博
@@ -999,6 +1005,7 @@
         MRTMessageStatusCell *statusCell = [tableView cellForRowAtIndexPath:indexPath];
         
         MRTStatusFrame *statusFrame = [[MRTStatusFrame alloc] init];
+        
         statusFrame.status = statusCell.statusFrame.status;
         commentVC.statusFrame = statusFrame;
         
@@ -1012,6 +1019,9 @@
     }
     if (tableView.tag == 1) {
         MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
+        
+        commentVC.leftTitle = @"@me";
+        commentVC.isFromAt_status = YES;
         //不滚动到评论区
         commentVC.scorllToComment = NO;
         //是否只显示主微博
@@ -1021,6 +1031,7 @@
         MRTMessageStatusCell *statusCell = [tableView cellForRowAtIndexPath:indexPath];
         
         MRTStatusFrame *statusFrame = [[MRTStatusFrame alloc] init];
+        statusFrame.isAtStatus = YES;//直接设置视频地址，不用从网页中抓取
         statusFrame.status = statusCell.statusFrame.comment.status;
         commentVC.statusFrame = statusFrame;
         
@@ -1034,6 +1045,9 @@
     }
     if (tableView.tag == 2 || tableView.tag == 3) {
         MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
+        
+        commentVC.leftTitle = @"@me";
+        commentVC.isFromAt_status = YES;
         //不滚动到评论区
         commentVC.scorllToComment = NO;
         //是否只显示主微博
@@ -1043,6 +1057,7 @@
         MRTMessageCommentCell *commentCell = [tableView cellForRowAtIndexPath:indexPath];
         
         MRTStatusFrame *statusFrame = [[MRTStatusFrame alloc] init];
+        statusFrame.isAtStatus = YES;//直接设置视频地址，不用从网页中抓取
         statusFrame.status = commentCell.commentFrame.comment.status;
         commentVC.statusFrame = statusFrame;
         

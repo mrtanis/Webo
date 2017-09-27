@@ -9,6 +9,8 @@
 #import "MRTStatus.h"
 
 #import "NSDate+MJ.h"
+#import "NSString+MRTConvert.h"
+#import "NSMutableAttributedString+MRTConvert.h"
 
 
 @implementation MRTStatus
@@ -85,6 +87,7 @@
     
     _source = final;
 }
+
 - (void)setText:(NSString *)text
 {
     _text = text;
@@ -146,14 +149,17 @@
         //将短链接提取备用
         _urlStr = [copyText substringWithRange:range];
         
+        NSLog(@"短连接:%@", _urlStr);
+        //NSString *htmlStr = [NSString stringWithContentsOfURL:[NSURL URLWithString:_urlStr] encoding:NSUTF8StringEncoding error:nil];
         
+        //_videoPosterStr = [NSString videoPicUrlFromString:htmlStr];
         
         NSMutableDictionary *attr = [NSMutableDictionary dictionary];
         attr[NSForegroundColorAttributeName] = [UIColor colorWithRed:0 green:0.5 blue:0.7 alpha:1];
         attr[NSLinkAttributeName] = [NSURL URLWithString:@"short://"];
         [str addAttributes:attr range:range];
     }
-    
+    /*
     //////////////////////////////////////////
     //最后替换表情，因为将字符替换成表情字符数会变化
     
@@ -222,152 +228,23 @@
         [imageArray[i][@"range"] getValue:&range];
         //进行替换
         [str replaceCharactersInRange:range withAttributedString:imageArray[i][@"image"]];
-    }
+    }*/
     
     _attrText = str;
 }
-/*
+
 //读取attrText时根据text来匹配正则表达式，例如显示表情，昵称变蓝等
 - (NSMutableAttributedString *)attrText
 {
-    NSString *copyText = self.text;
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:copyText];
-    [str addAttribute:NSFontAttributeName value:MRTTextFont range:NSMakeRange(0, copyText.length)];
     
-    ////////////////////////////////////////////////////////
-    //匹配用户昵称
-    //昵称正则表达式
-    NSString *pattern = @"@[\\u4e00-\\u9fa5\\w\\-]+";
-    NSError *error = nil;
-    NSRegularExpression *regExpre = [[NSRegularExpression alloc] initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&error];
-    if (!regExpre) {
-        NSLog(@"%@", [error localizedDescription]);
-    }
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:self.text];
+    [str addAttribute:NSFontAttributeName value:MRTTextFont range:NSMakeRange(0, self.text.length)];
+    [str convertToAttributedEmoString];
     
-    NSArray *resultArray = [regExpre matchesInString:copyText options:0 range:NSMakeRange(0, copyText.length)];
-    
-    for (NSTextCheckingResult *match in resultArray) {
-        NSRange range = [match range];
-        NSMutableDictionary *attr = [NSMutableDictionary dictionary];
-        attr[NSForegroundColorAttributeName] = [UIColor colorWithRed:0 green:0.5 blue:0.7 alpha:1];
-        attr[NSLinkAttributeName] = [NSURL URLWithString:@"at://"];
-        [str addAttributes:attr range:range];
-    }
-    
-    ////////////////////////////////////////////////////////
-    //匹配话题
-    pattern = @"#([^\\#|.]+)#";
-    regExpre = [[NSRegularExpression alloc] initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&error];
-    if (!regExpre) {
-        NSLog(@"%@", [error localizedDescription]);
-    }
-    
-    resultArray = [regExpre matchesInString:copyText options:0 range:NSMakeRange(0, copyText.length)];
-    
-    for (NSTextCheckingResult *match in resultArray) {
-        NSRange range = [match range];
-        NSMutableDictionary *attr = [NSMutableDictionary dictionary];
-        attr[NSForegroundColorAttributeName] = [UIColor colorWithRed:0 green:0.5 blue:0.7 alpha:1];
-        attr[NSLinkAttributeName] = [NSURL URLWithString:@"trend://"];
-        [str addAttributes:attr range:range];
-    }
-    
-    ////////////////////////////////////////////////////////
-    //匹配短连接
-    pattern = @"http(s)?://([a-zA-Z|\\d]+\\.)+[a-zA-Z|\\d]+(/[a-zA-Z|\\d|\\-|\\+|_./?%=]*)?";
-    regExpre = [[NSRegularExpression alloc] initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&error];
-    if (!regExpre) {
-        NSLog(@"%@", [error localizedDescription]);
-    }
-    
-    resultArray = [regExpre matchesInString:copyText options:0 range:NSMakeRange(0, copyText.length)];
-    
-    for (NSTextCheckingResult *match in resultArray) {
-        NSRange range = [match range];
-        //将短链接提取备用
-        _urlStr = [copyText substringWithRange:range];
-        
-        
-        
-        NSMutableDictionary *attr = [NSMutableDictionary dictionary];
-        attr[NSForegroundColorAttributeName] = [UIColor colorWithRed:0 green:0.5 blue:0.7 alpha:1];
-        attr[NSLinkAttributeName] = [NSURL URLWithString:@"short://"];
-        [str addAttributes:attr range:range];
-    }
-    
-    //////////////////////////////////////////
-    //最后替换表情，因为将字符替换成表情字符数会变化
-    
-    //加载表情bundle
-    NSString *bundlePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Emoticons.bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
-    //加载表情plist
-    NSString *plistPath = [bundle pathForResource:@"content" ofType:@"plist" inDirectory:@"com.sina.normal"];
-    //获取plist中的数据
-    NSDictionary *dic = [[NSDictionary alloc] initWithContentsOfFile:plistPath];
-    NSArray *emoArray = dic[@"emoticons"];
-    
-    
-    
-    
-    //表情正则表达式
-    pattern = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
-    regExpre = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&error];
-    
-    if (!regExpre) {
-        NSLog(@"%@", [error localizedDescription]);
-    }
-    
-    //通过正则表达式来匹配字符串
-    resultArray = [regExpre matchesInString:copyText options:0 range:NSMakeRange(0, copyText.length)];
-    
-    //用来存放字典，字典中储存图片和图片对应的位置
-    NSMutableArray *imageArray = [NSMutableArray arrayWithCapacity:resultArray.count];
-    
-    //根据匹配范围来用图片进行相应的替换
-    for (NSTextCheckingResult *match in resultArray) {
-        //获取数组中的range
-        NSRange range = [match range];
-        //获取原字符串中对应的值
-        NSString *subStr = [copyText substringWithRange:range];
-        
-        for (int i = 0; i < emoArray.count; i++) {
-            if ([emoArray[i][@"chs"] isEqualToString:subStr]) {
-                //emoArray[i][@"png"]就是所匹配的表情
-                //新建文字附件来保存表情图片
-                NSTextAttachment *textAttachment = [[NSTextAttachment alloc] init];
-                CGRect rect = CGRectMake(0, -4, 20, 20);
-                textAttachment.bounds = rect;
-                
-                
-                //给附件添加图片
-                textAttachment.image = [UIImage imageNamed:emoArray[i][@"png"]];
-                
-                //把附件转换成属性字符串，用于替换原字符中的表情文字
-                NSAttributedString *imageStr = [NSAttributedString attributedStringWithAttachment:textAttachment];
-                
-                //把图片和图片对应的位置存入字典中
-                NSMutableDictionary *imageDic = [NSMutableDictionary dictionaryWithCapacity:2];
-                [imageDic setObject:imageStr forKey:@"image"];
-                [imageDic setObject:[NSValue valueWithRange:range] forKey:@"range"];
-                
-                //把字典存入数组中
-                [imageArray addObject:imageDic];
-            }
-        }
-    }
-    
-    //从后往前替换
-    for (int i = (int)imageArray.count - 1; i >= 0; i--) {
-        NSRange range;
-        [imageArray[i][@"range"] getValue:&range];
-        //进行替换
-        [str replaceCharactersInRange:range withAttributedString:imageArray[i][@"image"]];
-    }
     
     return str;
 }
-*/
+
 - (NSArray *)pic_urls
 {
     if (self.pic_ids.count && self.thumbnail_pic) {
@@ -407,6 +284,8 @@
     [aCoder encodeObject:_url_objects forKey:@"url_objects"];
     [aCoder encodeObject:_pic_ids forKey:@"pic_ids"];
     [aCoder encodeObject:_thumbnail_pic forKey:@"thumbnail_pic"];
+    [aCoder encodeObject:_urlStr forKey:@"urlStr"];
+    [aCoder encodeObject:_videoPosterStr forKey:@"videoPosterStr"];
 }
 #pragma mark decode
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -428,6 +307,8 @@
         _url_objects = [aDecoder decodeObjectForKey:@"url_objects"];
         _pic_ids = [aDecoder decodeObjectForKey:@"pic_ids"];
         _thumbnail_pic = [aDecoder decodeObjectForKey:@"thumbnail_pic"];
+        _urlStr = [aDecoder decodeObjectForKey:@"urlStr"];
+        _videoPosterStr = [aDecoder decodeObjectForKey:@"videoPosterStr"];
     }
     
     return self;

@@ -12,8 +12,10 @@
 #import "NSString+MRTConvert.h"
 #import "AppDelegate.h"
 #import "MBProgressHUD+MRT.h"
+#import "MRTStatusCell.h"
 
-@interface MRTVideoPlayer ()
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+@interface MRTVideoPlayer () <UIGestureRecognizerDelegate>
 
 //播放器相关
 @property (nonatomic, strong) AVPlayer *player;
@@ -21,6 +23,9 @@
 @property (nonatomic, strong) AVPlayerLayer *AVLayer;
 @property (nonatomic, strong) AVAsset *AVAsset;
 @property (nonatomic, weak) UIView *playerView;
+@property (nonatomic) CGSize videoSize;
+
+
 
 //控件相关
 @property (nonatomic, strong) UIView *toolBar;   //底部工具栏
@@ -28,7 +33,9 @@
 @property (nonatomic, weak) UIButton *fullScreenButton;  //全屏按钮
 @property (nonatomic, weak) UIButton *replayButton;  //重播按钮
 @property (nonatomic, weak) UISlider *playSlider;  //滑动条
+@property (nonatomic, weak) UIProgressView *playProgressBottom;  //底部滑动条
 @property (nonatomic, weak) UIProgressView *progressView;  //进度条
+@property (nonatomic, weak) UIProgressView *progressViewBottom;  //底部进度条
 @property (nonatomic, weak) UILabel *currentTimeLabel;  //当前时间
 @property (nonatomic, weak) UILabel *totalTimeLabel;  //总时间
 @property (nonatomic, weak) UIActivityIndicatorView *loadingIndicator;  //加载时菊花图
@@ -45,15 +52,16 @@
 //@property (nonatomic) BOOL isInBackground;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) id timeObserver;  //playback监测
-@property (nonatomic) BOOL allowRotate; //根据视频长宽比判断是否允许转屏
-@property (nonatomic) BOOL miniPortrait;    //长形视频的窗口模式
-@property (nonatomic) BOOL isReplayShow;    //重播按钮是否显示
+
+
+
 @property (nonatomic) BOOL isBuffering; //是否正在缓冲isPauseByUser
 @property (nonatomic) BOOL isPauseByUser;
 
 //滑动手势相关
 @property (nonatomic, strong) NSMutableDictionary *locations;   //保存开始触摸时的位置
 @property (nonatomic) CGFloat disdance; //滑动距离
+@property (nonatomic) CGPoint beginPoint;
 
 
 @end
@@ -89,20 +97,24 @@
     
     if (self) {
         
-        
     }
     
     return self;
 }
 
 #pragma mark - 根据传入url播放视频
-- (void)playWithUrl:(NSURL *)url allowRotate:(BOOL)allowRotate frame:(CGRect)frame
+- (void)playWithUrl:(NSURL *)url onView:(UIView *)fatherView tableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath
 {
     
-    _allowRotate = allowRotate;
+    //_allowRotate = allowRotate;
     //self.frame = frame;
     
-    
+    _fatherView = fatherView;
+    self.tableView = tableView;//用self是因为需要使用自定义存方法
+    _indexPath = indexPath;
+    _isPlayerShow = YES;
+    //重置播放器
+    [self resetPlayer];
     _AVAsset = [AVAsset assetWithURL:url];
     NSArray *array = _AVAsset.tracks;
     CGSize videoSize = CGSizeZero;
@@ -110,20 +122,25 @@
     for (AVAssetTrack *track in array) {
         if ([track.mediaType isEqualToString:AVMediaTypeVideo]) {
             videoSize = track.naturalSize;
+            _videoSize = videoSize;
         }
     }
     NSLog(@"videoSize(%f, %f)", videoSize.width, videoSize.height);
-    if (videoSize.height > videoSize.width) {
-        self.frame = CGRectMake(MRTScreen_Width * 0.1, 64, MRTScreen_Width * 0.8, MRTScreen_Height * 0.8);
-        _allowRotate = NO;
+    if (videoSize.height >= videoSize.width) {
+        NSLog(@"不能旋转");
+        self.frame = fatherView.bounds;
+        self.allowRotate = NO;
+        _miniPortrait = YES;
     } else {
-        self.frame = CGRectMake(0, 64, MRTScreen_Width, MRTScreen_Width * 0.5625);
-        _allowRotate = YES;
+        NSLog(@"可以旋转");
+        self.frame = fatherView.bounds;
+        self.allowRotate = YES;
+        _miniPortrait = NO;
     }
     UIView *view = [[UIView alloc] initWithFrame:self.bounds];
     
     [self setUpPlayerView:view];
-    _AVItem = [AVPlayerItem playerItemWithURL:url];
+    self.AVItem = [AVPlayerItem playerItemWithURL:url];
     
     if (!_player) {
         _player = [AVPlayer playerWithPlayerItem:_AVItem];
@@ -132,7 +149,47 @@
     }
     
     
+    
     [self addObserverAndNotification];
+}
+
+#pragma mark - 根据AVItem的值来添加、删除观察者
+- (void)setAVItem:(AVPlayerItem *)AVItem
+{
+    if (_AVItem == AVItem) return;
+    
+    if (_AVItem) {
+        [_AVItem removeObserver:self forKeyPath:@"status"];
+        [_AVItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
+        [_AVItem removeObserver:self forKeyPath:@"playbackBufferEmpty"];
+        [_AVItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
+    }
+    
+    _AVItem = AVItem;
+    if (_AVItem) {
+        //观察AVItem的属性
+        [_AVItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+        [_AVItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
+        [_AVItem addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
+        [_AVItem addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
+    }
+}
+
+#pragma mark - 根据tableView的值来添加、删除观察者
+- (void)setTableView:(UITableView *)tableView
+{
+    if (_tableView == tableView) return;
+    
+    if (_tableView) {
+        [_tableView removeObserver:self forKeyPath:@"contentOffset"];
+    }
+    
+    _tableView = tableView;
+    
+    if (_tableView) {
+        //观察tableView的滚动
+        [_tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+    }
 }
 
 #pragma mark - 设置playerView
@@ -140,12 +197,26 @@
 {
     _playerView = playerView;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTap:)];
+    tap.numberOfTouchesRequired = 1;
+    tap.numberOfTapsRequired = 1;
+    tap.delegate = self;
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGesture:)];
+    pan.maximumNumberOfTouches = 1;
+    pan.minimumNumberOfTouches = 1;
+    pan.delegate = self;
+    
+    [tap requireGestureRecognizerToFail:pan];
+    [_playerView addGestureRecognizer:pan];
+    [_playerView addGestureRecognizer:tap];
     //初始化player
     _player = [[AVPlayer alloc] init];
     //初始化layer
     _AVLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
+    
+    _AVLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    
     self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.7];
-    [_playerView addGestureRecognizer:tap];
+    
     [_playerView.layer addSublayer:_AVLayer];
     
     //添加控件
@@ -156,7 +227,7 @@
     [_playerView bringSubviewToFront:_toolBar];
     [_toolBar bringSubviewToFront:_playSlider];
     
-    _isShowToolBar = YES;
+    _isShowToolBar = NO;
     _isLandscape = NO;
     _miniPortrait = !_allowRotate;//允许转屏则不是微博视频模式
     
@@ -164,6 +235,13 @@
     
     [MBProgressHUD showHUDToView:_playerView];
     
+    
+}
+
+#pragma mark - 设置allowRotate来控制转屏
+- (void)setAllowRotate:(BOOL)allowRotate
+{
+    _allowRotate = allowRotate;
     //设置是否允许转屏
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     appDelegate.allowRotate = _allowRotate;
@@ -175,6 +253,7 @@
     //toolBar
     UIView *toolBar = [[UIView alloc] initWithFrame:CGRectMake(0, 10, MRTScreen_Width, 40)];
     toolBar.backgroundColor = [UIColor clearColor];
+    toolBar.userInteractionEnabled = YES;
     [_playerView addSubview:toolBar];
     _toolBar = toolBar;
     
@@ -197,7 +276,7 @@
     UISlider *playSlider = [[UISlider alloc] initWithFrame:CGRectZero];
     [playSlider setThumbImage:[UIImage imageNamed:@"icon_thumb_light"] forState:UIControlStateNormal];
     playSlider.value = 0;
-    playSlider.minimumTrackTintColor = [UIColor clearColor];
+    playSlider.minimumTrackTintColor = [UIColor orangeColor];
     playSlider.maximumTrackTintColor = [UIColor clearColor];
     [playSlider addTarget:self action:@selector(playerSliderTouchDown:) forControlEvents:UIControlEventTouchDown];
     [playSlider addTarget:self action:@selector(playerSliderTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
@@ -205,13 +284,35 @@
     [toolBar addSubview:playSlider];
     _playSlider = playSlider;
     
+    //底部滑动条
+    UIProgressView *playProgressBottom = [[UIProgressView alloc] initWithFrame:CGRectZero];
+    playProgressBottom.hidden = YES;
+    playProgressBottom.progress = 0;
+    playProgressBottom.progressTintColor = [UIColor orangeColor];
+    playProgressBottom.backgroundColor = [UIColor clearColor];
+    
+    [_playerView addSubview:playProgressBottom];
+    _playProgressBottom = playProgressBottom;
+    
     //进度条
     UIProgressView *progressView = [[UIProgressView alloc] initWithFrame:CGRectZero];
-    progressView.progressTintColor = [UIColor orangeColor];
+    progressView.progressTintColor = [UIColor grayColor];
     progressView.backgroundColor = [UIColor clearColor];
     progressView.progress = 0;
     [toolBar addSubview:progressView];
     _progressView = progressView;
+    
+    //底部进度条
+    UIProgressView *progressViewBottom = [[UIProgressView alloc] initWithFrame:CGRectZero];
+    progressViewBottom.hidden = YES;
+    progressViewBottom.progressTintColor = [UIColor grayColor];
+    progressViewBottom.backgroundColor = [UIColor clearColor];
+    progressViewBottom.progress = 0;
+    [_playerView addSubview:progressViewBottom];
+    _progressViewBottom = progressViewBottom;
+    
+    [_playerView bringSubviewToFront:_playProgressBottom];
+
     
     //总时间
     UILabel *totalTimeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -270,7 +371,7 @@
     [_currentTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(_playButton.mas_right).offset(12);
         make.centerY.mas_equalTo(_playButton);
-        make.width.mas_greaterThanOrEqualTo(37);
+        make.width.mas_equalTo(37);
     }];
     
     
@@ -282,6 +383,7 @@
     [_totalTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(_fullScreenButton.mas_left).mas_offset(-12);
         make.centerY.mas_equalTo(_toolBar);
+        make.width.mas_equalTo(37);
     }];
     
     [_playSlider mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -291,9 +393,9 @@
     }];
     
     [_progressView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_playSlider);
-        make.right.mas_equalTo(_playSlider);
-        make.centerY.mas_equalTo(_playSlider);
+        make.left.mas_equalTo(_currentTimeLabel.mas_right).offset(12);
+        make.right.mas_equalTo(_totalTimeLabel.mas_left).offset(-12);
+        make.centerY.mas_equalTo(_playSlider).offset(1);
     }];
     
     [_replayButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -307,11 +409,25 @@
         make.right.mas_equalTo(_playerView);
         make.height.mas_equalTo(0);
     }];
+    
+    [_progressViewBottom mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_playerView);
+        make.right.equalTo(_playerView);
+        make.bottom.equalTo(_playerView).offset(0.5);
+    }];
+    
+    [_playProgressBottom mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_playerView);
+        make.right.equalTo(_playerView);
+        make.bottom.equalTo(_playerView).offset(0.5);
+    }];
 }
 
 #pragma mark - 播放、暂停
 - (void)playOrPause:(UIButton *)button
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideToolBar) object:nil];
+    [self performSelector:@selector(hideToolBar) withObject:nil afterDelay:3];
     if (_isPlaying) {
         [self pause];
         _isPauseByUser = YES;
@@ -371,13 +487,9 @@
 {
     
     [self pause];
+    [self cancelDelayHideToolBar];
+    
     [_playButton setImage:[UIImage imageNamed:@"icon_play"] forState:UIControlStateNormal];
-}
-
-- (void)playerSliderTouchUpInside:(UISlider *)slider
-{
-    _isSliding = NO;
-    //[_playButton setImage:[UIImage imageNamed:@"icon_play"] forState:UIControlStateNormal];
 }
 
 - (void)playerSliderValueChanged:(UISlider *)slider
@@ -391,15 +503,27 @@
     }
     
     CMTime newTime = CMTimeMakeWithSeconds(_playSlider.value, 1);
+    //__weak typeof (self) weakSelf = self;
     [_AVItem seekToTime:newTime completionHandler:^(BOOL finished) {
-        //
+        //[weakSelf play];
+        //_isSliding = NO;
     }];
     _currentTimeLabel.text = [NSString convertTime:_playSlider.value];
+}
+
+- (void)playerSliderTouchUpInside:(UISlider *)slider
+{
+    _isSliding = NO;
+    [self play];
+    [self performSelector:@selector(hideToolBar) withObject:nil afterDelay:3];
+    //[_playButton setImage:[UIImage imageNamed:@"icon_play"] forState:UIControlStateNormal];
 }
 
 #pragma mark - 全屏按钮切换
 - (void)rotationScreen:(UIButton *)button
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideToolBar) object:nil];
+    [self performSelector:@selector(hideToolBar) withObject:nil afterDelay:3];
     if (_allowRotate) {//允许旋转表明是秒拍视频
         UIInterfaceOrientation orientation;
         //如果是竖屏
@@ -427,15 +551,92 @@
     } else {//微博视频
         if (_miniPortrait) {
             _miniPortrait = NO;
+            //若为方形视频，则调整显示模式
+            //if (_videoSize.width == _videoSize.height) {
+                _AVLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+            //}
+            //竖屏将toolBar背景调为半透明
+            _toolBar.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+            UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+            [self removeFromSuperview];
+            [window addSubview:self];
             self.frame = CGRectMake(0, 0, MRTScreen_Width, MRTScreen_Height);
-            [_fullScreenButton setImage:[UIImage imageNamed:@"icon_fullscreen"] forState:UIControlStateNormal];
+            [_fullScreenButton setImage:[UIImage imageNamed:@"icon_window"] forState:UIControlStateNormal];
         } else {
             _miniPortrait = YES;
-            self.frame = CGRectMake(MRTScreen_Width * 0.1, 64, MRTScreen_Width * 0.8, MRTScreen_Height * 0.8);
-            [_fullScreenButton setImage:[UIImage imageNamed:@"icon_window"] forState:UIControlStateNormal];
+            //小窗口始终采用AspectFill
+            _AVLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+            //竖屏将toolBar背景调为透明
+            _toolBar.backgroundColor = [UIColor clearColor];
+            [self removeFromSuperview];
+            [_fatherView addSubview:self];
+            self.frame = _fatherView.bounds;
+            //self.frame = CGRectMake(MRTScreen_Width * 0.1, 64, MRTScreen_Width * 0.8, MRTScreen_Height * 0.8);
+            [_fullScreenButton setImage:[UIImage imageNamed:@"icon_fullscreen"] forState:UIControlStateNormal];
         }
     }
     
+}
+
+#pragma mark - 横竖屏变换通知
+//当view添加到window上时  该方法不会执行，改用通知来实现
+
+/*
+ - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
+ {
+ [super traitCollectionDidChange:previousTraitCollection];
+ 
+ //CGRect bounds = [UIScreen mainScreen].bounds;
+ 
+ NSLog(@"检测到屏幕旋转");
+ //竖屏
+ if (self.traitCollection.verticalSizeClass != UIUserInterfaceSizeClassCompact) {
+ NSLog(@"当前竖屏");
+ [self mas_remakeConstraints:^(MASConstraintMaker *make) {
+ make.top.left.equalTo(@(0));
+ make.width.equalTo(@(MRTScreen_Width));
+ make.height.equalTo(@(MRTScreen_Height));
+ }];
+ [self layoutIfNeeded];
+ } else {//横屏
+ NSLog(@"当前横屏");
+ [self mas_remakeConstraints:^(MASConstraintMaker *make) {
+ make.top.left.equalTo(@(0));
+ make.width.equalTo(@(MRTScreen_Height));
+ make.height.equalTo(@(MRTScreen_Width));
+ }];
+ _AVLayer.frame = CGRectMake(0, 0, MRTScreen_Height, MRTScreen_Width);
+ [self layoutIfNeeded];
+ }
+ }*/
+
+- (void)didRotate:(NSNotification *)notification
+{
+    if (_allowRotate) {
+        //竖屏
+        if (self.traitCollection.verticalSizeClass != UIUserInterfaceSizeClassCompact) {
+            NSLog(@"当前竖屏");
+            _isLandscape = NO;
+            //竖屏将toolBar背景调为透明
+            _toolBar.backgroundColor = [UIColor clearColor];
+            [_fullScreenButton setImage:[UIImage imageNamed:@"icon_fullscreen"] forState:UIControlStateNormal];
+            [self removeFromSuperview];
+            [_fatherView addSubview:self];
+            self.frame = _fatherView.bounds;
+            //self.frame = CGRectMake(0, 64, MRTScreen_Width, MRTScreen_Width * 0.5625);
+            
+        } else {//横屏
+            NSLog(@"当前横屏");
+            _isLandscape = YES;
+            _toolBar.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+            [_fullScreenButton setImage:[UIImage imageNamed:@"icon_window"] forState:UIControlStateNormal];
+            [self removeFromSuperview];
+            UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+            [window addSubview:self];
+            self.frame = CGRectMake(0, 0, MRTScreen_Width, MRTScreen_Height);
+            
+        }
+    }
 }
 
 #pragma mark - 重播
@@ -443,7 +644,7 @@
 {
     //隐藏按钮
     _replayButton.hidden = YES;
-    
+    _isReplayShow = NO;
     //跳转到起点
     CMTime begin = CMTimeMakeWithSeconds(0, 1);
     [_AVItem seekToTime:begin completionHandler:^(BOOL finished) {
@@ -456,12 +657,9 @@
 #pragma mark - 添加observer和通知
 - (void)addObserverAndNotification
 {
-    //观察AVItem的status属性和loadTimeRanges属性
-    [_AVItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
-    [_AVItem addObserver:self forKeyPath:@"loadedTimeRanges" options:NSKeyValueObservingOptionNew context:nil];
-    [_AVItem addObserver:self forKeyPath:@"playbackLikelyToKeepUp" options:NSKeyValueObservingOptionNew context:nil];
-    [_AVItem addObserver:self forKeyPath:@"playbackBufferEmpty" options:NSKeyValueObservingOptionNew context:nil];
-    //[_AVItem addObserver:self forKeyPath:@"playbackBufferFull" options:NSKeyValueObservingOptionNew context:nil];
+    
+    
+    
     //观察播放进度
     [self monitoringPlayback:_AVItem];
     
@@ -483,10 +681,12 @@
     NSLog(@"timeObserver地址:%p", _timeObserver);
     _timeObserver = [_player addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:NULL usingBlock:^(CMTime time) {
         __strong typeof (weakSelf) strongSelf = weakSelf;
-        float currentTime = item.currentTime.value / item.currentTime.timescale;
+        float currentTime = CMTimeGetSeconds(item.currentTime);
+        float totalTime = CMTimeGetSeconds(item.duration);
         //如果slider正在滑动则不更新
         if (!strongSelf.isSliding) {
             strongSelf.playSlider.value = currentTime;
+            strongSelf.playProgressBottom.progress = currentTime / totalTime;
             strongSelf.currentTimeLabel.text = [NSString convertTime:currentTime];
         }
     }];
@@ -503,62 +703,174 @@
 #pragma mark - KVO观测
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
 {
-    AVPlayerItem *item = (AVPlayerItem *)object;
-    if ([keyPath isEqualToString:@"status"]) {
-        //获取当前status状态
-        AVPlayerItemStatus status = [[change valueForKey:@"new"] integerValue];
-        if (status == AVPlayerStatusReadyToPlay) {
-            NSLog(@"ready to play!");
-            //获取总帧数
-            CMTime duration = item.duration;
-            //转换成秒(value/scale)
-            float totalTime = CMTimeGetSeconds(duration);
-            //设置滑动条的最大值
-            _playSlider.maximumValue = totalTime;
-            //设置总时间
-            _totalTimeLabel.text = [NSString convertTime:totalTime];
-            [MBProgressHUD hideHUDForView:_playerView];
-            [self play];
-        } else if (status == AVPlayerStatusFailed) {
-            NSLog(@"AVPlayerStatusFailed");
-        } else if (status == AVPlayerStatusUnknown) {
-            NSLog(@"AVPlayerStatusUnknown");
+    if (object == _AVItem) {
+        AVPlayerItem *item = (AVPlayerItem *)object;
+        if ([keyPath isEqualToString:@"status"]) {
+            //获取当前status状态
+            AVPlayerItemStatus status = [[change valueForKey:@"new"] integerValue];
+            if (status == AVPlayerStatusReadyToPlay) {
+                NSLog(@"ready to play!");
+                //获取总帧数
+                CMTime duration = item.duration;
+                //转换成秒(value/scale)
+                float totalTime = CMTimeGetSeconds(duration);
+                //设置滑动条的最大值
+                _playSlider.maximumValue = totalTime - 1;
+                
+                //设置总时间
+                _totalTimeLabel.text = [NSString convertTime:totalTime];
+                [MBProgressHUD hideHUDForView:_playerView];
+                [self performSelector:@selector(hideToolBar) withObject:nil afterDelay:3];
+                [self play];
+            } else if (status == AVPlayerStatusFailed) {
+                NSLog(@"AVPlayerStatusFailed");
+                [MBProgressHUD hideHUDForView:_playerView];
+                [MBProgressHUD showMessage:@"播放失败，请重试！" toView:_playerView];
+                __weak typeof (self) weakSelf = self;
+                [NSTimer scheduledTimerWithTimeInterval:1 repeats:NO block:^(NSTimer * _Nonnull timer) {
+                    __strong typeof (weakSelf) strongSelf = weakSelf;
+                    [MBProgressHUD hideHUDForView:_playerView];
+                    [strongSelf resetPlayer];
+                    _isPlayerShow = NO;
+                    [strongSelf removeFromSuperview];
+                    
+                }];
+                
+            } else if (status == AVPlayerStatusUnknown) {
+                NSLog(@"AVPlayerStatusUnknown");
+                [MBProgressHUD hideHUDForView:_playerView];
+                [MBProgressHUD showMessage:@"播放失败，请重试！" toView:_playerView];
+                __weak typeof (self) weakSelf = self;
+                [NSTimer scheduledTimerWithTimeInterval:1 repeats:NO block:^(NSTimer * _Nonnull timer) {
+                    __strong typeof (weakSelf) strongSelf = weakSelf;
+                    [MBProgressHUD hideHUDForView:_playerView];
+                    [strongSelf resetPlayer];
+                    _isPlayerShow = NO;
+                    [strongSelf removeFromSuperview];
+                    
+                }];
+            }
+        } else if ([keyPath isEqualToString:@"loadedTimeRanges"]) {
+            //获取缓冲数组
+            NSArray *loadedTimeRanges = [_AVItem loadedTimeRanges];
+            
+            //  typedef struct {
+            //    CMTime start;
+            //    CMTime duration;
+            //  } CMTimeRange;
+            
+            CMTimeRange timeRange = [loadedTimeRanges.firstObject CMTimeRangeValue];
+            float startSeconds = CMTimeGetSeconds(timeRange.start);
+            float durationSeconds = CMTimeGetSeconds(timeRange.duration);
+            //缓冲时间
+            NSTimeInterval loadedSeconds = startSeconds + durationSeconds;
+            //总时间
+            float totalTime = CMTimeGetSeconds(_AVItem.duration);
+            [_progressView setProgress:loadedSeconds / totalTime animated:YES];
+            [_progressViewBottom setProgress:loadedSeconds / totalTime animated:YES];
+        } else if ([keyPath isEqualToString:@"playbackBufferEmpty"]) {
+            // 当缓冲是空的时候
+            if (_AVItem.playbackBufferEmpty) {
+                NSLog(@"正在缓冲");
+                _isBuffering = YES;
+                [self bufferingSomeSecond];
+                [MBProgressHUD showHUDToView:_playerView];
+            }
+            
+        } else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"]) {
+            // 当缓冲好的时候
+            if (_AVItem.playbackLikelyToKeepUp && _isBuffering){
+                NSLog(@"缓冲完成");
+                _isBuffering = NO;
+                [MBProgressHUD hideHUDForView:_playerView];
+            }
         }
-    } else if ([keyPath isEqualToString:@"loadedTimeRanges"]) {
-        //获取缓冲数组
-        NSArray *loadedTimeRanges = [_AVItem loadedTimeRanges];
-        
-        //  typedef struct {
-        //    CMTime start;
-        //    CMTime duration;
-        //  } CMTimeRange;
-        
-        CMTimeRange timeRange = [loadedTimeRanges.firstObject CMTimeRangeValue];
-        float startSeconds = CMTimeGetSeconds(timeRange.start);
-        float durationSeconds = CMTimeGetSeconds(timeRange.duration);
-        //缓冲时间
-        NSTimeInterval loadedSeconds = startSeconds + durationSeconds;
-        //总时间
-        float totalTime = CMTimeGetSeconds(_AVItem.duration);
-        [_progressView setProgress:loadedSeconds / totalTime animated:YES];
-    } else if ([keyPath isEqualToString:@"playbackBufferEmpty"]) {
-        // 当缓冲是空的时候
-        if (_AVItem.playbackBufferEmpty) {
-            NSLog(@"正在缓冲");
-            _isBuffering = YES;
-            [self bufferingSomeSecond];
-            [MBProgressHUD showHUDToView:_playerView];
-        }
-        
-    } else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"]) {
-        // 当缓冲好的时候
-        if (_AVItem.playbackLikelyToKeepUp && _isBuffering){
-            NSLog(@"缓冲完成");
-            _isBuffering = NO;
-            [MBProgressHUD hideHUDForView:_playerView];
+    } else if (object == _tableView) {
+        if ([keyPath isEqualToString:@"contentOffset"]) {
+            if (_isLandscape) return;
+            //当tableView滚动时处理视频的播放和暂停
+            [self handleVideoWithScrollOffset];
         }
     }
     
+    
+}
+
+#pragma mark - 隐藏、显示toolBar
+- (void)hideToolBar
+{
+    _isShowToolBar = NO;
+    [_toolBar mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(_playerView.mas_bottom).offset(_toolBar.height);
+    }];
+    
+    [UIView animateWithDuration:0.1 animations:^{
+        [self layoutIfNeeded];
+        _toolBar.alpha = 0;
+        _progressViewBottom.hidden = NO;
+        _playProgressBottom.hidden = NO;
+    }];
+    
+}
+
+- (void)showToolBar
+{
+    _isShowToolBar = YES;
+    
+    [_toolBar mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(_playerView.mas_bottom);
+    }];
+    
+    
+    [UIView animateWithDuration:0.1 animations:^{
+        [self layoutIfNeeded];
+        self.toolBar.alpha = 1;
+        _progressViewBottom.hidden = YES;
+        _playProgressBottom.hidden = YES;
+    }];
+}
+
+//取消三秒后隐藏工具栏
+- (void)cancelDelayHideToolBar
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideToolBar) object:nil];
+}
+
+#pragma mark - 当tableView滚动时处理视频是否允许旋转和设置缓冲
+- (void)handleVideoWithScrollOffset
+{
+    MRTStatusCell *cell = [_tableView cellForRowAtIndexPath:_indexPath];
+    //NSLog(@"videoView_indexPath:%@", _indexPath);
+    //NSLog(@"videoView_tableView:%@", _tableView);
+    if (![_tableView.visibleCells containsObject:cell]) {
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.0")) {
+            NSTimeInterval interval = 1; // set to  0 for default duration.
+            _player.currentItem.preferredForwardBufferDuration = interval;
+        }
+        //[self pause];
+        //NSLog(@"videoView滚动监测不允许旋转");
+        //self.allowRotate = NO;
+        //[self removeFromSuperview];
+    } else if (_isPlayerShow){
+        
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.0")) {
+            NSTimeInterval interval = 30; // set to  0 for default duration.
+            _player.currentItem.preferredForwardBufferDuration = interval;
+        }
+        /*
+        if (cell.statusFrame.status.videoPosterStr.length) {
+            [cell.originalView.posterView addSubview:self];
+            self.frame = cell.originalView.posterView.bounds;
+        } else {
+            [cell.retweetView.posterView addSubview:self];
+            self.frame = cell.retweetView.posterView.bounds;
+        }*/
+        //NSLog(@"videoView滚动监测允许旋转");
+        //self.allowRotate = !_miniPortrait;
+        //[self play];
+        
+        
+    }
 }
 
 #pragma mark - 缓冲时暂停一下载播放，如果还是不能播放，接着暂停，如此循环直到能播放
@@ -593,8 +905,20 @@
     _AVLayer.frame = self.bounds;
 }
 
-#pragma mark - 触摸点击事件
+#pragma mark - 手势代理
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if ([touch.view isKindOfClass:[UISlider class]] || [touch.view isKindOfClass:[UIButton class]]) {
+        return NO;
+    }
+    
+    return YES;
+    
+}
 
+
+#pragma mark - 触摸点击事件
+/*
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     if (touches.count == 1 && _isLandscape == NO) {
@@ -602,6 +926,7 @@
         CGPoint location = [t locationInView:_playerView];
         NSValue *key = [NSValue valueWithNonretainedObject:t];
         self.locations[key] = [NSValue valueWithCGPoint:location];
+        
     }
 }
 
@@ -622,11 +947,13 @@
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    
+    
     NSLog(@"self.center.x:%f", self.center.x);
     if (fabs(self.center.x) > MRTScreen_Width) {
         [self resetPlayer];
-        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        appDelegate.allowRotate = NO;
+        self.allowRotate = NO;
+        _isPlayerShow = NO;
         [self removeFromSuperview];
         
     } else {
@@ -637,107 +964,59 @@
         }];
     }
 }
-
+*/
 - (void)singleTap:(UIGestureRecognizer *)gesture
 {
     NSLog(@"单击操作！");
-    
     if (_isShowToolBar) {
-        _isShowToolBar = NO;
-        
-        [_toolBar mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.bottom.mas_equalTo(_playerView.mas_bottom).offset(_toolBar.height);
-        }];
-        
-        [UIView animateWithDuration:0.1 animations:^{
-            [self layoutIfNeeded];
-            self.toolBar.alpha = 0;
-        }];
+        [self cancelDelayHideToolBar];
+        [self hideToolBar];
     } else {
-        _isShowToolBar = YES;
-        
-        [_toolBar mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.bottom.mas_equalTo(_playerView.mas_bottom);
-        }];
-        
-        [UIView animateWithDuration:0.1 animations:^{
-            [self layoutIfNeeded];
-            self.toolBar.alpha = 1;
-        }];
+        [self showToolBar];
+        [self performSelector:@selector(hideToolBar) withObject:nil afterDelay:3];
     }
 }
 
-#pragma mark - 感应横竖屏变换
-//当view添加到window上时  该方法不会执行，改用通知来实现
-
-/*
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
+- (void)panGesture:(UIGestureRecognizer *)gesture
 {
-    [super traitCollectionDidChange:previousTraitCollection];
-    
-    //CGRect bounds = [UIScreen mainScreen].bounds;
-    
-    NSLog(@"检测到屏幕旋转");
-    //竖屏
-    if (self.traitCollection.verticalSizeClass != UIUserInterfaceSizeClassCompact) {
-        NSLog(@"当前竖屏");
-        [self mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.left.equalTo(@(0));
-            make.width.equalTo(@(MRTScreen_Width));
-            make.height.equalTo(@(MRTScreen_Height));
-        }];
-        [self layoutIfNeeded];
-    } else {//横屏
-        NSLog(@"当前横屏");
-        [self mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.left.equalTo(@(0));
-            make.width.equalTo(@(MRTScreen_Height));
-            make.height.equalTo(@(MRTScreen_Width));
-        }];
-        _AVLayer.frame = CGRectMake(0, 0, MRTScreen_Height, MRTScreen_Width);
-        [self layoutIfNeeded];
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        CGPoint location = [gesture locationInView:_playerView];
+        _beginPoint = location;
     }
-}*/
-
-- (void)didRotate:(NSNotification *)notification
-{
-    if (_allowRotate) {
-        //竖屏
-        if (self.traitCollection.verticalSizeClass != UIUserInterfaceSizeClassCompact) {
-            NSLog(@"当前竖屏");
-            _isLandscape = NO;
-            //竖屏将toolBar背景调为透明
-            _toolBar.backgroundColor = [UIColor clearColor];
-            [_fullScreenButton setImage:[UIImage imageNamed:@"icon_fullscreen"] forState:UIControlStateNormal];
-            [self mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(@64);
-                make.left.equalTo(@(0));
-                make.width.equalTo(@(MRTScreen_Width));
-                make.height.equalTo(@(MRTScreen_Width * 0.5625));
-            }];
-        } else {//横屏
-            NSLog(@"当前横屏");
-            _isLandscape = YES;
-            _toolBar.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-            [_fullScreenButton setImage:[UIImage imageNamed:@"icon_window"] forState:UIControlStateNormal];
-            [self mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.top.left.equalTo(@(0));
-                make.width.equalTo(@(MRTScreen_Width));
-                make.height.equalTo(@(MRTScreen_Height));
+    
+    if (gesture.state == UIGestureRecognizerStateChanged) {
+        CGPoint location = [gesture locationInView:_playerView];
+        _disdance = location.x - _beginPoint.x;
+        CGPoint center = self.center;
+        center.x += _disdance;
+        self.center = center;
+    }
+    
+    if (gesture.state == UIGestureRecognizerStateEnded) {
+        if (fabs(self.center.x) > MRTScreen_Width) {
+            [self resetPlayer];
+            self.allowRotate = NO;
+            _isPlayerShow = NO;
+            [self removeFromSuperview];
+            
+        } else {
+            [UIView animateWithDuration:0.2 animations:^{
+                CGPoint center = self.center;
+                center.x = (MRTScreen_Width - MRTStatusCellMargin * 2) * 0.5;
+                self.center = center;
             }];
         }
     }
-    
 }
+
 
 #pragma mark - 删除observer和通知
 - (void)resetPlayer
 {
     
-    [_AVItem removeObserver:self forKeyPath:@"status"];
-    [_AVItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
-    [_AVItem removeObserver:self forKeyPath:@"playbackBufferEmpty"];
-    [_AVItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
+    
+    
+    
     if (_timeObserver) {
         [_player removeTimeObserver:_timeObserver];
         _timeObserver = nil;
@@ -745,16 +1024,25 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     //[_AVItem cancelPendingSeeks];
     //[_AVItem.asset cancelLoading];
-    _AVItem = nil;
+    //_AVItem = nil;
     [_player pause];
     [_AVLayer removeFromSuperlayer];
     [_player replaceCurrentItemWithPlayerItem:nil];
     _player = nil;
-    [_playerView removeFromSuperview];
+    
     _playSlider.value = 0;
-    _progressView.progress = 0;
+    //_progressView.progress = 0;
     _currentTimeLabel.text = @"00:00";
     _totalTimeLabel.text = @"00:00";
+    [_playSlider removeFromSuperview];
+    [_currentTimeLabel removeFromSuperview];
+    [_totalTimeLabel removeFromSuperview];
+    [_playButton removeFromSuperview];
+    [_progressView removeFromSuperview];
+    [_fullScreenButton removeFromSuperview];
+    [_toolBar removeFromSuperview];
+    [_replayButton removeFromSuperview];
+    [_playerView removeFromSuperview];
     
     
 }
@@ -762,6 +1050,8 @@
 #pragma mark - dealloc
 - (void)dealloc
 {
+    self.AVItem = nil;
+    self.tableView = nil;
     [self resetPlayer];
 }
 @end

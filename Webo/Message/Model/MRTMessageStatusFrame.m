@@ -74,7 +74,7 @@
     
     //正文
     CGFloat text_X = icon_X;
-    CGFloat text_Y = CGRectGetMaxY(_originalIconFrame) + MRTStatusCellMargin;
+    CGFloat text_Y = CGRectGetMaxY(_originalIconFrame);
     CGFloat text_Width = MRTScreen_Width - 2 * MRTStatusCellMargin;
     NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
     //字体
@@ -87,11 +87,11 @@
     
     _originalTextFrame = CGRectMake(text_X, text_Y, contentSize.width, contentSize.height);
     
-    CGFloat original_Height = CGRectGetMaxY(_originalTextFrame) + MRTStatusCellMargin;
+    CGFloat original_Height = CGRectGetMaxY(_originalTextFrame);
     //配图
     if (_status.pic_urls.count) {
         CGFloat pic_X = MRTStatusCellMargin;
-        CGFloat pic_Y = CGRectGetMaxY(_originalTextFrame) + MRTStatusCellMargin;
+        CGFloat pic_Y = CGRectGetMaxY(_originalTextFrame);
         CGSize picSize = [self pictureSizeWithCount:(int)_status.pic_urls.count picture:[self.status.pic_urls firstObject]];
         //如果只有一张图，则为originalOnePicSize赋值
         if (_status.pic_urls.count == 1) _originalOnePicSize = picSize;
@@ -243,7 +243,7 @@
     
     //正文
     CGFloat text_X = icon_X;
-    CGFloat text_Y = CGRectGetMaxY(_originalIconFrame) + MRTStatusCellMargin;
+    CGFloat text_Y = CGRectGetMaxY(_originalIconFrame);
     CGFloat text_Width = MRTScreen_Width - 2 * MRTStatusCellMargin;
     NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
     //字体
@@ -256,7 +256,7 @@
     
     _originalTextFrame = CGRectMake(text_X, text_Y, contentSize.width, contentSize.height);
     
-    CGFloat original_Height = CGRectGetMaxY(_originalTextFrame) + MRTStatusCellMargin;
+    CGFloat original_Height = CGRectGetMaxY(_originalTextFrame);
     
     //通过以上子控件的frame计算原创微博的frame
     CGFloat original_X = 0;

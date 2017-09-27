@@ -32,6 +32,7 @@
 #import "MRTCacheManager.h"
 #import "MRTVideoPlayer.h"
 #import "AppDelegate.h"
+#import "NSString+MRTConvert.h"
 
 @interface MRTHomeViewController () <MRTCoverDelegate, MRTStatusCellDelegate>
 
@@ -40,6 +41,7 @@
 @property (nonatomic, copy) NSMutableArray *statusFrames;
 
 @property (nonatomic, weak) MRTVideoPlayer *videoView;
+@property (nonatomic) BOOL ignoreScrollJudge;
 @end
 
 @implementation MRTHomeViewController
@@ -73,6 +75,7 @@
 #pragma mark 生命周期
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     
     //微博背景颜色
     self.tableView.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1];
@@ -112,6 +115,12 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveTimeline) name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    _ignoreScrollJudge = NO; //还原滚动暂停
 }
 
 - (void)dealloc
@@ -243,8 +252,43 @@
         for (MRTStatus *status in statuses) {
             //创建statusFrame
             MRTStatusFrame *statusFrame = [[MRTStatusFrame alloc] init];
-            //给statusFrame的status属性赋值
-            statusFrame.status = status;
+           
+            __weak typeof (self) weakSelf = self;
+            NSURL *url = nil;
+            if (status.urlStr.length) {
+                
+                url = [NSURL URLWithString:status.urlStr];
+                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                    NSData *htmlData = [NSData dataWithContentsOfURL:url];
+                    NSString *htmlStr = [[NSString alloc] initWithData:htmlData encoding:NSUTF8StringEncoding];
+                    NSString *videoPosterStr = [NSString videoPicUrlFromString:htmlStr];
+                    status.videoPosterStr = videoPosterStr;
+
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        statusFrame.status = status;
+                        [weakSelf.tableView reloadData];
+                    });
+                    
+                });
+            } else if (status.retweeted_status.urlStr.length){
+                
+                url = [NSURL URLWithString:status.retweeted_status.urlStr];
+                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                    NSData *htmlData = [NSData dataWithContentsOfURL:url];
+                    NSString *htmlStr = [[NSString alloc] initWithData:htmlData encoding:NSUTF8StringEncoding];
+                    NSString *videoPosterStr = [NSString videoPicUrlFromString:htmlStr];
+                    status.retweeted_status.videoPosterStr = videoPosterStr;
+    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        statusFrame.status = status;
+                        [weakSelf.tableView reloadData];
+                    });
+                    
+                });
+            } else {
+                statusFrame.status = status;
+            }
+
             //将statusFrame加入newStatusFrame数组
             [newStatusFrames addObject:statusFrame];
         }
@@ -301,8 +345,43 @@
             for (MRTStatus *status in statuses) {
                 //创建statusFrame
                 MRTStatusFrame *statusFrame = [[MRTStatusFrame alloc] init];
-                //给statusFrame的status属性赋值
-                statusFrame.status = status;
+                
+                __weak typeof (self) weakSelf = self;
+                NSURL *url = nil;
+                if (status.urlStr.length) {
+                    url = [NSURL URLWithString:status.urlStr];
+                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                        NSData *htmlData = [NSData dataWithContentsOfURL:url];
+                        NSString *htmlStr = [[NSString alloc] initWithData:htmlData encoding:NSUTF8StringEncoding];
+                        NSString *videoPosterStr = [NSString videoPicUrlFromString:htmlStr];
+                        status.videoPosterStr = videoPosterStr;
+                        
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            statusFrame.status = status;
+                            [weakSelf.tableView reloadData];
+                        });
+                        
+                    });
+                } else if (status.retweeted_status.urlStr.length){
+                    url = [NSURL URLWithString:status.retweeted_status.urlStr];
+                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                        NSData *htmlData = [NSData dataWithContentsOfURL:url];
+                        NSString *htmlStr = [[NSString alloc] initWithData:htmlData encoding:NSUTF8StringEncoding];
+                        NSString *videoPosterStr = [NSString videoPicUrlFromString:htmlStr];
+                        status.retweeted_status.videoPosterStr = videoPosterStr;
+                        
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            statusFrame.status = status;
+                            [weakSelf.tableView reloadData];
+                        });
+                        
+                    });
+                } else {
+                    statusFrame.status = status;
+                }
+                
                 //将statusFrame加入到oldStatusFrame数组
                 [oldStatusFrames addObject:statusFrame];
             }
@@ -413,6 +492,7 @@
     MRTStatusFrame *statusFrame = self.statusFrames[indexPath.row];
     
     cell.statusFrame = statusFrame;
+    cell.indexPath = indexPath;
     cell.statusToolBar.hidden = NO;
     
     //设置控制器为statusToolBar的代理，以便相应工具栏点击
@@ -438,13 +518,23 @@
 {
 
     MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
+    
+    commentVC.leftTitle = @"首页";
     //不滚动到评论区
     commentVC.scorllToComment = NO;
-    
-    
+
     MRTStatusCell *statusCell = [self.tableView cellForRowAtIndexPath:indexPath];
 
     commentVC.statusFrame = statusCell.statusFrame;
+    
+    if (_videoView.isPlayerShow && _videoView.indexPath == indexPath) {
+        NSLog(@"给子控制器视频属性赋值");
+        _ignoreScrollJudge = YES; //忽略滚动暂停
+        [_videoView removeFromSuperview];
+        _videoView.indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        
+        commentVC.videoView = _videoView;
+    }
     
     //隐藏系统自带tabBar
     commentVC.hidesBottomBarWhenPushed = YES;
@@ -455,7 +545,7 @@
 }
 
 #pragma mark 执行cell代理方法,点击工具栏
-- (void)statusCell:(MRTStatusFrame *)statusFrame didClickButton:(NSInteger)index
+- (void)statusCell:(MRTStatusFrame *)statusFrame didClickButton:(NSInteger)index indexPath:(NSIndexPath *)indexPath
 {
     if (index == 0) {
         MRTWriteRepostController *writeRepostVC = [[MRTWriteRepostController alloc] init];
@@ -472,6 +562,8 @@
         //如果有评论就进入查看
         if (statusFrame.status.comments_count) {
             MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
+            
+            commentVC.leftTitle = @"首页";
             commentVC.statusFrame = statusFrame;
             
             //滚动到评论区
@@ -479,6 +571,15 @@
             
             //隐藏系统自带tabBar
             commentVC.hidesBottomBarWhenPushed = YES;
+            
+            if (_videoView.isPlayerShow && _videoView.indexPath == indexPath) {
+                NSLog(@"给子控制器视频属性赋值");
+                _ignoreScrollJudge = YES; //忽略滚动暂停
+                [_videoView removeFromSuperview];
+                _videoView.indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                
+                commentVC.videoView = _videoView;
+            }
             
             [self.navigationController pushViewController:commentVC animated:YES];
         } else {//没有评论就进入发评论界面
@@ -493,9 +594,11 @@
 }
 
 #pragma mark 执行cell代理方法,点击textView
-- (void)textViewDidClickCell:(MRTStatusFrame *)statusFrame
+- (void)textViewDidClickCell:(MRTStatusFrame *)statusFrame indexPath:(NSIndexPath *)indexPath
 {
     MRTCommentViewController *commentVC = [[MRTCommentViewController alloc] init];
+    
+    commentVC.leftTitle = @"首页";
     commentVC.statusFrame = statusFrame;
     
     //滚动到评论区
@@ -504,30 +607,73 @@
     //隐藏系统自带tabBar
     commentVC.hidesBottomBarWhenPushed = YES;
     
+    if (_videoView.isPlayerShow && _videoView.indexPath == indexPath) {
+        NSLog(@"给子控制器视频属性赋值");
+        _ignoreScrollJudge = YES; //忽略滚动暂停
+        [_videoView removeFromSuperview];
+        _videoView.indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        
+        commentVC.videoView = _videoView;
+    }
+    
     [self.navigationController pushViewController:commentVC animated:YES];
 }
 
 #pragma mark 点击视频链接代理方法
-- (void)playVideoWithUrl:(NSURL *)url allowRotate:(BOOL)allowRotate
+- (void)playVideoWithUrl:(NSURL *)url onView:(UIView *)fatherView indexPath:(NSIndexPath *)indexPath
 {
     
     MRTVideoPlayer *videoView = [MRTVideoPlayer sharedInstance];
-    CGRect frame = CGRectZero;
-    /*
-    if (allowRotate) {
-        frame = CGRectMake(0, 64, MRTScreen_Width, MRTScreen_Width * 0.5625);
-        videoView.frame = frame;
-    } else {
-        frame = CGRectMake(MRTScreen_Width * 0.1, 64, MRTScreen_Width * 0.8, MRTScreen_Height * 0.8);
-        videoView.frame = frame;
-    }
-    */
-    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-    [window addSubview:videoView];
-    [videoView playWithUrl:url allowRotate:allowRotate frame:frame];
-    //[self.view addSubview:videoView];
+    
+    //UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    //[window addSubview:videoView];
+    [fatherView addSubview:videoView];
+    
+    [videoView playWithUrl:url onView:fatherView tableView:(UITableView *)self.view indexPath:indexPath];
     _videoView = videoView;
+    //_videoViewExist = YES;
     NSLog(@"播放器设置完成,地址:%@", url);
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    UITableView *tableView = (UITableView *)self.view;
+    MRTStatusCell *cell = [tableView cellForRowAtIndexPath:_videoView.indexPath];
+    if (![tableView.visibleCells containsObject:cell]) {
+        if (_videoView.isPlaying && !_ignoreScrollJudge) {
+            [_videoView pause];
+            NSLog(@"homeVC执行暂停");
+        }
+        [_videoView removeFromSuperview];
+        _videoView.allowRotate = NO;
+        
+    } else if (_videoView.isPlayerShow) {
+        NSLog(@"homeVC视频cell可见");
+        NSLog(@"videoView.fatherView：%@", _videoView.fatherView);
+        UIView *fatherView;
+        if (cell.statusFrame.status.videoPosterStr) {
+            fatherView = cell.originalView.posterView;
+        } else {
+            fatherView = cell.retweetView.posterView;
+        }
+        [fatherView addSubview:_videoView];
+        _videoView.frame = fatherView.bounds;
+        _videoView.fatherView = fatherView;
+        _videoView.allowRotate = !_videoView.miniPortrait;
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (!_videoView.isPlaying && !_videoView.isReplayShow) {
+        NSLog(@"scrollViewDidEndDecelerating");
+        UITableView *tableView = (UITableView *)self.view;
+        MRTStatusCell *cell = [tableView cellForRowAtIndexPath:_videoView.indexPath];
+        if ([tableView.visibleCells containsObject:cell]) {
+            NSLog(@"scrollViewDidEndDecelerating_andPlay");
+            [_videoView play];
+        }
+    }
 }
 /*
 - (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator

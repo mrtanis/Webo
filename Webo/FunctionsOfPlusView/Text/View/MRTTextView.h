@@ -14,6 +14,8 @@
 
 
 @property (nonatomic, copy) NSString *placeHolderStr;
+//占位符
+@property (nonatomic, weak) UILabel *placeHolder;
 
 @property (nonatomic) CGFloat keyboardHeight;
 

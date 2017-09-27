@@ -14,7 +14,7 @@
 
 @optional
 - (void)retweetTextViewDidTapCell;
-- (void)playVideoWithUrl:(NSURL *)url allowRotate:(BOOL)allowRotate;
+- (void)playVideoWithUrl:(NSURL *)url onView:(UIView *)superView;
 @end
 
 @interface MRTRetweetView : UIImageView
@@ -25,4 +25,5 @@
 @property (nonatomic, weak) UILabel *nameLabel;
 @property (nonatomic, weak) UILabel *textLabel;
 @property (nonatomic, weak) UITextView *textView;
+@property (nonatomic, weak) UIImageView *posterView;
 @end
