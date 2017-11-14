@@ -18,15 +18,16 @@
 
 //利用MJExtension快捷编码解码，默认编码解码全部属性，如需针对部分可调用
 //[Person setupIgnoredCodingPropertyNames:^NSArray *{return @[@"属性名"];}];
-MJCodingImplementation
+
 
 + (instancetype)accountWithDict:(NSDictionary *)dict
 {
-    MRTAccount *account = [[MRTAccount alloc] init];
+    //MRTAccount *account = [[MRTAccount alloc] init];
     
     //用字典里的key匹配properties，并将对应的value赋值给属性，所以属性名应该和获取的字典里面的key一样
-    [account setValuesForKeysWithDictionary:dict];
+    //[account setValuesForKeysWithDictionary:dict];
     
+    MRTAccount *account = [MRTAccount mj_objectWithKeyValues:dict];
     return account;
 }
 
@@ -38,7 +39,7 @@ MJCodingImplementation
     _expires_date = [NSDate dateWithTimeIntervalSinceNow:[expires_in longLongValue]];
 }
 
-/*
+
 //编码时调用
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
@@ -64,5 +65,5 @@ MJCodingImplementation
     
     return self;
 }
-*/
+
 @end

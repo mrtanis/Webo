@@ -14,6 +14,7 @@
 @optional
 - (void)originalTextViewDidTapCell;
 - (void)clickReplyButton;
+- (void)clickURL:(NSURL *)url;
 
 @end
 @interface MRTMessageOriginalStatusView : UIImageView

@@ -70,14 +70,33 @@
 		2643C1151F6C554800DE678D /* MRTEmotionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2643C1141F6C554800DE678D /* MRTEmotionLayout.m */; };
 		264953421ED63276008E4236 /* MRTStatusFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 264953411ED63276008E4236 /* MRTStatusFrame.m */; };
 		264A7BB71F759D120067BDA7 /* MRTImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 264A7BB61F759D120067BDA7 /* MRTImagePickerController.m */; };
-		264A7BBF1F76F8460067BDA7 /* MRTImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 264A7BBE1F76F8460067BDA7 /* MRTImageViewerController.m */; };
 		264A7BC21F76F98C0067BDA7 /* MRTImageViewerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 264A7BC11F76F98C0067BDA7 /* MRTImageViewerCell.m */; };
 		264C00B81F2218D500702E83 /* MRTMessageSwitchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 264C00B71F2218D500702E83 /* MRTMessageSwitchBar.m */; };
+		264CD12E1FA235EC00DEA351 /* MRTVideoURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 264CD12D1FA235EC00DEA351 /* MRTVideoURL.m */; };
+		264CD1311FA473BF00DEA351 /* MRTStatusTestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 264CD1301FA473BF00DEA351 /* MRTStatusTestCell.m */; };
+		26509E6B1F923F5E000FF6E9 /* MRTProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26509E6A1F923F5E000FF6E9 /* MRTProfileCell.xib */; };
+		26509E731F924BD0000FF6E9 /* MRTProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26509E721F924BD0000FF6E9 /* MRTProfileCell.m */; };
+		265394031FA8C0B1008562F2 /* MRTVideoFullScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 265394021FA8C0B1008562F2 /* MRTVideoFullScreenController.m */; };
+		265394091FA8C5B3008562F2 /* MRTVideoTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 265394081FA8C5B3008562F2 /* MRTVideoTransition.m */; };
+		2653BE7C1F8C64E300767A85 /* MRTPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2653BE7B1F8C64E300767A85 /* MRTPhotoView.m */; };
 		265ECC181F28B8A50077EADB /* MRTMessageStatusFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 265ECC171F28B8A50077EADB /* MRTMessageStatusFrame.m */; };
 		265ECC1B1F28B8D30077EADB /* MRTMessageCommentFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 265ECC1A1F28B8D30077EADB /* MRTMessageCommentFrame.m */; };
 		265ECC201F28E9250077EADB /* MRTMessageStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 265ECC1F1F28E9250077EADB /* MRTMessageStatusCell.m */; };
 		265ECC231F28EA9F0077EADB /* MRTMessageRetweetStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 265ECC221F28EA9F0077EADB /* MRTMessageRetweetStatusView.m */; };
 		265ECC261F28FA510077EADB /* MRTMessageOriginalStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 265ECC251F28FA510077EADB /* MRTMessageOriginalStatusView.m */; };
+		266135851FB9996B00DBD312 /* QRcodeSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 266135841FB9996B00DBD312 /* QRcodeSound.wav */; };
+		266135881FBA8F7900DBD312 /* MRTImagePickerCameraCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 266135871FBA8F7900DBD312 /* MRTImagePickerCameraCell.m */; };
+		2664A1661F95E8A9007BE6EC /* MRTMyStatusesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2664A1651F95E8A9007BE6EC /* MRTMyStatusesController.m */; };
+		2664A16A1F9609BE007BE6EC /* MRTFriendsListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2664A1681F9609BE007BE6EC /* MRTFriendsListCell.m */; };
+		2664A16B1F9609BF007BE6EC /* MRTFriendsListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2664A1691F9609BE007BE6EC /* MRTFriendsListCell.xib */; };
+		2664A16E1F962550007BE6EC /* MRTFriendsListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2664A16D1F962550007BE6EC /* MRTFriendsListController.m */; };
+		2664A1721F962AC5007BE6EC /* MRTFriendsListTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2664A1711F962AC5007BE6EC /* MRTFriendsListTool.m */; };
+		2664A1751F963351007BE6EC /* MRTFriendsListParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2664A1741F963351007BE6EC /* MRTFriendsListParameter.m */; };
+		2664A1781F963374007BE6EC /* MRTFriendsListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2664A1771F963374007BE6EC /* MRTFriendsListResult.m */; };
+		2664A17B1F9646E1007BE6EC /* MRTOtherUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2664A17A1F9646E1007BE6EC /* MRTOtherUser.m */; };
+		2664A17E1F977AF2007BE6EC /* MRTRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2664A17D1F977AF2007BE6EC /* MRTRelation.m */; };
+		2664A1811F978274007BE6EC /* MRTRelationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2664A1801F978274007BE6EC /* MRTRelationResult.m */; };
+		2664A1841F97846F007BE6EC /* MRTRelationParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2664A1831F97846F007BE6EC /* MRTRelationParameter.m */; };
 		266896C51EC876C7009CCC25 /* MRTOneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266896C31EC876C7009CCC25 /* MRTOneViewController.m */; };
 		266896C61EC876C7009CCC25 /* MRTOneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266896C41EC876C7009CCC25 /* MRTOneViewController.xib */; };
 		266896CA1EC8B393009CCC25 /* MRTTwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 266896C81EC8B393009CCC25 /* MRTTwoViewController.m */; };
@@ -112,6 +131,8 @@
 		268172771F73328800CD24C4 /* MRTTextAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 268172761F73328800CD24C4 /* MRTTextAttachment.m */; };
 		2681727D1F7414A800CD24C4 /* NSAttributedString+MRTConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = 2681727C1F7414A800CD24C4 /* NSAttributedString+MRTConvert.m */; };
 		268172801F74164100CD24C4 /* NSMutableAttributedString+MRTConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = 2681727F1F74164100CD24C4 /* NSMutableAttributedString+MRTConvert.m */; };
+		2681C1401FB03EE9008B8C35 /* MRTQRcodeScannerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2681C13F1FB03EE9008B8C35 /* MRTQRcodeScannerController.m */; };
+		2681C1441FB1A3A4008B8C35 /* MRTWebViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2681C1431FB1A3A4008B8C35 /* MRTWebViewer.m */; };
 		268293481EF14C2200C9FD7A /* MRTTextToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 268293471EF14C2200C9FD7A /* MRTTextToolBar.m */; };
 		268982FA1F3F4FC2003CCB8D /* MRTReplyCommentParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 268982F91F3F4FC2003CCB8D /* MRTReplyCommentParam.m */; };
 		268983001F3FB802003CCB8D /* MRTCommentPopMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 268982FF1F3FB802003CCB8D /* MRTCommentPopMenu.m */; };
@@ -129,6 +150,8 @@
 		26D2EA221ECE5B4900B733EB /* MRTUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D2EA211ECE5B4900B733EB /* MRTUser.m */; };
 		26D2EA251ECE5B7700B733EB /* MRTStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D2EA241ECE5B7700B733EB /* MRTStatus.m */; };
 		26D2EA281ECE5B9C00B733EB /* MRTPicture.m in Sources */ = {isa = PBXBuildFile; fileRef = 26D2EA271ECE5B9C00B733EB /* MRTPicture.m */; };
+		26EF966A1F98DA66008AA022 /* MRTTimeLineStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 26EF96691F98DA66008AA022 /* MRTTimeLineStore.m */; };
+		26EF96701F9A4B20008AA022 /* MRTSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 26EF966F1F9A4B20008AA022 /* MRTSearchController.m */; };
 		8B489928D8866335C2391C79 /* libPods-Webo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C128BD0545A7FD9C0DB859C4 /* libPods-Webo.a */; };
 /* End PBXBuildFile section */
 
@@ -274,12 +297,23 @@
 		264A7BB61F759D120067BDA7 /* MRTImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTImagePickerController.m; path = MRTImagePicker/Controller/MRTImagePickerController.m; sourceTree = "<group>"; };
 		264A7BB81F76C2A00067BDA7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		264A7BB91F76C2A10067BDA7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		264A7BBD1F76F8460067BDA7 /* MRTImageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTImageViewerController.h; path = MRTImagePicker/Controller/MRTImageViewerController.h; sourceTree = "<group>"; };
-		264A7BBE1F76F8460067BDA7 /* MRTImageViewerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTImageViewerController.m; path = MRTImagePicker/Controller/MRTImageViewerController.m; sourceTree = "<group>"; };
 		264A7BC01F76F98C0067BDA7 /* MRTImageViewerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTImageViewerCell.h; path = MRTImagePicker/View/MRTImageViewerCell.h; sourceTree = "<group>"; };
 		264A7BC11F76F98C0067BDA7 /* MRTImageViewerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTImageViewerCell.m; path = MRTImagePicker/View/MRTImageViewerCell.m; sourceTree = "<group>"; };
 		264C00B61F2218D500702E83 /* MRTMessageSwitchBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTMessageSwitchBar.h; path = Message/View/MRTMessageSwitchBar.h; sourceTree = "<group>"; };
 		264C00B71F2218D500702E83 /* MRTMessageSwitchBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTMessageSwitchBar.m; path = Message/View/MRTMessageSwitchBar.m; sourceTree = "<group>"; };
+		264CD12C1FA235EC00DEA351 /* MRTVideoURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTVideoURL.h; path = Home/Model/MRTVideoURL.h; sourceTree = "<group>"; };
+		264CD12D1FA235EC00DEA351 /* MRTVideoURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTVideoURL.m; path = Home/Model/MRTVideoURL.m; sourceTree = "<group>"; };
+		264CD12F1FA473BF00DEA351 /* MRTStatusTestCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTStatusTestCell.h; path = Home/View/Cell/MRTStatusTestCell.h; sourceTree = "<group>"; };
+		264CD1301FA473BF00DEA351 /* MRTStatusTestCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTStatusTestCell.m; path = Home/View/Cell/MRTStatusTestCell.m; sourceTree = "<group>"; };
+		26509E6A1F923F5E000FF6E9 /* MRTProfileCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MRTProfileCell.xib; path = Profile/View/MRTProfileCell.xib; sourceTree = "<group>"; };
+		26509E711F924BD0000FF6E9 /* MRTProfileCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTProfileCell.h; path = Profile/View/MRTProfileCell.h; sourceTree = "<group>"; };
+		26509E721F924BD0000FF6E9 /* MRTProfileCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTProfileCell.m; path = Profile/View/MRTProfileCell.m; sourceTree = "<group>"; };
+		265394011FA8C0B1008562F2 /* MRTVideoFullScreenController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTVideoFullScreenController.h; path = Home/View/Video/MRTVideoFullScreenController.h; sourceTree = "<group>"; };
+		265394021FA8C0B1008562F2 /* MRTVideoFullScreenController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTVideoFullScreenController.m; path = Home/View/Video/MRTVideoFullScreenController.m; sourceTree = "<group>"; };
+		265394071FA8C5B3008562F2 /* MRTVideoTransition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTVideoTransition.h; path = Home/View/Video/MRTVideoTransition.h; sourceTree = "<group>"; };
+		265394081FA8C5B3008562F2 /* MRTVideoTransition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTVideoTransition.m; path = Home/View/Video/MRTVideoTransition.m; sourceTree = "<group>"; };
+		2653BE7A1F8C64E300767A85 /* MRTPhotoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTPhotoView.h; path = FunctionsOfPlusView/Text/View/MRTPhotoView.h; sourceTree = "<group>"; };
+		2653BE7B1F8C64E300767A85 /* MRTPhotoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTPhotoView.m; path = FunctionsOfPlusView/Text/View/MRTPhotoView.m; sourceTree = "<group>"; };
 		265ECC161F28B8A50077EADB /* MRTMessageStatusFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTMessageStatusFrame.h; path = Message/Model/MRTMessageStatusFrame.h; sourceTree = "<group>"; };
 		265ECC171F28B8A50077EADB /* MRTMessageStatusFrame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTMessageStatusFrame.m; path = Message/Model/MRTMessageStatusFrame.m; sourceTree = "<group>"; };
 		265ECC191F28B8D30077EADB /* MRTMessageCommentFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTMessageCommentFrame.h; path = Message/Model/MRTMessageCommentFrame.h; sourceTree = "<group>"; };
@@ -290,6 +324,30 @@
 		265ECC221F28EA9F0077EADB /* MRTMessageRetweetStatusView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTMessageRetweetStatusView.m; path = Webo/Message/View/Cell/MRTMessageRetweetStatusView.m; sourceTree = SOURCE_ROOT; };
 		265ECC241F28FA510077EADB /* MRTMessageOriginalStatusView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTMessageOriginalStatusView.h; path = Webo/Message/View/Cell/MRTMessageOriginalStatusView.h; sourceTree = SOURCE_ROOT; };
 		265ECC251F28FA510077EADB /* MRTMessageOriginalStatusView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTMessageOriginalStatusView.m; path = Webo/Message/View/Cell/MRTMessageOriginalStatusView.m; sourceTree = SOURCE_ROOT; };
+		266135841FB9996B00DBD312 /* QRcodeSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = QRcodeSound.wav; sourceTree = "<group>"; };
+		266135861FBA8F7900DBD312 /* MRTImagePickerCameraCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTImagePickerCameraCell.h; path = MRTImagePicker/View/MRTImagePickerCameraCell.h; sourceTree = "<group>"; };
+		266135871FBA8F7900DBD312 /* MRTImagePickerCameraCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTImagePickerCameraCell.m; path = MRTImagePicker/View/MRTImagePickerCameraCell.m; sourceTree = "<group>"; };
+		2664A1641F95E8A9007BE6EC /* MRTMyStatusesController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTMyStatusesController.h; path = Profile/Controller/MRTMyStatusesController.h; sourceTree = "<group>"; };
+		2664A1651F95E8A9007BE6EC /* MRTMyStatusesController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTMyStatusesController.m; path = Profile/Controller/MRTMyStatusesController.m; sourceTree = "<group>"; };
+		2664A1671F9609BE007BE6EC /* MRTFriendsListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTFriendsListCell.h; path = Profile/View/MRTFriendsListCell.h; sourceTree = "<group>"; };
+		2664A1681F9609BE007BE6EC /* MRTFriendsListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTFriendsListCell.m; path = Profile/View/MRTFriendsListCell.m; sourceTree = "<group>"; };
+		2664A1691F9609BE007BE6EC /* MRTFriendsListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MRTFriendsListCell.xib; path = Profile/View/MRTFriendsListCell.xib; sourceTree = "<group>"; };
+		2664A16C1F962550007BE6EC /* MRTFriendsListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTFriendsListController.h; path = Profile/Controller/MRTFriendsListController.h; sourceTree = "<group>"; };
+		2664A16D1F962550007BE6EC /* MRTFriendsListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTFriendsListController.m; path = Profile/Controller/MRTFriendsListController.m; sourceTree = "<group>"; };
+		2664A1701F962AC5007BE6EC /* MRTFriendsListTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTFriendsListTool.h; path = Tool/FriendsList/MRTFriendsListTool.h; sourceTree = "<group>"; };
+		2664A1711F962AC5007BE6EC /* MRTFriendsListTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTFriendsListTool.m; path = Tool/FriendsList/MRTFriendsListTool.m; sourceTree = "<group>"; };
+		2664A1731F963351007BE6EC /* MRTFriendsListParameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTFriendsListParameter.h; path = Tool/FriendsList/MRTFriendsListParameter.h; sourceTree = "<group>"; };
+		2664A1741F963351007BE6EC /* MRTFriendsListParameter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTFriendsListParameter.m; path = Tool/FriendsList/MRTFriendsListParameter.m; sourceTree = "<group>"; };
+		2664A1761F963374007BE6EC /* MRTFriendsListResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTFriendsListResult.h; path = Tool/FriendsList/MRTFriendsListResult.h; sourceTree = "<group>"; };
+		2664A1771F963374007BE6EC /* MRTFriendsListResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTFriendsListResult.m; path = Tool/FriendsList/MRTFriendsListResult.m; sourceTree = "<group>"; };
+		2664A1791F9646E0007BE6EC /* MRTOtherUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTOtherUser.h; path = Profile/Model/MRTOtherUser.h; sourceTree = "<group>"; };
+		2664A17A1F9646E1007BE6EC /* MRTOtherUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTOtherUser.m; path = Profile/Model/MRTOtherUser.m; sourceTree = "<group>"; };
+		2664A17C1F977AF2007BE6EC /* MRTRelation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTRelation.h; path = Profile/Model/MRTRelation.h; sourceTree = "<group>"; };
+		2664A17D1F977AF2007BE6EC /* MRTRelation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTRelation.m; path = Profile/Model/MRTRelation.m; sourceTree = "<group>"; };
+		2664A17F1F978274007BE6EC /* MRTRelationResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTRelationResult.h; path = Tool/FriendsList/MRTRelationResult.h; sourceTree = "<group>"; };
+		2664A1801F978274007BE6EC /* MRTRelationResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTRelationResult.m; path = Tool/FriendsList/MRTRelationResult.m; sourceTree = "<group>"; };
+		2664A1821F97846F007BE6EC /* MRTRelationParameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTRelationParameter.h; path = Tool/FriendsList/MRTRelationParameter.h; sourceTree = "<group>"; };
+		2664A1831F97846F007BE6EC /* MRTRelationParameter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTRelationParameter.m; path = Tool/FriendsList/MRTRelationParameter.m; sourceTree = "<group>"; };
 		266896C21EC876C7009CCC25 /* MRTOneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTOneViewController.h; path = Home/Controller/MRTOneViewController.h; sourceTree = "<group>"; };
 		266896C31EC876C7009CCC25 /* MRTOneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTOneViewController.m; path = Home/Controller/MRTOneViewController.m; sourceTree = "<group>"; };
 		266896C41EC876C7009CCC25 /* MRTOneViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MRTOneViewController.xib; path = Home/Controller/MRTOneViewController.xib; sourceTree = "<group>"; };
@@ -356,6 +414,10 @@
 		2681727C1F7414A800CD24C4 /* NSAttributedString+MRTConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+MRTConvert.m"; path = "Category/NSAttributedString+MRTConvert.m"; sourceTree = "<group>"; };
 		2681727E1F74164100CD24C4 /* NSMutableAttributedString+MRTConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableAttributedString+MRTConvert.h"; path = "Category/NSMutableAttributedString+MRTConvert.h"; sourceTree = "<group>"; };
 		2681727F1F74164100CD24C4 /* NSMutableAttributedString+MRTConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableAttributedString+MRTConvert.m"; path = "Category/NSMutableAttributedString+MRTConvert.m"; sourceTree = "<group>"; };
+		2681C13E1FB03EE9008B8C35 /* MRTQRcodeScannerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTQRcodeScannerController.h; path = MRTQRcodeScanner/MRTQRcodeScannerController.h; sourceTree = "<group>"; };
+		2681C13F1FB03EE9008B8C35 /* MRTQRcodeScannerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTQRcodeScannerController.m; path = MRTQRcodeScanner/MRTQRcodeScannerController.m; sourceTree = "<group>"; };
+		2681C1421FB1A3A4008B8C35 /* MRTWebViewer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTWebViewer.h; path = MRTWebViewer/MRTWebViewer.h; sourceTree = "<group>"; };
+		2681C1431FB1A3A4008B8C35 /* MRTWebViewer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTWebViewer.m; path = MRTWebViewer/MRTWebViewer.m; sourceTree = "<group>"; };
 		268293461EF14C2200C9FD7A /* MRTTextToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTTextToolBar.h; path = FunctionsOfPlusView/Text/View/MRTTextToolBar.h; sourceTree = "<group>"; };
 		268293471EF14C2200C9FD7A /* MRTTextToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTTextToolBar.m; path = FunctionsOfPlusView/Text/View/MRTTextToolBar.m; sourceTree = "<group>"; };
 		268982F81F3F4FC2003CCB8D /* MRTReplyCommentParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTReplyCommentParam.h; path = Tool/Comment/ReplyComment/MRTReplyCommentParam.h; sourceTree = "<group>"; };
@@ -390,6 +452,10 @@
 		26D2EA241ECE5B7700B733EB /* MRTStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTStatus.m; path = Home/Model/MRTStatus.m; sourceTree = "<group>"; };
 		26D2EA261ECE5B9C00B733EB /* MRTPicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTPicture.h; path = Home/Model/MRTPicture.h; sourceTree = "<group>"; };
 		26D2EA271ECE5B9C00B733EB /* MRTPicture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTPicture.m; path = Home/Model/MRTPicture.m; sourceTree = "<group>"; };
+		26EF96681F98DA66008AA022 /* MRTTimeLineStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTTimeLineStore.h; path = Tool/Cache/MRTTimeLineStore.h; sourceTree = "<group>"; };
+		26EF96691F98DA66008AA022 /* MRTTimeLineStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTTimeLineStore.m; path = Tool/Cache/MRTTimeLineStore.m; sourceTree = "<group>"; };
+		26EF966E1F9A4B20008AA022 /* MRTSearchController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTSearchController.h; path = Discover/Controller/MRTSearchController.h; sourceTree = "<group>"; };
+		26EF966F1F9A4B20008AA022 /* MRTSearchController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTSearchController.m; path = Discover/Controller/MRTSearchController.m; sourceTree = "<group>"; };
 		BA69F59417D1A198953C3BD9 /* Pods-Webo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Webo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Webo/Pods-Webo.release.xcconfig"; sourceTree = "<group>"; };
 		C128BD0545A7FD9C0DB859C4 /* libPods-Webo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Webo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -445,7 +511,9 @@
 		2619E1041EAEA3C3004CE6DD /* Webo */ = {
 			isa = PBXGroup;
 			children = (
+				2681C1411FB1A217008B8C35 /* MRTWebViewer */,
 				269695371F6AE27A00074490 /* MRTImagePicker */,
+				2681C13D1FB03E01008B8C35 /* MRTQRcodeScanner */,
 				267FE46C1F61FC83008EAD1C /* EmotionKeyboard */,
 				266896CC1EC90B24009CCC25 /* NewFeature */,
 				263EE9391ED1E33400345397 /* Tool */,
@@ -466,6 +534,7 @@
 				261A1EA81EAFED7100D2B7FE /* WeboIcon@2x.png */,
 				261A1EAA1EAFEE1900D2B7FE /* WeboIcon@3x.png */,
 				263716B41ED306E300E28F3B /* 爸比我要喝奶奶.mp3 */,
+				266135841FB9996B00DBD312 /* QRcodeSound.wav */,
 				263716B51ED306E300E28F3B /* silence.mp3 */,
 				2619E1161EAEA3C3004CE6DD /* LaunchScreen.storyboard */,
 				2619E1191EAEA3C3004CE6DD /* Info.plist */,
@@ -642,6 +711,7 @@
 				263EE9451ED1F05200345397 /* RootVC */,
 				263EE9441ED1F01A00345397 /* Account */,
 				263EE9431ED1EFFC00345397 /* Status */,
+				2664A16F1F9629D7007BE6EC /* FriendsList */,
 				263867BB1EF4A08D00470760 /* Comment */,
 				2670C48D1F433EC500522D21 /* URLConvert */,
 			);
@@ -731,6 +801,23 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		2664A16F1F9629D7007BE6EC /* FriendsList */ = {
+			isa = PBXGroup;
+			children = (
+				2664A1701F962AC5007BE6EC /* MRTFriendsListTool.h */,
+				2664A1711F962AC5007BE6EC /* MRTFriendsListTool.m */,
+				2664A1731F963351007BE6EC /* MRTFriendsListParameter.h */,
+				2664A1741F963351007BE6EC /* MRTFriendsListParameter.m */,
+				2664A1761F963374007BE6EC /* MRTFriendsListResult.h */,
+				2664A1771F963374007BE6EC /* MRTFriendsListResult.m */,
+				2664A17F1F978274007BE6EC /* MRTRelationResult.h */,
+				2664A1801F978274007BE6EC /* MRTRelationResult.m */,
+				2664A1821F97846F007BE6EC /* MRTRelationParameter.h */,
+				2664A1831F97846F007BE6EC /* MRTRelationParameter.m */,
+			);
+			name = FriendsList;
+			sourceTree = "<group>";
+		};
 		266896CC1EC90B24009CCC25 /* NewFeature */ = {
 			isa = PBXGroup;
 			children = (
@@ -792,6 +879,8 @@
 				268293471EF14C2200C9FD7A /* MRTTextToolBar.m */,
 				26383F941EF3208F003E4ED2 /* MRTTextAddPhotos.h */,
 				26383F951EF3208F003E4ED2 /* MRTTextAddPhotos.m */,
+				2653BE7A1F8C64E300767A85 /* MRTPhotoView.h */,
+				2653BE7B1F8C64E300767A85 /* MRTPhotoView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -941,6 +1030,8 @@
 			children = (
 				266F31A91EBFC04A001ECF24 /* MRTDiscoverViewController.h */,
 				266F31AA1EBFC04A001ECF24 /* MRTDiscoverViewController.m */,
+				26EF966E1F9A4B20008AA022 /* MRTSearchController.h */,
+				26EF966F1F9A4B20008AA022 /* MRTSearchController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -969,6 +1060,8 @@
 				26D2EA211ECE5B4900B733EB /* MRTUser.m */,
 				26D2EA231ECE5B7700B733EB /* MRTStatus.h */,
 				26D2EA241ECE5B7700B733EB /* MRTStatus.m */,
+				264CD12C1FA235EC00DEA351 /* MRTVideoURL.h */,
+				264CD12D1FA235EC00DEA351 /* MRTVideoURL.m */,
 				26D2EA261ECE5B9C00B733EB /* MRTPicture.h */,
 				26D2EA271ECE5B9C00B733EB /* MRTPicture.m */,
 				264953401ED63276008E4236 /* MRTStatusFrame.h */,
@@ -1010,6 +1103,10 @@
 			children = (
 				266F31AC1EBFC06B001ECF24 /* MRTProfileViewController.h */,
 				266F31AD1EBFC06B001ECF24 /* MRTProfileViewController.m */,
+				2664A1641F95E8A9007BE6EC /* MRTMyStatusesController.h */,
+				2664A1651F95E8A9007BE6EC /* MRTMyStatusesController.m */,
+				2664A16C1F962550007BE6EC /* MRTFriendsListController.h */,
+				2664A16D1F962550007BE6EC /* MRTFriendsListController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1017,6 +1114,12 @@
 		266F31971EBFBA6C001ECF24 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				26509E6A1F923F5E000FF6E9 /* MRTProfileCell.xib */,
+				26509E711F924BD0000FF6E9 /* MRTProfileCell.h */,
+				26509E721F924BD0000FF6E9 /* MRTProfileCell.m */,
+				2664A1671F9609BE007BE6EC /* MRTFriendsListCell.h */,
+				2664A1681F9609BE007BE6EC /* MRTFriendsListCell.m */,
+				2664A1691F9609BE007BE6EC /* MRTFriendsListCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1024,6 +1127,10 @@
 		266F31981EBFBA6E001ECF24 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2664A1791F9646E0007BE6EC /* MRTOtherUser.h */,
+				2664A17A1F9646E1007BE6EC /* MRTOtherUser.m */,
+				2664A17C1F977AF2007BE6EC /* MRTRelation.h */,
+				2664A17D1F977AF2007BE6EC /* MRTRelation.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1058,6 +1165,8 @@
 			children = (
 				267772B11F12A2F3001B47C9 /* MRTCacheManager.h */,
 				267772B21F12A2F4001B47C9 /* MRTCacheManager.m */,
+				26EF96681F98DA66008AA022 /* MRTTimeLineStore.h */,
+				26EF96691F98DA66008AA022 /* MRTTimeLineStore.m */,
 			);
 			name = Cache;
 			sourceTree = "<group>";
@@ -1102,6 +1211,8 @@
 			children = (
 				267A0C591ED49F2800855520 /* MRTStatusCell.h */,
 				267A0C5A1ED49F2800855520 /* MRTStatusCell.m */,
+				264CD12F1FA473BF00DEA351 /* MRTStatusTestCell.h */,
+				264CD1301FA473BF00DEA351 /* MRTStatusTestCell.m */,
 				267A0C5C1ED4E60E00855520 /* MRTOriginalView.h */,
 				267A0C5D1ED4E60E00855520 /* MRTOriginalView.m */,
 				267A0C5F1ED4E63A00855520 /* MRTRetweetView.h */,
@@ -1121,6 +1232,10 @@
 			children = (
 				267FB7611F4648D7003EECA1 /* MRTVideoPlayer.h */,
 				267FB7621F4648D7003EECA1 /* MRTVideoPlayer.m */,
+				265394011FA8C0B1008562F2 /* MRTVideoFullScreenController.h */,
+				265394021FA8C0B1008562F2 /* MRTVideoFullScreenController.m */,
+				265394071FA8C5B3008562F2 /* MRTVideoTransition.h */,
+				265394081FA8C5B3008562F2 /* MRTVideoTransition.m */,
 			);
 			name = Video;
 			sourceTree = "<group>";
@@ -1138,6 +1253,24 @@
 				2643C1141F6C554800DE678D /* MRTEmotionLayout.m */,
 			);
 			name = EmotionKeyboard;
+			sourceTree = "<group>";
+		};
+		2681C13D1FB03E01008B8C35 /* MRTQRcodeScanner */ = {
+			isa = PBXGroup;
+			children = (
+				2681C13E1FB03EE9008B8C35 /* MRTQRcodeScannerController.h */,
+				2681C13F1FB03EE9008B8C35 /* MRTQRcodeScannerController.m */,
+			);
+			name = MRTQRcodeScanner;
+			sourceTree = "<group>";
+		};
+		2681C1411FB1A217008B8C35 /* MRTWebViewer */ = {
+			isa = PBXGroup;
+			children = (
+				2681C1421FB1A3A4008B8C35 /* MRTWebViewer.h */,
+				2681C1431FB1A3A4008B8C35 /* MRTWebViewer.m */,
+			);
+			name = MRTWebViewer;
 			sourceTree = "<group>";
 		};
 		268982F71F3F4F19003CCB8D /* ReplyComment */ = {
@@ -1163,8 +1296,6 @@
 			children = (
 				264A7BB51F759D120067BDA7 /* MRTImagePickerController.h */,
 				264A7BB61F759D120067BDA7 /* MRTImagePickerController.m */,
-				264A7BBD1F76F8460067BDA7 /* MRTImageViewerController.h */,
-				264A7BBE1F76F8460067BDA7 /* MRTImageViewerController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1174,6 +1305,8 @@
 			children = (
 				2696953D1F6AE8EA00074490 /* MRTImagePickerCell.h */,
 				2696953E1F6AE8EA00074490 /* MRTImagePickerCell.m */,
+				266135861FBA8F7900DBD312 /* MRTImagePickerCameraCell.h */,
+				266135871FBA8F7900DBD312 /* MRTImagePickerCameraCell.m */,
 				264A7BC01F76F98C0067BDA7 /* MRTImageViewerCell.h */,
 				264A7BC11F76F98C0067BDA7 /* MRTImageViewerCell.m */,
 				26B24C211F7BAF160015A304 /* MRTImageViewerLayout.h */,
@@ -1276,7 +1409,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = MRT;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = mrtanis;
 				TargetAttributes = {
 					2619E1011EAEA3C3004CE6DD = {
@@ -1334,10 +1467,13 @@
 				2619E1181EAEA3C3004CE6DD /* LaunchScreen.storyboard in Resources */,
 				2619E1151EAEA3C3004CE6DD /* Assets.xcassets in Resources */,
 				261A1EA91EAFED7100D2B7FE /* WeboIcon@2x.png in Resources */,
+				2664A16B1F9609BF007BE6EC /* MRTFriendsListCell.xib in Resources */,
 				263716B71ED306E300E28F3B /* silence.mp3 in Resources */,
+				266135851FB9996B00DBD312 /* QRcodeSound.wav in Resources */,
 				2619E1101EAEA3C3004CE6DD /* Main.storyboard in Resources */,
 				266896C61EC876C7009CCC25 /* MRTOneViewController.xib in Resources */,
 				266BB0EC1EFC2FC40025D505 /* Emoticons.bundle in Resources */,
+				26509E6B1F923F5E000FF6E9 /* MRTProfileCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1379,9 +1515,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Webo/Pods-Webo-resources.sh",
+				"${PODS_ROOT}/MJPhotoBrowser/MJPhotoBrowser/MJPhotoBrowser/MJPhotoBrowser.bundle",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1394,13 +1535,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Webo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1415,16 +1559,20 @@
 				2696953F1F6AE8EA00074490 /* MRTImagePickerCell.m in Sources */,
 				265ECC201F28E9250077EADB /* MRTMessageStatusCell.m in Sources */,
 				26B1ECAF1F2F2E5B007059D3 /* MRTObject.m in Sources */,
+				26EF96701F9A4B20008AA022 /* MRTSearchController.m in Sources */,
 				2619E10A1EAEA3C3004CE6DD /* AppDelegate.m in Sources */,
 				267A0C641ED4E74A00855520 /* MRTStatusToolBar.m in Sources */,
 				263EE95A1ED1F28E00345397 /* MRTHttpTool.m in Sources */,
 				263EE9541ED1F25A00345397 /* MRTAccountStore.m in Sources */,
 				2619E1131EAEA3C3004CE6DD /* Webo.xcdatamodeld in Sources */,
 				26782CFA1EF29CA900BBD854 /* MRTTextTool.m in Sources */,
+				2664A1811F978274007BE6EC /* MRTRelationResult.m in Sources */,
 				267D10AF1F4C52E400F813C7 /* NSString+MRTConvert.m in Sources */,
 				268293481EF14C2200C9FD7A /* MRTTextToolBar.m in Sources */,
 				263867BE1EF4A0ED00470760 /* MRTCommentResult.m in Sources */,
 				265ECC181F28B8A50077EADB /* MRTMessageStatusFrame.m in Sources */,
+				2664A1721F962AC5007BE6EC /* MRTFriendsListTool.m in Sources */,
+				2664A1661F95E8A9007BE6EC /* MRTMyStatusesController.m in Sources */,
 				268172771F73328800CD24C4 /* MRTTextAttachment.m in Sources */,
 				2635DA0C1EC1281100EF24B6 /* UIView+MRTFrame.m in Sources */,
 				264A7BB71F759D120067BDA7 /* MRTImagePickerController.m in Sources */,
@@ -1438,6 +1586,7 @@
 				2669E9091EEDE9C600F46A01 /* MRTTextViewController.m in Sources */,
 				263DF70B1F6BF794005A29CA /* MRTEmotionCell.m in Sources */,
 				26315FC31ECB0CA8001BC766 /* MRTOAuthViewController.m in Sources */,
+				2664A1751F963351007BE6EC /* MRTFriendsListParameter.m in Sources */,
 				265ECC261F28FA510077EADB /* MRTMessageOriginalStatusView.m in Sources */,
 				264953421ED63276008E4236 /* MRTStatusFrame.m in Sources */,
 				263461401EC478FD000D34A6 /* MRTNavigationController.m in Sources */,
@@ -1446,14 +1595,20 @@
 				2671DEA31EC6040E002F3D26 /* MRTCover.m in Sources */,
 				26396B811EF97F19009E8390 /* MRTRepostResult.m in Sources */,
 				26396B841EF980B0009E8390 /* MRTSendRepostParam.m in Sources */,
+				26509E731F924BD0000FF6E9 /* MRTProfileCell.m in Sources */,
 				2635DA091EC1175000EF24B6 /* MRTBadgeView.m in Sources */,
 				265ECC1B1F28B8D30077EADB /* MRTMessageCommentFrame.m in Sources */,
 				2639D4DF1EF74630003A843F /* MRTSwitchBar.m in Sources */,
 				263EE9571ED1F28000345397 /* MRTRootVCPicker.m in Sources */,
+				265394031FA8C0B1008562F2 /* MRTVideoFullScreenController.m in Sources */,
 				268983061F3FD662003CCB8D /* MRTRepostCell.m in Sources */,
+				266135881FBA8F7900DBD312 /* MRTImagePickerCameraCell.m in Sources */,
+				2681C1441FB1A3A4008B8C35 /* MRTWebViewer.m in Sources */,
 				267539D51ECDABB500D6BB3A /* MRTAccount.m in Sources */,
+				2664A1781F963374007BE6EC /* MRTFriendsListResult.m in Sources */,
 				26A093151F5F081500A0DBD1 /* MRTStream.m in Sources */,
 				263867C11EF4A2B500470760 /* MRTCommentParam.m in Sources */,
+				26EF966A1F98DA66008AA022 /* MRTTimeLineStore.m in Sources */,
 				268983031F3FCFB1003CCB8D /* MRTRepostFrame.m in Sources */,
 				26D2EA221ECE5B4900B733EB /* MRTUser.m in Sources */,
 				2643C1151F6C554800DE678D /* MRTEmotionLayout.m in Sources */,
@@ -1461,12 +1616,17 @@
 				263E4A731F3B5EDD008801F3 /* MRTMessageCommentCell.m in Sources */,
 				267A0C5E1ED4E60E00855520 /* MRTOriginalView.m in Sources */,
 				263EE9691ED1FE4500345397 /* MRTUnreadResult.m in Sources */,
+				2664A1841F97846F007BE6EC /* MRTRelationParameter.m in Sources */,
+				2664A16A1F9609BE007BE6EC /* MRTFriendsListCell.m in Sources */,
 				2635DA131EC12B8100EF24B6 /* MRTTabBarButton.m in Sources */,
 				267FB3591F13D31400F23935 /* NSFileManager+MRTPathMethod.m in Sources */,
 				2639D4D91EF6DAFE003A843F /* MRTSendCommentParam.m in Sources */,
+				2681C1401FB03EE9008B8C35 /* MRTQRcodeScannerController.m in Sources */,
 				26B1ECAC1F2F2E3C007059D3 /* MRTURL_object.m in Sources */,
 				2671DEA71EC61416002F3D26 /* MRTPopMenu.m in Sources */,
 				266896D81EC9118E009CCC25 /* MRTNewFeatureController.m in Sources */,
+				265394091FA8C5B3008562F2 /* MRTVideoTransition.m in Sources */,
+				264CD1311FA473BF00DEA351 /* MRTStatusTestCell.m in Sources */,
 				265ECC231F28EA9F0077EADB /* MRTMessageRetweetStatusView.m in Sources */,
 				26D2EA281ECE5B9C00B733EB /* MRTPicture.m in Sources */,
 				267A0C5B1ED49F2800855520 /* MRTStatusCell.m in Sources */,
@@ -1477,6 +1637,7 @@
 				263EE9601ED1FAA100345397 /* MRTAccessToken.m in Sources */,
 				268983091F3FD751003CCB8D /* MRTRepostMainView.m in Sources */,
 				2639FE0B1EF53AF10053C4FC /* MRTMainView.m in Sources */,
+				2653BE7C1F8C64E300767A85 /* MRTPhotoView.m in Sources */,
 				263EE9501ED1F24F00345397 /* MRTStatusResult.m in Sources */,
 				266896C51EC876C7009CCC25 /* MRTOneViewController.m in Sources */,
 				266F31AB1EBFC04A001ECF24 /* MRTDiscoverViewController.m in Sources */,
@@ -1492,6 +1653,7 @@
 				268983001F3FB802003CCB8D /* MRTCommentPopMenu.m in Sources */,
 				263867BA1EF4943500470760 /* MRTComment.m in Sources */,
 				268172801F74164100CD24C4 /* NSMutableAttributedString+MRTConvert.m in Sources */,
+				2664A17B1F9646E1007BE6EC /* MRTOtherUser.m in Sources */,
 				2635DA101EC1285E00EF24B6 /* UIImage+MRTImage.m in Sources */,
 				266F31A81EBFC020001ECF24 /* MRTMessageViewController.m in Sources */,
 				263EE96F1ED2068A00345397 /* MRTUnreadTool.m in Sources */,
@@ -1500,6 +1662,7 @@
 				26B24C231F7BAF160015A304 /* MRTImageViewerLayout.m in Sources */,
 				26782CF71EF29C1700BBD854 /* MRTTextParam.m in Sources */,
 				26AFCEDA1EEB57DE006704FC /* MRTPlusButtonClickView.m in Sources */,
+				264CD12E1FA235EC00DEA351 /* MRTVideoURL.m in Sources */,
 				263867B71EF4935600470760 /* MRTCommentFrame.m in Sources */,
 				26383F961EF3208F003E4ED2 /* MRTTextAddPhotos.m in Sources */,
 				26B1ECB21F2F332A007059D3 /* MRTImage.m in Sources */,
@@ -1507,6 +1670,7 @@
 				263EE9511ED1F24F00345397 /* MRTStatusTool.m in Sources */,
 				267FE4721F61FE00008EAD1C /* MRTEmotionKeyboard.m in Sources */,
 				264A7BC21F76F98C0067BDA7 /* MRTImageViewerCell.m in Sources */,
+				2664A17E1F977AF2007BE6EC /* MRTRelation.m in Sources */,
 				263EBEB81F27A3E00083B0FF /* MRTMessageSwitchView.m in Sources */,
 				263867B01EF4722E00470760 /* MRTCommentTitle.m in Sources */,
 				26396B871EF9B700009E8390 /* MRTWriteRepostController.m in Sources */,
@@ -1517,8 +1681,8 @@
 				263716C01ED3432A00E28F3B /* MRTUserInfoTool.m in Sources */,
 				26AFCEDE1EEB5877006704FC /* MRTPlusClickViewButton.m in Sources */,
 				263E4A761F3B5F3E008801F3 /* MRTMessageCommentView.m in Sources */,
-				264A7BBF1F76F8460067BDA7 /* MRTImageViewerController.m in Sources */,
 				263867C41EF4A43200470760 /* MRTCommentTool.m in Sources */,
+				2664A16E1F962550007BE6EC /* MRTFriendsListController.m in Sources */,
 				268982FA1F3F4FC2003CCB8D /* MRTReplyCommentParam.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1587,7 +1751,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1595,7 +1761,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1637,7 +1807,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1645,7 +1817,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

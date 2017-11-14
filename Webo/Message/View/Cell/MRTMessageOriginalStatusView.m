@@ -99,6 +99,9 @@
     UITextView *textView = [[UITextView alloc] init];
     textView.font = MRTTextFont;
     textView.textColor = [UIColor darkTextColor];
+    NSMutableDictionary *attr = [NSMutableDictionary dictionary];
+    attr[NSForegroundColorAttributeName] = [UIColor colorWithRed:0 green:0.5 blue:0.7 alpha:1];
+    textView.linkTextAttributes = attr;
     textView.editable = NO;
     textView.scrollEnabled = NO;
     textView.userInteractionEnabled = YES;
@@ -223,7 +226,7 @@
         
         //来源
         _sourceLabel.text = status.source;
-        NSLog(@"source:%@", status.source);
+        //NSLog(@"source:%@", status.source);
         _sourceLabel.textColor = [UIColor grayColor];
         
         //正文
@@ -259,7 +262,7 @@
         
         //来源
         _sourceLabel.text = comment.source;
-        NSLog(@"source:%@", comment.source);
+        //NSLog(@"source:%@", comment.source);
         _sourceLabel.textColor = [UIColor grayColor];
         
         //正文
@@ -278,8 +281,11 @@
         NSLog(@"点击话题");
         return NO;
     }
-    if ([[URL scheme] rangeOfString:@"short"].location != NSNotFound) {
+    if ([[URL scheme] rangeOfString:@"http"].location != NSNotFound) {
         NSLog(@"点击短连接");
+        if ([_delegate respondsToSelector:@selector(clickURL:)]) {
+            [_delegate clickURL:URL];
+        }
         return NO;
     }
     

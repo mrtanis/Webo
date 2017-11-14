@@ -18,9 +18,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIBarButtonItem *chat = [[UIBarButtonItem alloc] initWithTitle:@"发起聊天" style:UIBarButtonItemStylePlain target:self action:@selector(chat)];
+    //UIBarButtonItem *chat = [[UIBarButtonItem alloc] initWithTitle:@"发起聊天" style:UIBarButtonItemStylePlain target:self action:@selector(chat)];
     
-    self.navigationItem.rightBarButtonItem = chat;
+    self.navigationItem.rightBarButtonItem = nil;
     
     //重要！！！否则自己添加的tableView上面会留出导航栏高度的空白
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -29,6 +29,12 @@
     switchView.delegate = self;
     
     [self.view addSubview:switchView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]}];
 }
 
 //点击发起聊天调用

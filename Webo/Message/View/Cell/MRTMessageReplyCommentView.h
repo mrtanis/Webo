@@ -13,6 +13,7 @@
 
 @optional
 - (void)replyCommentTextViewDidTapCell;
+- (void)clickURL:(NSURL *)url;
 @end
 
 @interface MRTMessageReplyCommentView : UIImageView

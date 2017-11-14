@@ -115,4 +115,12 @@
     return cell;
 }
 
+#pragma mark 点击url代理方法
+- (void)clickURL:(NSURL *)url
+{
+    if ([_delegate respondsToSelector:@selector(clickURL:)]) {
+        [_delegate clickURL:url];
+    }
+}
+
 @end

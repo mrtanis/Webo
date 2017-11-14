@@ -19,6 +19,7 @@
 #import "MRTWriteRepostController.h"
 #import "MRTNavigationController.h"
 #import "MRTWriteCommentViewController.h"
+#import "MRTTimeLineStore.h"
 
 
 @interface MRTMessageSwitchView()<UITableViewDelegate, UITableViewDataSource, MRTMessageStatusCellDelegate, MRTMessageCommentCellDelegate>
@@ -64,7 +65,7 @@
 - (NSMutableArray *)at_statusFrames
 {
     if (!_at_statusFrames) {
-        _at_statusFrames = [NSKeyedUnarchiver unarchiveObjectWithFile:[self timelineArchivePathWithIndex:0]];
+        _at_statusFrames = [NSKeyedUnarchiver unarchiveObjectWithFile:[MRTTimeLineStore timelineArchivePathWithIndex:0]];
     }
     if (!_at_statusFrames) {
         _at_statusFrames = [NSMutableArray array];
@@ -76,7 +77,7 @@
 - (NSMutableArray *)at_commentFrames
 {
     if (!_at_commentFrames) {
-        _at_commentFrames = [NSKeyedUnarchiver unarchiveObjectWithFile:[self timelineArchivePathWithIndex:1]];
+        _at_commentFrames = [NSKeyedUnarchiver unarchiveObjectWithFile:[MRTTimeLineStore timelineArchivePathWithIndex:1]];
     }
     if (!_at_commentFrames) {
         _at_commentFrames = [NSMutableArray array];
@@ -88,7 +89,7 @@
 - (NSMutableArray *)in_commentFrames
 {
     if (!_in_commentFrames) {
-        _in_commentFrames = [NSKeyedUnarchiver unarchiveObjectWithFile:[self timelineArchivePathWithIndex:2]];
+        _in_commentFrames = [NSKeyedUnarchiver unarchiveObjectWithFile:[MRTTimeLineStore timelineArchivePathWithIndex:2]];
     }
     if (!_in_commentFrames) {
         _in_commentFrames = [NSMutableArray array];
@@ -100,7 +101,7 @@
 - (NSMutableArray *)out_commentFrames
 {
     if (!_out_commentFrames) {
-        _out_commentFrames = [NSKeyedUnarchiver unarchiveObjectWithFile:[self timelineArchivePathWithIndex:3]];
+        _out_commentFrames = [NSKeyedUnarchiver unarchiveObjectWithFile:[MRTTimeLineStore timelineArchivePathWithIndex:3]];
     }
     if (!_out_commentFrames) {
         _out_commentFrames = [NSMutableArray array];
@@ -126,6 +127,7 @@
     if (self) {
         [self addSwitchBar];
         [self setUpScrollView];
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveTimeline) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
     
@@ -157,7 +159,7 @@
         tableView.tag = i;
         tableView.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1];
         //添加下拉刷新控件
-        tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshWithOutCacheCheck)];
+        tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
         //[self loadNewDataCheckCache:YES];
         
         
@@ -173,19 +175,13 @@
         [self.tableViews addObject:tableView];
     }
     if (self.at_statusFrames.count == 0) {
-        [self loadNewDataCheckCache:NO];
+        [self loadNewData];
     }
-}
-#pragma mark 忽略缓存刷新方式
-
-- (void)refreshWithOutCacheCheck
-{
-    [self loadNewDataCheckCache:NO];
 }
 
 #pragma mark 请求最新的微博或评论
 
-- (void)loadNewDataCheckCache:(BOOL)checkCache
+- (void)loadNewData
 {
     if (_selectedIndex == 0) {
         NSUInteger count = self.at_statusFrames.count;
@@ -206,10 +202,6 @@
         UITableView *tableView = _tableViews[0];
         //发送get请求
         [MRTStatusTool newAt_StatusWithSinceId:sinceId success:^(NSArray *statuses) {
-            //显示微博更新数
-            //if (!checkCache) {
-            //    [self showNewStatusCount:(int)statuses.count];
-            //}
             
             //结束下拉刷新
             
@@ -235,6 +227,7 @@
             
             //刷新表格数据
             [tableView reloadData];
+            [self saveTimeline];
             
         } failure:^(NSError *error) {
             //结束下拉刷新
@@ -244,7 +237,7 @@
             
             NSLog(@"error:%@", error);
             
-        } checkCache:checkCache];
+        }];
     } else if (_selectedIndex == 1) {
         NSUInteger count = self.at_commentFrames.count;
         if (count >= 180) {
@@ -289,6 +282,7 @@
             
             //刷新表格数据
             [tableView reloadData];
+            [self saveTimeline];
             
         } failure:^(NSError *error) {
             //结束下拉刷新
@@ -298,7 +292,7 @@
             
             NSLog(@"error:%@", error);
             
-        } checkCache:checkCache];
+        }];
     } else if (_selectedIndex == 2) {
         NSUInteger count = self.in_commentFrames.count;
         if (count >= 180) {
@@ -344,6 +338,7 @@
             
             //刷新表格数据
             [tableView reloadData];
+            [self saveTimeline];
             
         } failure:^(NSError *error) {
             //结束下拉刷新
@@ -353,7 +348,7 @@
             
             NSLog(@"error:%@", error);
             
-        } checkCache:checkCache];
+        }];
     } else {
         NSUInteger count = self.out_commentFrames.count;
         if (count >= 180) {
@@ -398,6 +393,7 @@
             NSLog(@"我发出的的评论个数：%d", (int)self.out_commentFrames.count);
             //刷新表格数据
             [tableView reloadData];
+            [self saveTimeline];
             
         } failure:^(NSError *error) {
             //结束下拉刷新
@@ -407,7 +403,7 @@
             
             NSLog(@"error:%@", error);
             
-        } checkCache:checkCache];
+        }];
     }
 }
 
@@ -456,6 +452,7 @@
                 
                 //刷新表格
                 [tableView reloadData];
+                [self saveTimeline];
                 
             } failure:^(NSError *error) {
                 //结束上拉刷新
@@ -509,6 +506,7 @@
                 
                 //刷新表格
                 [tableView reloadData];
+                [self saveTimeline];
                 
             } failure:^(NSError *error) {
                 //结束上拉刷新
@@ -562,6 +560,7 @@
                 
                 //刷新表格
                 [tableView reloadData];
+                [self saveTimeline];
                 
             } failure:^(NSError *error) {
                 //结束上拉刷新
@@ -615,6 +614,7 @@
                 
                 //刷新表格
                 [tableView reloadData];
+                [self saveTimeline];
                 
             } failure:^(NSError *error) {
                 //结束上拉刷新
@@ -626,7 +626,6 @@
             }];
         }
     }
-    
 }
 
 
@@ -814,67 +813,26 @@
 - (void)autoRefreshTableView
 {
     if (_selectedIndex == 0 && _at_statusFrames.count == 0) {
-        [self loadNewDataCheckCache:NO];
+        [self loadNewData];
     }
     if (_selectedIndex == 1 && _at_commentFrames.count == 0) {
-        [self loadNewDataCheckCache:NO];
+        [self loadNewData];
     }
     if (_selectedIndex == 2 && _in_commentFrames.count == 0) {
-        [self loadNewDataCheckCache:NO];
+        [self loadNewData];
     }
     if (_selectedIndex == 3 && _out_commentFrames.count == 0) {
-        [self loadNewDataCheckCache:NO];
+        [self loadNewData];
     }
 }
 
 #pragma mark - 保存timeline数组到缓存(doc目录)
 - (void)saveTimeline
 {
-    for (int i = 0; i < 4; i++) {
-        NSString *path = [self timelineArchivePathWithIndex:i];
-        //[self.statusFrames removeAllObjects];
-        if (i == 0) {
-            //[_at_statusFrames removeAllObjects];
-            [NSKeyedArchiver archiveRootObject:self.at_statusFrames toFile:path];
-        }
-        if (i == 1) {
-            //[_at_commentFrames removeAllObjects];
-            [NSKeyedArchiver archiveRootObject:self.at_commentFrames toFile:path];
-        }
-        if (i == 2) {
-            //[_in_commentFrames removeAllObjects];
-            [NSKeyedArchiver archiveRootObject:self.in_commentFrames toFile:path];
-        }
-        if (i == 3) {
-            //[_out_commentFrames removeAllObjects];
-            [NSKeyedArchiver archiveRootObject:self.out_commentFrames toFile:path];
-        }
-        
-    }
     
-}
-
-- (NSString *)timelineArchivePathWithIndex:(int)index
-{
-    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //[MRTTimeLineStore deleteTimeLineOfAtMe];
+    [MRTTimeLineStore saveTimeLineWithAt_status:self.at_statusFrames at_comment:self.at_commentFrames in_comment:self.in_commentFrames out_comment:self.out_commentFrames];
     
-    //从documentDirectories数组获取第一个，也是唯一文档目录路径
-    NSString *documentDirectory = [documentDirectories firstObject];
-    NSString *path = @"";
-    if (index == 0) {
-        path = [documentDirectory stringByAppendingPathComponent:@"at_statusTimeline.data"];
-    }
-    if (index == 1) {
-        path = [documentDirectory stringByAppendingPathComponent:@"at_commentTimeline.data"];
-    }
-    if (index == 2) {
-        path = [documentDirectory stringByAppendingPathComponent:@"in_commentTimeline.data"];
-    }
-    if (index == 3) {
-        path = [documentDirectory stringByAppendingPathComponent:@"out_commentTimeline.data"];
-    }
-
-    return path;
 }
 
 

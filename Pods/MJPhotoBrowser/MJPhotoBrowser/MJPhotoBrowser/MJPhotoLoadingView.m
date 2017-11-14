@@ -62,7 +62,9 @@
     _progress = progress;
     _progressView.progress = progress;
     if (progress >= 1.0) {
-        [_progressView removeFromSuperview];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_progressView removeFromSuperview];
+        });
     }
 }
 @end

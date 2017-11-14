@@ -22,6 +22,7 @@
 - (void)textViewDidClickCell:(MRTStatusFrame *)statusFrame onlyOriginal:(BOOL)flag;
 
 - (void)clickReplyButtonWithFrame:(MRTCommentFrame *)commentFrame;
+- (void)clickURL:(NSURL *)url;
 
 @end
 @interface MRTMessageStatusCell : UITableViewCell

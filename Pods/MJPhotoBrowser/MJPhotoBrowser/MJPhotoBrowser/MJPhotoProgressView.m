@@ -87,7 +87,11 @@
 - (void)setProgress:(float)progress
 {
     _progress = progress;
-    [self setNeedsDisplay];
+    __weak typeof (self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [weakSelf setNeedsDisplay];
+    });
+    
 }
 
 @end

@@ -83,6 +83,8 @@
     UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, text_Width, text_Width)];
     textView.font = MRTTextFont;
     textView.attributedText = self.status.attrText;
+    NSLog(@"self.status.attrText:%@", self.status.attrText);
+    NSLog(@"self.status.text:%@", self.status.text);
     CGSize contentSize = textView.contentSize;
     
     _originalTextFrame = CGRectMake(text_X, text_Y, contentSize.width, contentSize.height);

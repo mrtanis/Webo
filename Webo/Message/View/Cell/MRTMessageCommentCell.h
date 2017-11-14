@@ -19,7 +19,7 @@
 - (void)textViewDidClickCell:(MRTMessageCommentFrame *)commentFrame;
 
 - (void)clickReplyButtonWithFrame:(MRTCommentFrame *)commentFrame;
-
+- (void)clickURL:(NSURL *)url;
 @end
 
 @interface MRTMessageCommentCell : UITableViewCell
