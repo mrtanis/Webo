@@ -33,6 +33,7 @@
 #import "NSString+MRTConvert.h"
 #import "MRTCommentTitle.h"
 #import "MRTOtherUser.h"
+#import "MRTWebViewer.h"
 
 @interface MRTMyStatusesController ()<MRTStatusCellDelegate>
 
@@ -517,6 +518,14 @@
     _videoView = videoView;
     //_videoViewExist = YES;
     NSLog(@"播放器设置完成,地址:%@", url);
+}
+
+#pragma mark 点击url代理方法
+- (void)clickURL:(NSURL *)url
+{
+    MRTWebViewer *webViewer = [[MRTWebViewer alloc] initWithURL:url];
+    
+    [self.navigationController pushViewController:webViewer animated:YES];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

@@ -302,6 +302,7 @@
         [self presentViewController:navVC animated:YES completion:nil];
     } else if (button.tag == 1) {
         MRTImagePickerController *imagePicker = [[MRTImagePickerController alloc] init];
+        imagePicker.delegate = self;
         imagePicker.directEnter = YES;
         MRTNavigationController *nav = [[MRTNavigationController alloc] initWithRootViewController:imagePicker];
         [self presentViewController:nav animated:YES completion:nil];

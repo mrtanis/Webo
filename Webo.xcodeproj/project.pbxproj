@@ -28,7 +28,6 @@
 		2635DA0C1EC1281100EF24B6 /* UIView+MRTFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 2635DA0B1EC1281100EF24B6 /* UIView+MRTFrame.m */; };
 		2635DA101EC1285E00EF24B6 /* UIImage+MRTImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2635DA0F1EC1285E00EF24B6 /* UIImage+MRTImage.m */; };
 		2635DA131EC12B8100EF24B6 /* MRTTabBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2635DA121EC12B8100EF24B6 /* MRTTabBarButton.m */; };
-		263716B61ED306E300E28F3B /* 爸比我要喝奶奶.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 263716B41ED306E300E28F3B /* 爸比我要喝奶奶.mp3 */; };
 		263716B71ED306E300E28F3B /* silence.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 263716B51ED306E300E28F3B /* silence.mp3 */; };
 		263716C01ED3432A00E28F3B /* MRTUserInfoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 263716BF1ED3432A00E28F3B /* MRTUserInfoTool.m */; };
 		263801D41EE5F2CF0060428B /* MRTPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 263801D31EE5F2CF0060428B /* MRTPictureView.m */; };
@@ -213,7 +212,6 @@
 		2635DA0F1EC1285E00EF24B6 /* UIImage+MRTImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+MRTImage.m"; path = "Category/UIImage+MRTImage.m"; sourceTree = "<group>"; };
 		2635DA111EC12B8100EF24B6 /* MRTTabBarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTTabBarButton.h; path = TabBar/View/MRTTabBarButton.h; sourceTree = "<group>"; };
 		2635DA121EC12B8100EF24B6 /* MRTTabBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTTabBarButton.m; path = TabBar/View/MRTTabBarButton.m; sourceTree = "<group>"; };
-		263716B41ED306E300E28F3B /* 爸比我要喝奶奶.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "爸比我要喝奶奶.mp3"; sourceTree = "<group>"; };
 		263716B51ED306E300E28F3B /* silence.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = silence.mp3; sourceTree = "<group>"; };
 		263716BE1ED3432A00E28F3B /* MRTUserInfoTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MRTUserInfoTool.h; path = Tool/UserInfo/MRTUserInfoTool.h; sourceTree = "<group>"; };
 		263716BF1ED3432A00E28F3B /* MRTUserInfoTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MRTUserInfoTool.m; path = Tool/UserInfo/MRTUserInfoTool.m; sourceTree = "<group>"; };
@@ -533,7 +531,6 @@
 				266BB0EB1EFC2FC40025D505 /* Emoticons.bundle */,
 				261A1EA81EAFED7100D2B7FE /* WeboIcon@2x.png */,
 				261A1EAA1EAFEE1900D2B7FE /* WeboIcon@3x.png */,
-				263716B41ED306E300E28F3B /* 爸比我要喝奶奶.mp3 */,
 				266135841FB9996B00DBD312 /* QRcodeSound.wav */,
 				263716B51ED306E300E28F3B /* silence.mp3 */,
 				2619E1161EAEA3C3004CE6DD /* LaunchScreen.storyboard */,
@@ -1461,7 +1458,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				263716B61ED306E300E28F3B /* 爸比我要喝奶奶.mp3 in Resources */,
 				261A1EAB1EAFEE1900D2B7FE /* WeboIcon@3x.png in Resources */,
 				266896CB1EC8B393009CCC25 /* MRTTwoViewController.xib in Resources */,
 				2619E1181EAEA3C3004CE6DD /* LaunchScreen.storyboard in Resources */,

@@ -432,7 +432,7 @@ static NSString * const reuseIdentifierCamera = @"cameraCell";
     }
     NSInteger index;
     if (_onlySelected) {
-        index = [self.selectedIndexes[_currentPreviewIndex + 1] integerValue];
+        index = [self.selectedIndexes[_currentPreviewIndex] integerValue] + 1;
     } else {
         index = _currentPreviewIndex + 1;
     }
@@ -537,7 +537,7 @@ static NSString * const reuseIdentifierCamera = @"cameraCell";
         NSNumber *m = [NSNumber numberWithInteger:i];
         [self.previewSelectedIndexes addObject:m];
     }
-    [self enterPreviewFromIndex:[NSIndexPath indexPathForItem:[(NSNumber *)(self.selectedIndexes[0]) integerValue] inSection:0]];
+    [self enterPreviewFromIndex:[NSIndexPath indexPathForItem:[(NSNumber *)(self.selectedIndexes[0]) integerValue] + 1 inSection:0]];
 }
 
 - (void)clickOriginal:(UIButton *)button
@@ -663,16 +663,12 @@ static NSString * const reuseIdentifierCamera = @"cameraCell";
         
         return cell;
     } else {
-        if (indexPath.item == 0) {
-            MRTImagePickerCameraCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifierCamera forIndexPath:indexPath];
-            
-            return cell;
-        } else {
+        if (_singleImageMode) {
             MRTImagePickerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
             
             cell.singleImageMode = _singleImageMode;
             cell.delegate = self;
-            cell.index = indexPath.item - 1;
+            cell.index = indexPath.item;
             cell.backgroundColor = [UIColor orangeColor];
             
             PHImageRequestOptions *options= [[PHImageRequestOptions alloc] init];//请求选项设置
@@ -683,7 +679,7 @@ static NSString * const reuseIdentifierCamera = @"cameraCell";
             CGFloat scale = [UIScreen mainScreen].scale;
             CGSize size =CGSizeMake((MRTScreen_Width - 3) / 4.0 * scale, (MRTScreen_Width - 3) / 4.0 * scale);
             
-            [[PHImageManager defaultManager] requestImageForAsset:self.assets[indexPath.item - 1] targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            [[PHImageManager defaultManager] requestImageForAsset:self.assets[indexPath.item] targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     cell.photo = result;
@@ -710,7 +706,57 @@ static NSString * const reuseIdentifierCamera = @"cameraCell";
                 }
             }
             return cell;
+        } else {
+            if (indexPath.item == 0) {
+                MRTImagePickerCameraCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifierCamera forIndexPath:indexPath];
+                
+                return cell;
+            } else {
+                MRTImagePickerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+                
+                cell.singleImageMode = _singleImageMode;
+                cell.delegate = self;
+                cell.index = indexPath.item - 1;
+                cell.backgroundColor = [UIColor orangeColor];
+                
+                PHImageRequestOptions *options= [[PHImageRequestOptions alloc] init];//请求选项设置
+                options.resizeMode=PHImageRequestOptionsResizeModeExact;
+                options.synchronous=NO;   //YES 一定是同步    NO不一定是异步
+                
+                
+                CGFloat scale = [UIScreen mainScreen].scale;
+                CGSize size =CGSizeMake((MRTScreen_Width - 3) / 4.0 * scale, (MRTScreen_Width - 3) / 4.0 * scale);
+                
+                [[PHImageManager defaultManager] requestImageForAsset:self.assets[indexPath.item - 1] targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        cell.photo = result;
+                    });
+                }];
+                /*
+                 for (PHAsset *asset in self.alreadySelectedPhotoAssets) {
+                 NSLog(@"asset.localIdentifier:%@", asset.localIdentifier);
+                 NSLog(@"[self.assets[indexPath.item] localIdentifier] :%@", [self.assets[indexPath.item] localIdentifier]);
+                 if ([asset.localIdentifier isEqual:[self.assets[indexPath.item] localIdentifier]]) {
+                 cell.chooseButton.selected = YES;
+                 [self.selectedAssets addObject:self.assets[indexPath.item]];
+                 [self.selectedIndexes addObject:[NSNumber numberWithInteger:indexPath.item]];
+                 }
+                 }
+                 [self setPickerViewButtonStatus];
+                 */
+                cell.chooseButton.selected = NO;
+                for (NSNumber *number in self.selectedIndexes) {
+                    //NSLog(@"selectedIndex:%ld, indexPath.item:%ld", [number integerValue], indexPath.item);
+                    if ([number integerValue] == indexPath.item - 1) {
+                        cell.chooseButton.selected = YES;
+                        [self setPickerViewButtonStatus];
+                    }
+                }
+                return cell;
+            }
         }
+        
         
         
     }
@@ -724,18 +770,25 @@ static NSString * const reuseIdentifierCamera = @"cameraCell";
     if (collectionView.tag == 2) {
         
     } else {
-        if (indexPath.item == 0) {
-            ;
-            [self dismissViewControllerAnimated:NO completion:^{
-                if ([_delegate respondsToSelector:@selector(shouldPresentCameraVC)]) {
-                    [_delegate shouldPresentCameraVC];
-                }
-            }];
-            
-        } else {
+        if (_singleImageMode) {
             //点击图片从小图位置放大进入预览
             [self enterPreviewFromIndex:indexPath];
+        } else {
+            if (indexPath.item == 0) {
+                
+                [self dismissViewControllerAnimated:NO completion:^{
+                    if ([_delegate respondsToSelector:@selector(shouldPresentCameraVC)]) {
+                        [_delegate shouldPresentCameraVC];
+                    }
+                }];
+                
+            } else {
+                //点击图片从小图位置放大进入预览
+                [self enterPreviewFromIndex:indexPath];
+            }
         }
+        
+        
         
     }
     
@@ -745,6 +798,12 @@ static NSString * const reuseIdentifierCamera = @"cameraCell";
 #pragma mark - 点击图片放大进入预览
 - (void)enterPreviewFromIndex:(NSIndexPath *)indexPath
 {
+    NSInteger enterIndex;
+    if (_singleImageMode) {
+        enterIndex = indexPath.item + 1;
+    } else {
+        enterIndex = indexPath.item;
+    }
     //隐藏控制器导航栏
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     //自制imageViewer导航栏
@@ -753,13 +812,13 @@ static NSString * const reuseIdentifierCamera = @"cameraCell";
     //设置张数标题
     UILabel *title = [[UILabel alloc] init];
     title.font = [UIFont boldSystemFontOfSize:16];
-    NSInteger currentPage = _onlySelected ? 1 : indexPath.item + 1;
+    NSInteger currentPage = _onlySelected ? 1 : enterIndex;
     NSInteger totalPages = _onlySelected ? self.selectedAssets.count : _assets.count;
     title.text = [NSString stringWithFormat:@"%ld/%ld", currentPage, totalPages];
     title.textColor = [UIColor darkTextColor];
     [title sizeToFit];
     title.center = CGPointMake(imageViewerNavBar.width * 0.5, 44 * 0.5 + 20);
-    _currentPreviewIndex = _onlySelected ? 0 : indexPath.item;
+    _currentPreviewIndex = _onlySelected ? 0 : enterIndex - 1;
     [imageViewerNavBar addSubview:title];
     _imageViewerTitle = title;
     //设置左侧按钮
@@ -807,7 +866,7 @@ static NSString * const reuseIdentifierCamera = @"cameraCell";
     NSLog(@"collectionView.contentOffset.y:%f", self.collectionView.contentOffset.y);
 
     MRTImageViewerLayout *layout = [[MRTImageViewerLayout alloc] initWithItemSize:CGSizeMake(MRTScreen_Width, MRTScreen_Height - 64)];
-    layout.beginIndex = _onlySelected ? 0 : indexPath.item;
+    layout.beginIndex = _onlySelected ? 0 : enterIndex - 1;
     UICollectionView *imageViewer = [[UICollectionView alloc] initWithFrame:CGRectMake(-5, 64, MRTScreen_Width + 10, MRTScreen_Height - 64) collectionViewLayout:layout];
     layout.itemSize = CGSizeMake(imageViewer.width - 10, imageViewer.height);
     imageViewer.tag = 2;
@@ -844,6 +903,8 @@ static NSString * const reuseIdentifierCamera = @"cameraCell";
         _previewSelectButton = previewSelectButton;
         if (_onlySelected) {
             _previewSelectButton.selected = YES;
+        } else if (indexPath.item == 1 && [self.selectedIndexes containsObject:[NSNumber numberWithInt:0]]) {
+            _previewSelectButton.selected = YES;
         }
     }
     
@@ -854,7 +915,13 @@ static NSString * const reuseIdentifierCamera = @"cameraCell";
     options.deliveryMode = PHImageRequestOptionsDeliveryModeFastFormat;
     options.synchronous=NO;   //YES 一定是同步    NO不一定是异步
     
-    [[PHImageManager defaultManager] requestImageForAsset:self.assets[indexPath.item] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+    NSInteger assetIndex;
+    if (_singleImageMode) {
+        assetIndex = indexPath.item;
+    } else {
+        assetIndex = indexPath.item - 1;
+    }
+    [[PHImageManager defaultManager] requestImageForAsset:self.assets[assetIndex] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         dispatch_async(dispatch_get_main_queue(), ^{
             temporaryView.image = result;
             CGSize imageSize = result.size;
@@ -919,11 +986,16 @@ static NSString * const reuseIdentifierCamera = @"cameraCell";
         temporaryX = (MRTScreen_Width - temporaryWidth) * 0.5;
     }
     NSInteger index;
-    if (_onlySelected) {
-        index = [self.selectedIndexes[_currentPreviewIndex] integerValue];
-    } else {
+    if (_singleImageMode) {
         index = _currentPreviewIndex;
+    } else {
+        if (_onlySelected) {
+            index = [self.selectedIndexes[_currentPreviewIndex] integerValue] + 1;
+        } else {
+            index = _currentPreviewIndex + 1;
+        }
     }
+    
     
     MRTImagePickerCell *pickerCell = (MRTImagePickerCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
     NSLog(@"pickerCell:%@", pickerCell);

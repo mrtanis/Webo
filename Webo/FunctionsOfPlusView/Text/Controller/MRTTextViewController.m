@@ -22,7 +22,7 @@
 #import "MRTPhotoView.h"
 #import <Photos/Photos.h>
 
-@interface MRTTextViewController ()<UITextViewDelegate, MRTtextViewDelegate, MRTTextToolBarDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MRTPhotoViewDelegate>
+@interface MRTTextViewController ()<UITextViewDelegate, MRTtextViewDelegate, MRTTextToolBarDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MRTPhotoViewDelegate, MRTImagePickerDelegate>
 
 @property (nonatomic, weak) MRTTextView *textView;
 @property (nonatomic) CGFloat viewMoveDistance;
@@ -216,6 +216,7 @@
 #pragma mark 设置添加图片界面
 - (void)setUpPhotos
 {
+    _shouldSetUpPhotoView = NO;
     NSLog(@"setUpPhotos");
     CGFloat photoY;
     if ([_textView hasText]) {
@@ -238,6 +239,7 @@
     CGSize imageSize = CGSizeMake((MRTScreen_Width - 20 - 5 * 2) / 3.0 * scale, (MRTScreen_Width - 20 - 5 * 2) / 3.0 * scale);
     
     [self.photoViews removeAllObjects];
+    NSLog(@"self.photoAssets.count:%ld", self.photoAssets.count);
     for (int i = 0; i < self.photoAssets.count; i++) {
         
         [[PHImageManager defaultManager] requestImageForAsset:self.photoAssets[i] targetSize:imageSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
@@ -639,6 +641,7 @@
         [photoView removeFromSuperview];
     }
     MRTImagePickerController *imagePicker = [[MRTImagePickerController alloc] init];
+    imagePicker.delegate = self;
     imagePicker.photosBlock = ^(NSMutableArray *array, BOOL originalMode) {
         self.photoAssets = array;
         self.originalMode = originalMode;
@@ -654,27 +657,65 @@
     
     [self presentViewController:nav animated:YES completion:nil];
 }
-/*
-#pragma mark 完成选择图片时的代理方法
+
+#pragma mark - 弹出拍照界面
+- (void)shouldPresentCameraVC
+{
+    UIImagePickerController *pickerVC = [[UIImagePickerController alloc] init];
+    
+    //判断摄像头是否可用
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        pickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+    pickerVC.delegate = self;
+    
+    [self presentViewController:pickerVC animated:YES completion:nil];
+    
+}
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
-    NSLog(@"%@", info);
     
     UIImage *image = info[UIImagePickerControllerOriginalImage];
     
-    //创建配图视图
-    [self setUpPhotos];
-    
-    //传递图片
-    self.photosView.image = image;
-    //保存图片到数组
-    [self.photos addObject:image];
-    
-    //返回首页
-    [self dismissViewControllerAnimated:YES completion:nil];
-    //设置发送按钮可点击
-    self.navigationItem.rightBarButtonItem.enabled = YES;
-}*/
+    //__block PHAsset *assetOfImage;
+    typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            typeof(weakSelf) strongSelf = weakSelf;
+            if ([PHPhotoLibrary authorizationStatus] == PHAuthorizationStatusAuthorized) {
+                [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+                    //写入图片到相册
+                    PHAssetChangeRequest *req = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+                } completionHandler:^(BOOL success, NSError * _Nullable error) {
+                    NSLog(@"success = %d, error = %@", success, error);
+                    
+                    
+                    //先获取相机胶卷
+                    //PHFetchResult *collectionsResult = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[@"相机胶卷"] options:nil];
+                    //PHAssetCollection *assetCollection = [collectionsResult firstObject];
+                    //按日期降序排列并过滤掉非照片类型
+                    PHFetchOptions *fetchAssetOption = [[PHFetchOptions alloc] init];
+                    fetchAssetOption.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:false]];//按照日期降序排序
+                    //fetchAssetOption.predicate = [NSPredicate predicateWithFormat:@"mediaType = %d",PHAssetMediaTypeImage];//过滤剩下照片类型
+                    PHFetchResult *assetsResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchAssetOption];
+                    PHAsset *asset = [assetsResult firstObject];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [picker dismissViewControllerAnimated:NO completion:^{
+                            if (strongSelf.photoAssets.count < 9) {
+                                [strongSelf.photoAssets addObject:asset];
+                            } else {
+                                [strongSelf.photoAssets replaceObjectAtIndex:8 withObject:asset];
+                            }
+                            [strongSelf setUpPhotos];
+                        }];
+                    });
+                }];
+            }
+        }];
+    });
+}
 
 #pragma mark - 删除选择的图片
 - (void)deselectPhoto:(MRTPhotoView *)photoView

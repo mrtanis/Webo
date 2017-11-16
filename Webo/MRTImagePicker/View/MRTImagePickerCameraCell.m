@@ -23,6 +23,7 @@
 - (void)setUpCameraIcon
 {
     UIImageView *cameraIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"compose_photo_photograph"]];
+    cameraIcon.contentMode = UIViewContentModeCenter;
     cameraIcon.frame = self.bounds;
     [self.contentView addSubview:cameraIcon];
 }
