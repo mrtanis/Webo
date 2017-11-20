@@ -12,7 +12,6 @@
 #import "MRTCover.h"
 #import "MRTPopMenu.h"
 #import "MRTMenuViewController.h"
-#import "MRTOneViewController.h"
 #import "MRTAccountStore.h"
 #import "MRTAccount.h"
 #import "MRTStatus.h"
@@ -289,17 +288,7 @@
     [self.navigationController pushViewController:scanner animated:YES];
 }
 
-- (void)pop
-{
-    //创建新的控制
-    MRTOneViewController *one = [[MRTOneViewController alloc] init];
-    
-    //push时隐藏系统自带tabBar
-    one.hidesBottomBarWhenPushed = YES;
-    
-    //push新的控制器
-    [self.navigationController pushViewController:one animated:YES];
-}
+
 
 #pragma mark 标题调用方法
 - (void)menuTitleClick:(UIButton *)button

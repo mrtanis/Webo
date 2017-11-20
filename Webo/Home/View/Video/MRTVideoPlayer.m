@@ -312,7 +312,7 @@
                 }
                 [UIView animateWithDuration:0.3 animations:^{
                     self.transform = CGAffineTransformIdentity;
-                    _toolBar.transform = CGAffineTransformIdentity;
+                    //_toolBar.transform = CGAffineTransformIdentity;
                     [self removeFromSuperview];
                     [_fatherView addSubview:self];
                     self.frame = _fatherView.bounds;
@@ -457,24 +457,34 @@
         //旋转状态栏
         //NSNumber *orientationUnknown = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
         //[[UIApplication sharedApplication] setValue:orientationUnknown forKey:@"statusBarOrientation"];
-        NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
-        [[UIApplication sharedApplication] setValue:orientationTarget forKey:@"statusBarOrientation"];
+        if (_isLandscape) {
+            NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
+            [[UIApplication sharedApplication] setValue:orientationTarget forKey:@"statusBarOrientation"];
+            [self removeFromSuperview];
+            //[[UIApplication sharedApplication].windows lastObject]以及keyWindow都不一定准确
+            UIWindow *window = [UIApplication sharedApplication].delegate.window;
+            //NSLog(@"window:%@",window);
+            [window addSubview:self];
+        } else {
+            NSNumber *orientationTarget = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+            [[UIApplication sharedApplication] setValue:orientationTarget forKey:@"statusBarOrientation"];
+            [self removeFromSuperview];
+            [_fatherView addSubview:self];
+        }
+        
         //隐藏状态栏,此处可不隐藏，设置为与toolBar一起显示、隐藏
         /*
         if ([_delegate respondsToSelector:@selector(shouldHideStatusBar:)]) {
             [_delegate shouldHideStatusBar:YES];
         }*/
         
-        [self removeFromSuperview];
-        //[[UIApplication sharedApplication].windows lastObject]以及keyWindow都不一定准确
-        UIWindow *window = [UIApplication sharedApplication].delegate.window;
-        //NSLog(@"window:%@",window);
-        [window addSubview:self];
+        
+        
         [UIView animateWithDuration:0.3 animations:^{
-
             if (!_isLandscape) {
-                CGAffineTransform transform = CGAffineTransformRotate(self.transform, M_PI);
-                self.transform = transform;
+                self.transform = CGAffineTransformIdentity;
+                _toolBar.transform = CGAffineTransformIdentity;
+                self.frame = _fatherView.bounds;
             } else {
                 //self.frame = _fatherView.frame;
                 self.frame = CGRectMake( (MRTScreen_Height - MRTScreen_Width) * 0.5, - (MRTScreen_Height - MRTScreen_Width) * 0.5, MRTScreen_Width, MRTScreen_Height);
@@ -485,6 +495,8 @@
         } completion:^(BOOL finished) {
             if (_isLandscape) {
                 self.videoOrientation = MRTVideoOrientationLandscapeLeft;
+            } else {
+                self.videoOrientation = MRTVideoOrientationPortrait;
             }
             //NSLog(@"%@", self);
         }];
@@ -549,6 +561,7 @@
     
     //播放按钮
     UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    playButton.contentMode = UIViewContentModeCenter;
     [playButton setImage:[UIImage imageNamed:@"icon_play"] forState:UIControlStateNormal];
     [playButton addTarget:self action:@selector(playOrPause:) forControlEvents:UIControlEventTouchUpInside];
     [toolBar addSubview:playButton];
@@ -614,6 +627,7 @@
     
     //全屏按钮
     UIButton *fullscreenButton = [[UIButton alloc] initWithFrame:CGRectZero];
+    fullscreenButton.contentMode = UIViewContentModeCenter;
     [fullscreenButton setImage:[UIImage imageNamed:@"icon_fullscreen"] forState:UIControlStateNormal];
     [fullscreenButton addTarget:self action:@selector(rotationScreen:) forControlEvents:UIControlEventTouchUpInside];
     [toolBar addSubview:fullscreenButton];
@@ -654,24 +668,30 @@
     }];
     
     [_playButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_toolBar.mas_left).mas_offset(12);
-        make.centerY.mas_equalTo(_toolBar);
+        make.left.mas_equalTo(_toolBar.mas_left);
+        make.top.mas_equalTo(_toolBar.mas_top);
+        make.bottom.mas_equalTo(_toolBar.mas_bottom);
+        make.width.mas_equalTo(40);
+        //make.centerY.mas_equalTo(_toolBar);
     }];
     
     [_currentTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_playButton.mas_right).offset(12);
+        make.left.mas_equalTo(_playButton.mas_right);
         make.centerY.mas_equalTo(_playButton);
         make.width.mas_equalTo(37);
     }];
     
     
     [_fullScreenButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.mas_equalTo(_toolBar);
-        make.right.mas_equalTo(_toolBar.mas_right).mas_offset(-12);
+        //make.centerY.mas_equalTo(_toolBar);
+        make.right.mas_equalTo(_toolBar.mas_right);
+        make.top.mas_equalTo(_toolBar.mas_top);
+        make.bottom.mas_equalTo(_toolBar.mas_bottom);
+        make.width.mas_equalTo(40);
     }];
     
     [_totalTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(_fullScreenButton.mas_left).mas_offset(-12);
+        make.right.mas_equalTo(_fullScreenButton.mas_left);
         make.centerY.mas_equalTo(_toolBar);
         make.width.mas_equalTo(37);
     }];
@@ -829,13 +849,10 @@
 #pragma mark - 添加observer和通知
 - (void)addObserverAndNotification
 {
-    
-    
-    
+
     //观察播放进度
     [self monitoringPlayback:_AVItem];
-    
-    
+
     //添加通知
     //播放完成通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playToEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
@@ -1246,9 +1263,6 @@
 - (void)resetPlayer
 {
     
-    
-    
-    
     if (_timeObserver) {
         [_player removeTimeObserver:_timeObserver];
         _timeObserver = nil;
@@ -1257,8 +1271,8 @@
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     //从通知中心删除观察者
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    //[_AVItem cancelPendingSeeks];
-    //[_AVItem.asset cancelLoading];
+    [_AVItem cancelPendingSeeks];
+    [_AVItem.asset cancelLoading];
     //_AVItem = nil;
     [_player pause];
     _isReplayShow = NO;

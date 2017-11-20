@@ -36,6 +36,7 @@
 		23FF6503579E6D99C93AB4496351BE95 /* FLAnimatedImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF78051CF8B7A34B0F73B07F3C1194B /* FLAnimatedImageView+WebCache.m */; };
 		250E7B59705A985AC759251AEBE22D60 /* SDWebImageImageIOCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F852FD6A13C86CABE6606F8791359AD /* SDWebImageImageIOCoder.m */; };
 		2579663181BFA8F7DA4B5D7CF8537FC0 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = BA53EC9085A04DC70A3A1C27346A1BF7 /* UIActivityIndicatorView+AFNetworking.m */; };
+		2651F1B71FC30D5B009FB7E7 /* MJPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2651F1B61FC30D5B009FB7E7 /* MJPhotoView.m */; };
 		268DA924AEA51CCBE7D187332E4841A5 /* MJRefreshBackNormalFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = CC810C2D12AA98A4C24D7B1C18791AF6 /* MJRefreshBackNormalFooter.m */; };
 		276F024207D4AA8FFC305F054A21F1E4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E156B06C614AC165399C5B049838B9DD /* CoreGraphics.framework */; };
 		28211D9F35BB734A1EBC2CFEC49E9201 /* YLGIFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 60D1B942902808C2FE8DC01924AC3359 /* YLGIFImage.m */; };
@@ -383,6 +384,7 @@
 		1E96466E3CD3688DB34D1A28BD8B316E /* SVProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.xcconfig; sourceTree = "<group>"; };
 		1FED2EC17490802439582B0D3879DE25 /* SDWebImageManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageManager.h; path = SDWebImage/SDWebImageManager.h; sourceTree = "<group>"; };
 		20600239D4B22DB8D16F4D17FCCB628E /* FLAnimatedImageView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLAnimatedImageView.h; path = FLAnimatedImage/FLAnimatedImageView.h; sourceTree = "<group>"; };
+		2651F1B61FC30D5B009FB7E7 /* MJPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MJPhotoView.m; path = MJPhotoBrowser/MJPhotoBrowser/MJPhotoView.m; sourceTree = "<group>"; };
 		2652329C8B5A5BC655D0DE326590F30D /* MJRefreshAutoStateFooter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MJRefreshAutoStateFooter.h; path = MJRefresh/Custom/Footer/Auto/MJRefreshAutoStateFooter.h; sourceTree = "<group>"; };
 		278D04FE84EA8E4CCE48AFB7EE53F3DC /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "View+MASShorthandAdditions.h"; path = "Masonry/View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
 		28F2C92297CF5F39ABF5DEDB5D2F02B5 /* MBProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MBProgressHUD.xcconfig; sourceTree = "<group>"; };
@@ -833,6 +835,7 @@
 				B97C907D1AE6FCEA48E8A2DCDD15EA19 /* MJPhotoToolbar.h */,
 				D5E9324213248DA7D9EE84B539A47591 /* MJPhotoToolbar.m */,
 				419178D25AE73E84A721A5686CF49C58 /* MJPhotoView.h */,
+				2651F1B61FC30D5B009FB7E7 /* MJPhotoView.m */,
 				4BF8AB723B6C498995E11D601CB09410 /* Resources */,
 				7587E49142782BAFEAEB73EDAF2A8C2C /* Support Files */,
 			);
@@ -1700,6 +1703,7 @@
 				5C0696B2AD1DC23F6473F5A19FAB6296 /* AFImageDownloader.m in Sources */,
 				31ED9BD97AF9E62874AF3CDF2F8090CF /* AFNetworkActivityIndicatorManager.m in Sources */,
 				97A86FAAD4B1AD9B3292FF6AF1D8F82B /* AFNetworking-dummy.m in Sources */,
+				2651F1B71FC30D5B009FB7E7 /* MJPhotoView.m in Sources */,
 				E0EF330DB2D3521ED26E67B2E8687A2E /* AFNetworkReachabilityManager.m in Sources */,
 				66E1040543AF7BA3DC3731FE17C85F5B /* AFSecurityPolicy.m in Sources */,
 				5945033488F9995134DBB7014DE2412F /* AFURLRequestSerialization.m in Sources */,
