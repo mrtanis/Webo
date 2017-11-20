@@ -8,7 +8,6 @@
 
 #import "MRTPictureView.h"
 #import "MRTPicture.h"
-#import "UIImageView+WebCache.h"
 #import "MJPhotoBrowser.h"
 #import "MRTPictureWithTag.h"
 
@@ -49,7 +48,7 @@
 #pragma mark 点击图片
 - (void)tap:(UITapGestureRecognizer *)tap
 {
-    UIImageView *tapView = (UIImageView *)tap.view;
+    MRTPictureWithTag *tapView = (MRTPictureWithTag *)tap.view;
     //转化为MJPhoto
     int i = 0;
     NSMutableArray *MJPhotos = [NSMutableArray array];

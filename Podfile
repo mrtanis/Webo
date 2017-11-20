@@ -6,6 +6,8 @@ target 'Webo' do
   pod 'MBProgressHUD'
   pod 'MJExtension'
   pod 'SDWebImage'
+  pod 'SDWebImage/GIF'
+  pod 'FLAnimatedImage'
   pod 'MJRefresh'
   pod 'MJPhotoBrowser'
   pod 'Masonry'

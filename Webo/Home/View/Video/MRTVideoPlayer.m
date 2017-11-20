@@ -325,7 +325,7 @@
                 
             case UIDeviceOrientationLandscapeLeft: {
                 //横屏时下拉通知再关闭会在此调用设备旋转信息，此时若已经是横屏则直接返回，否则再设置视屏frame会出错
-                if (_videoOrientation == MRTVideoOrientationLandscapeLeft) {
+                if (_videoOrientation == MRTVideoOrientationLandscapeRight) {
                     return;
                 }
                 NSLog(@"当前横屏LandscapeLeft");
@@ -347,7 +347,7 @@
                     UIWindow *window = [UIApplication sharedApplication].delegate.window;
                     NSLog(@"window:%@",window);
                     [window addSubview:self];
-                    if (_videoOrientation == MRTVideoOrientationLandscapeRight) {
+                    if (_videoOrientation == MRTVideoOrientationLandscapeLeft) {
                         CGAffineTransform transform = CGAffineTransformRotate(self.transform, M_PI);
                         self.transform = transform;
                     } else {
@@ -357,14 +357,14 @@
                         self.transform = transform;
                     }
                 } completion:^(BOOL finished) {
-                    self.videoOrientation = MRTVideoOrientationLandscapeLeft;
+                    self.videoOrientation = MRTVideoOrientationLandscapeRight;
                     NSLog(@"%@", self);
                 }];
                 break;
             }
             case UIDeviceOrientationLandscapeRight: {
                 //横屏时下拉通知再关闭会在此调用设备旋转信息，此时若已经是横屏则直接返回，否则再设置视屏frame会出错
-                if (_videoOrientation == MRTVideoOrientationLandscapeRight) {
+                if (_videoOrientation == MRTVideoOrientationLandscapeLeft) {
                     return;
                 }
                 NSLog(@"当前横屏LandscapeRight");
@@ -390,7 +390,7 @@
                     NSLog(@"window:%@",window);
                     [window addSubview:self];
                     
-                    if (_videoOrientation == MRTVideoOrientationLandscapeLeft) {
+                    if (_videoOrientation == MRTVideoOrientationLandscapeRight) {
                         CGAffineTransform transform = CGAffineTransformRotate(self.transform, M_PI);
                         self.transform = transform;
                     } else {
@@ -401,7 +401,7 @@
                     }
                     
                 } completion:^(BOOL finished) {
-                    self.videoOrientation = MRTVideoOrientationLandscapeRight;
+                    self.videoOrientation = MRTVideoOrientationLandscapeLeft;
                     NSLog(@"%@", self);
                 }];
                 break;

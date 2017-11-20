@@ -5,6 +5,7 @@
 //  Copyright (c) 2013年 itcast. All rights reserved.
 
 #import "MJPhoto.h"
+#import "FLAnimatedImage.h"
 
 @implementation MJPhoto
 
@@ -18,10 +19,10 @@
     return img;
 }
 
-- (void)setSrcImageView:(UIImageView *)srcImageView
+- (void)setSrcImageView:(FLAnimatedImageView *)srcImageView
 {
     _srcImageView = srcImageView;
-    _placeholder = srcImageView.image;
+    _placeholder = srcImageView.animatedImage.posterImage;
     if (srcImageView.clipsToBounds) {
         _capture = [self capture:srcImageView];
     }

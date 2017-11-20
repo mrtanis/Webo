@@ -2,19 +2,17 @@
 //  MRTPictureWithTag.m
 //  Webo
 //
-//  Created by mrtanis on 2017/6/7.
+//  Created by mrtanis on 2017/11/19.
 //  Copyright © 2017年 mrtanis. All rights reserved.
 //
 
 #import "MRTPictureWithTag.h"
-#import "UIImageView+WebCache.h"
+#import "MRTPicture.h"
+#import "FLAnimatedImageView+WebCache.h"
 
 @interface MRTPictureWithTag()
-
 @property (nonatomic, weak) UIImageView *gifTag;
-
 @end
-
 @implementation MRTPictureWithTag
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -22,16 +20,17 @@
     self = [super initWithFrame:frame];
     
     if (self) {
+        
         //设置可交互
         self.userInteractionEnabled = YES;
         //设置图片显示方式
         self.contentMode = UIViewContentModeScaleAspectFill;
         //裁剪图片，超出部分裁减掉
         self.clipsToBounds = YES;
-        
         UIImageView *gifTag = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"timeline_image_gif"]];
         [self addSubview:gifTag];
         _gifTag = gifTag;
+        
     }
     
     return self;
@@ -57,9 +56,10 @@
     [self sd_setImageWithURL:[NSURL URLWithString:midPic] placeholderImage:[UIImage imageNamed:@"timeline_image_placeholder"]];
     
     if ([midPic hasSuffix:@".gif"]) {
-        self.gifTag.hidden = NO;
+        _gifTag.hidden = NO;
     } else {
-        self.gifTag.hidden = YES;
+        _gifTag.hidden = YES;
     }
 }
+
 @end

@@ -2,14 +2,13 @@
 //  MRTPictureWithTag.h
 //  Webo
 //
-//  Created by mrtanis on 2017/6/7.
+//  Created by mrtanis on 2017/11/19.
 //  Copyright © 2017年 mrtanis. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "MRTPicture.h"
+#import <FLAnimatedImage/FLAnimatedImage.h>
+@class MRTPicture;
 
-@interface MRTPictureWithTag : UIImageView
+@interface MRTPictureWithTag : FLAnimatedImageView
 @property (nonatomic, strong) MRTPicture *picture;
-
 @end

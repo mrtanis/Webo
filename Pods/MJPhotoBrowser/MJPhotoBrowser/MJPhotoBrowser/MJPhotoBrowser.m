@@ -95,7 +95,7 @@
         
         [self.view addSubview:self.photoScrollView];
         [self.view addSubview:self.toolbar];
-        [self updateTollbarState];
+        [self updateToolbarState:nil];
         [self showPhotos];
     }
     //渐变显示
@@ -232,9 +232,14 @@
 }
 
 #pragma mark - updateTollbarState
-- (void)updateTollbarState
+- (void)updateToolbarState:(MJPhoto *)photo
 {
+    
     _currentPhotoIndex = _photoScrollView.contentOffset.x / _photoScrollView.frame.size.width;
+    if (photo) {
+        [_toolbar.photos replaceObjectAtIndex:_currentPhotoIndex withObject:photo];
+    }
+    
     _toolbar.currentPhotoIndex = _currentPhotoIndex;
 }
 
@@ -256,13 +261,13 @@
 
 - (void)photoViewImageFinishLoad:(MJPhotoView *)photoView
 {
-    [self updateTollbarState];
+    [self updateToolbarState:photoView.photo];
 }
 
 #pragma mark - UIScrollView Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	[self showPhotos];
-    [self updateTollbarState];
+    [self updateToolbarState:nil];
 }
 
 @end

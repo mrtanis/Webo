@@ -8,6 +8,7 @@
 
 #import "MJPhotoToolbar.h"
 #import "MJPhoto.h"
+#import "FLAnimatedImage.h"
 
 @interface MJPhotoToolbar()
 {
