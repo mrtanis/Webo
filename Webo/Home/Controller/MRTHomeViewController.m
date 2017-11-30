@@ -930,6 +930,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    
     if (!_videoView.isPlaying && !_videoView.isReplayShow) {
         NSLog(@"scrollViewDidEndDecelerating");
         UITableView *tableView = (UITableView *)self.view;
@@ -940,6 +941,8 @@
         }
     }
 }
+
+
 /*
 - (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {

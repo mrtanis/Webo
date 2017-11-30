@@ -75,6 +75,14 @@
 		264CD1311FA473BF00DEA351 /* MRTStatusTestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 264CD1301FA473BF00DEA351 /* MRTStatusTestCell.m */; };
 		26509E6B1F923F5E000FF6E9 /* MRTProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26509E6A1F923F5E000FF6E9 /* MRTProfileCell.xib */; };
 		26509E731F924BD0000FF6E9 /* MRTProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26509E721F924BD0000FF6E9 /* MRTProfileCell.m */; };
+		2651F1B91FC41B67009FB7E7 /* IMG_0029.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2651F1B81FC41B66009FB7E7 /* IMG_0029.jpg */; };
+		2651F1E71FC47B65009FB7E7 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2651F1BF1FC41C62009FB7E7 /* UserNotifications.framework */; };
+		2651F1E81FC47B65009FB7E7 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2651F1C11FC41C62009FB7E7 /* UserNotificationsUI.framework */; };
+		2651F1EC1FC47B65009FB7E7 /* NotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2651F1EB1FC47B65009FB7E7 /* NotificationViewController.m */; };
+		2651F1EF1FC47B65009FB7E7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2651F1ED1FC47B65009FB7E7 /* MainInterface.storyboard */; };
+		2651F1F31FC47B65009FB7E7 /* MRTNotificationContentExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2651F1E61FC47B65009FB7E7 /* MRTNotificationContentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2651F1FF1FC485E0009FB7E7 /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2651F1FE1FC485E0009FB7E7 /* NotificationService.m */; };
+		2651F2031FC485E0009FB7E7 /* MRTNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2651F1FB1FC485E0009FB7E7 /* MRTNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		26531B531FC1D945003F5E46 /* MRTPictureWithTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 26531B521FC1D945003F5E46 /* MRTPictureWithTag.m */; };
 		265394031FA8C0B1008562F2 /* MRTVideoFullScreenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 265394021FA8C0B1008562F2 /* MRTVideoFullScreenController.m */; };
 		265394091FA8C5B3008562F2 /* MRTVideoTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 265394081FA8C5B3008562F2 /* MRTVideoTransition.m */; };
@@ -165,10 +173,41 @@
 			remoteGlobalIDString = 2619E1011EAEA3C3004CE6DD;
 			remoteInfo = Webo;
 		};
+		2651F1F11FC47B65009FB7E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2619E0FA1EAEA3C3004CE6DD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2651F1E51FC47B65009FB7E7;
+			remoteInfo = MRTNotificationContentExtension;
+		};
+		2651F2011FC485E0009FB7E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2619E0FA1EAEA3C3004CE6DD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2651F1FA1FC485E0009FB7E7;
+			remoteInfo = MRTNotificationServiceExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2651F1D11FC41C62009FB7E7 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2651F1F31FC47B65009FB7E7 /* MRTNotificationContentExtension.appex in Embed App Extensions */,
+				2651F2031FC485E0009FB7E7 /* MRTNotificationServiceExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		16A373BDB4D13CB4712937FE /* Pods-Webo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Webo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Webo/Pods-Webo.debug.xcconfig"; sourceTree = "<group>"; };
+		26110BBD1FC5739400855DA8 /* Webo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Webo.entitlements; sourceTree = "<group>"; };
+		26110BBE1FC573FC00855DA8 /* MRTNotificationContentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MRTNotificationContentExtension.entitlements; sourceTree = "<group>"; };
 		2619E1021EAEA3C3004CE6DD /* Webo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Webo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2619E1061EAEA3C3004CE6DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2619E1081EAEA3C3004CE6DD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -302,6 +341,18 @@
 		26509E6A1F923F5E000FF6E9 /* MRTProfileCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MRTProfileCell.xib; path = Profile/View/MRTProfileCell.xib; sourceTree = "<group>"; };
 		26509E711F924BD0000FF6E9 /* MRTProfileCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTProfileCell.h; path = Profile/View/MRTProfileCell.h; sourceTree = "<group>"; };
 		26509E721F924BD0000FF6E9 /* MRTProfileCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTProfileCell.m; path = Profile/View/MRTProfileCell.m; sourceTree = "<group>"; };
+		2651F1B81FC41B66009FB7E7 /* IMG_0029.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0029.jpg; sourceTree = "<group>"; };
+		2651F1BF1FC41C62009FB7E7 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		2651F1C11FC41C62009FB7E7 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		2651F1E61FC47B65009FB7E7 /* MRTNotificationContentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MRTNotificationContentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2651F1EA1FC47B65009FB7E7 /* NotificationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationViewController.h; sourceTree = "<group>"; };
+		2651F1EB1FC47B65009FB7E7 /* NotificationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationViewController.m; sourceTree = "<group>"; };
+		2651F1EE1FC47B65009FB7E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		2651F1F01FC47B65009FB7E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2651F1FB1FC485E0009FB7E7 /* MRTNotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MRTNotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2651F1FD1FC485E0009FB7E7 /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
+		2651F1FE1FC485E0009FB7E7 /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
+		2651F2001FC485E0009FB7E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26531B511FC1D945003F5E46 /* MRTPictureWithTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTPictureWithTag.h; path = Home/View/Cell/MRTPictureWithTag.h; sourceTree = "<group>"; };
 		26531B521FC1D945003F5E46 /* MRTPictureWithTag.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTPictureWithTag.m; path = Home/View/Cell/MRTPictureWithTag.m; sourceTree = "<group>"; };
 		265394011FA8C0B1008562F2 /* MRTVideoFullScreenController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTVideoFullScreenController.h; path = Home/View/Video/MRTVideoFullScreenController.h; sourceTree = "<group>"; };
@@ -471,6 +522,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2651F1E31FC47B65009FB7E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2651F1E81FC47B65009FB7E7 /* UserNotificationsUI.framework in Frameworks */,
+				2651F1E71FC47B65009FB7E7 /* UserNotifications.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2651F1F81FC485E0009FB7E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -480,6 +547,8 @@
 				2619E1041EAEA3C3004CE6DD /* Webo */,
 				2619E1211EAEA3C3004CE6DD /* WeboTests */,
 				2619E12C1EAEA3C3004CE6DD /* WeboUITests */,
+				2651F1E91FC47B65009FB7E7 /* MRTNotificationContentExtension */,
+				2651F1FC1FC485E0009FB7E7 /* MRTNotificationServiceExtension */,
 				2619E1031EAEA3C3004CE6DD /* Products */,
 				C8AE40A5E7F03FB29C893179 /* Pods */,
 				87B097444AE84103A2FCF9A4 /* Frameworks */,
@@ -492,6 +561,8 @@
 				2619E1021EAEA3C3004CE6DD /* Webo.app */,
 				2619E11E1EAEA3C3004CE6DD /* WeboTests.xctest */,
 				2619E1291EAEA3C3004CE6DD /* WeboUITests.xctest */,
+				2651F1E61FC47B65009FB7E7 /* MRTNotificationContentExtension.appex */,
+				2651F1FB1FC485E0009FB7E7 /* MRTNotificationServiceExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -499,6 +570,7 @@
 		2619E1041EAEA3C3004CE6DD /* Webo */ = {
 			isa = PBXGroup;
 			children = (
+				26110BBD1FC5739400855DA8 /* Webo.entitlements */,
 				2681C1411FB1A217008B8C35 /* MRTWebViewer */,
 				269695371F6AE27A00074490 /* MRTImagePicker */,
 				2681C13D1FB03E01008B8C35 /* MRTQRcodeScanner */,
@@ -521,6 +593,7 @@
 				266BB0EB1EFC2FC40025D505 /* Emoticons.bundle */,
 				261A1EA81EAFED7100D2B7FE /* WeboIcon@2x.png */,
 				261A1EAA1EAFEE1900D2B7FE /* WeboIcon@3x.png */,
+				2651F1B81FC41B66009FB7E7 /* IMG_0029.jpg */,
 				266135841FB9996B00DBD312 /* QRcodeSound.wav */,
 				263716B51ED306E300E28F3B /* silence.mp3 */,
 				2619E1161EAEA3C3004CE6DD /* LaunchScreen.storyboard */,
@@ -767,6 +840,28 @@
 				263EE96E1ED2068A00345397 /* MRTUnreadTool.m */,
 			);
 			name = UnreadMsg;
+			sourceTree = "<group>";
+		};
+		2651F1E91FC47B65009FB7E7 /* MRTNotificationContentExtension */ = {
+			isa = PBXGroup;
+			children = (
+				26110BBE1FC573FC00855DA8 /* MRTNotificationContentExtension.entitlements */,
+				2651F1EA1FC47B65009FB7E7 /* NotificationViewController.h */,
+				2651F1EB1FC47B65009FB7E7 /* NotificationViewController.m */,
+				2651F1ED1FC47B65009FB7E7 /* MainInterface.storyboard */,
+				2651F1F01FC47B65009FB7E7 /* Info.plist */,
+			);
+			path = MRTNotificationContentExtension;
+			sourceTree = "<group>";
+		};
+		2651F1FC1FC485E0009FB7E7 /* MRTNotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				2651F1FD1FC485E0009FB7E7 /* NotificationService.h */,
+				2651F1FE1FC485E0009FB7E7 /* NotificationService.m */,
+				2651F2001FC485E0009FB7E7 /* Info.plist */,
+			);
+			path = MRTNotificationServiceExtension;
 			sourceTree = "<group>";
 		};
 		265ECC1D1F28E84E0077EADB /* Cell */ = {
@@ -1311,6 +1406,8 @@
 			isa = PBXGroup;
 			children = (
 				C128BD0545A7FD9C0DB859C4 /* libPods-Webo.a */,
+				2651F1BF1FC41C62009FB7E7 /* UserNotifications.framework */,
+				2651F1C11FC41C62009FB7E7 /* UserNotificationsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1337,10 +1434,13 @@
 				2619E1001EAEA3C3004CE6DD /* Resources */,
 				31E0A8FB789A7EF4DB509F28 /* [CP] Embed Pods Frameworks */,
 				4A35F0A5853F77241DD3C352 /* [CP] Copy Pods Resources */,
+				2651F1D11FC41C62009FB7E7 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				2651F1F21FC47B65009FB7E7 /* PBXTargetDependency */,
+				2651F2021FC485E0009FB7E7 /* PBXTargetDependency */,
 			);
 			name = Webo;
 			productName = Webo;
@@ -1383,6 +1483,40 @@
 			productReference = 2619E1291EAEA3C3004CE6DD /* WeboUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		2651F1E51FC47B65009FB7E7 /* MRTNotificationContentExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2651F1F41FC47B65009FB7E7 /* Build configuration list for PBXNativeTarget "MRTNotificationContentExtension" */;
+			buildPhases = (
+				2651F1E21FC47B65009FB7E7 /* Sources */,
+				2651F1E31FC47B65009FB7E7 /* Frameworks */,
+				2651F1E41FC47B65009FB7E7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MRTNotificationContentExtension;
+			productName = MRTNotificationContentExtension;
+			productReference = 2651F1E61FC47B65009FB7E7 /* MRTNotificationContentExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		2651F1FA1FC485E0009FB7E7 /* MRTNotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2651F2041FC485E0009FB7E7 /* Build configuration list for PBXNativeTarget "MRTNotificationServiceExtension" */;
+			buildPhases = (
+				2651F1F71FC485E0009FB7E7 /* Sources */,
+				2651F1F81FC485E0009FB7E7 /* Frameworks */,
+				2651F1F91FC485E0009FB7E7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MRTNotificationServiceExtension;
+			productName = MRTNotificationServiceExtension;
+			productReference = 2651F1FB1FC485E0009FB7E7 /* MRTNotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1398,6 +1532,9 @@
 						DevelopmentTeam = 8K5W74R456;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
@@ -1414,6 +1551,21 @@
 						DevelopmentTeam = 8K5W74R456;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2619E1011EAEA3C3004CE6DD;
+					};
+					2651F1E51FC47B65009FB7E7 = {
+						CreatedOnToolsVersion = 9.1;
+						DevelopmentTeam = 8K5W74R456;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					2651F1FA1FC485E0009FB7E7 = {
+						CreatedOnToolsVersion = 9.1;
+						DevelopmentTeam = 8K5W74R456;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1433,6 +1585,8 @@
 				2619E1011EAEA3C3004CE6DD /* Webo */,
 				2619E11D1EAEA3C3004CE6DD /* WeboTests */,
 				2619E1281EAEA3C3004CE6DD /* WeboUITests */,
+				2651F1E51FC47B65009FB7E7 /* MRTNotificationContentExtension */,
+				2651F1FA1FC485E0009FB7E7 /* MRTNotificationServiceExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1445,6 +1599,7 @@
 				261A1EAB1EAFEE1900D2B7FE /* WeboIcon@3x.png in Resources */,
 				2619E1181EAEA3C3004CE6DD /* LaunchScreen.storyboard in Resources */,
 				2619E1151EAEA3C3004CE6DD /* Assets.xcassets in Resources */,
+				2651F1B91FC41B67009FB7E7 /* IMG_0029.jpg in Resources */,
 				261A1EA91EAFED7100D2B7FE /* WeboIcon@2x.png in Resources */,
 				2664A16B1F9609BF007BE6EC /* MRTFriendsListCell.xib in Resources */,
 				263716B71ED306E300E28F3B /* silence.mp3 in Resources */,
@@ -1463,6 +1618,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2619E1271EAEA3C3004CE6DD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2651F1E41FC47B65009FB7E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2651F1EF1FC47B65009FB7E7 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2651F1F91FC485E0009FB7E7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1679,6 +1849,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2651F1E21FC47B65009FB7E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2651F1EC1FC47B65009FB7E7 /* NotificationViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2651F1F71FC485E0009FB7E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2651F1FF1FC485E0009FB7E7 /* NotificationService.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1691,6 +1877,16 @@
 			isa = PBXTargetDependency;
 			target = 2619E1011EAEA3C3004CE6DD /* Webo */;
 			targetProxy = 2619E12A1EAEA3C3004CE6DD /* PBXContainerItemProxy */;
+		};
+		2651F1F21FC47B65009FB7E7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2651F1E51FC47B65009FB7E7 /* MRTNotificationContentExtension */;
+			targetProxy = 2651F1F11FC47B65009FB7E7 /* PBXContainerItemProxy */;
+		};
+		2651F2021FC485E0009FB7E7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2651F1FA1FC485E0009FB7E7 /* MRTNotificationServiceExtension */;
+			targetProxy = 2651F2011FC485E0009FB7E7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1711,6 +1907,14 @@
 				264A7BB91F76C2A10067BDA7 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		2651F1ED1FC47B65009FB7E7 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2651F1EE1FC47B65009FB7E7 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1828,6 +2032,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Webo/Webo.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8K5W74R456;
@@ -1845,6 +2051,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Webo/Webo.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8K5W74R456;
@@ -1906,6 +2114,88 @@
 			};
 			name = Release;
 		};
+		2651F1F51FC47B65009FB7E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = MRTNotificationContentExtension/MRTNotificationContentExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8K5W74R456;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = MRTNotificationContentExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mrtanis.Webo.MRTNotificationContentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2651F1F61FC47B65009FB7E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = MRTNotificationContentExtension/MRTNotificationContentExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8K5W74R456;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = MRTNotificationContentExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mrtanis.Webo.MRTNotificationContentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2651F2051FC485E0009FB7E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8K5W74R456;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = MRTNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mrtanis.Webo.MRTNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2651F2061FC485E0009FB7E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8K5W74R456;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = MRTNotificationServiceExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mrtanis.Webo.MRTNotificationServiceExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1941,6 +2231,24 @@
 			buildConfigurations = (
 				2619E1391EAEA3C3004CE6DD /* Debug */,
 				2619E13A1EAEA3C3004CE6DD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2651F1F41FC47B65009FB7E7 /* Build configuration list for PBXNativeTarget "MRTNotificationContentExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2651F1F51FC47B65009FB7E7 /* Debug */,
+				2651F1F61FC47B65009FB7E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2651F2041FC485E0009FB7E7 /* Build configuration list for PBXNativeTarget "MRTNotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2651F2051FC485E0009FB7E7 /* Debug */,
+				2651F2061FC485E0009FB7E7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

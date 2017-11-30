@@ -16,7 +16,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 
-@interface AppDelegate ()
+@interface AppDelegate () <UNUserNotificationCenterDelegate>
 
 @property (nonatomic, strong) AVAudioPlayer *player;
 
@@ -35,10 +35,19 @@
     
     //ios10采用新的通知中心，目前这种获取授权可以达到改变applicationIconBadgeNumber的效果
     UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
-    [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge)
+    center.delegate = self;
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionAlert | UNAuthorizationOptionSound)
                           completionHandler:^(BOOL granted, NSError * _Nullable error) {
-                              // Enable or disable features based on authorization.
+                              if (!error && granted) {
+                                  NSLog(@"注册成功");
+                              } else {
+                                  NSLog(@"注册失败");
+                              }
                           }];
+    // 可以通过 getNotificationSettingsWithCompletionHandler 获取权限设置，了解用户对通知权限的设定
+    [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+        NSLog(@"========%@",settings);
+    }];
     
     [MRTRootVCPicker chooseRootVC:self.window quickLaunchType:MRTQuickLaunchTypeFinished];
     
@@ -114,6 +123,67 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    //将通知要显示的图片写入AppGroups共享文件夹
+    
+    //获取图片data
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"IMG_0029" ofType:@"jpg"];
+    NSData *imageData = [NSData dataWithContentsOfFile:imagePath];
+    //获取共享文件夹路径（使用NSFileManager，也可使用NSUserDefaults传递）
+    NSString *sharingPath = [[[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.webo.mrtanis"] path];
+    NSString *imageSharingPath = [sharingPath stringByAppendingPathComponent:@"IMG_0029.jpg"];
+    //将图片写入共享文件夹
+    [[NSFileManager defaultManager] createFileAtPath:imageSharingPath contents:imageData attributes:nil];
+    
+    
+    
+    
+    UNTimeIntervalNotificationTrigger *intervalTrigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:5 repeats:NO];
+    UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+    content.title = @"Webo提醒";
+    //content.subtitle = @"Webo查看精彩信息";
+    content.body = @"打开Webo查看最新好友微博，与好友分享你的新鲜事！";
+    content.badge = @6;
+    content.sound = [UNNotificationSound defaultSound];
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"IMG_0029" withExtension:@"jpg"];
+    UNNotificationAttachment *attchment = [UNNotificationAttachment attachmentWithIdentifier:@"photo" URL:url options:nil error:nil];
+    content.attachments = @[attchment];
+    content.userInfo = @{@"key1":@"value1",@"key2":@"value2"};
+    
+    content.categoryIdentifier = @"Webo_Category";
+    //创建按钮Action
+    UNNotificationAction *writeAction = [UNNotificationAction actionWithIdentifier:@"action.write" title:@"发微博" options:UNNotificationActionOptionForeground
+];
+    
+    UNNotificationAction *cancelAction = [UNNotificationAction actionWithIdentifier:@"action.cancel" title:@"取消" options:UNNotificationActionOptionDestructive];
+    
+    UNNotificationCategory *notificationCategory = [UNNotificationCategory categoryWithIdentifier:@"Webo_Category" actions:@[writeAction, cancelAction] intentIdentifiers:@[] options:UNNotificationCategoryOptionCustomDismissAction];
+    UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
+    [center setNotificationCategories:[NSSet setWithObject:notificationCategory]];
+    /*
+    // 创建 UNTextInputNotificationAction 比 UNNotificationAction 多了两个参数
+    // * buttonTitle 输入框右边的按钮标题
+    // * placeholder 输入框占位符
+    UNTextInputNotificationAction *inputAction = [UNTextInputNotificationAction actionWithIdentifier:@"action.input" title:@"输入" options:UNNotificationActionOptionForeground textInputButtonTitle:@"发送" textInputPlaceholder:@"tell me loudly"];
+    // 注册 category
+    UNNotificationCategory *notificationCategory2 = [UNNotificationCategory categoryWithIdentifier:@"Webo_Category" actions:@[inputAction] intentIdentifiers:@[] options:UNNotificationCategoryOptionCustomDismissAction];
+    
+    [center setNotificationCategories:[NSSet setWithObjects:notificationCategory, notificationCategory2, nil]];
+    */
+    //创建通知标识
+    NSString *requestIdentifier = @"mrtanis.webo.timeInterval";
+    
+    //创建通知请求
+    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:requestIdentifier content:content trigger:intervalTrigger];
+    
+    
+    // 将通知请求 add 到 UNUserNotificationCenter
+    [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+        if (!error) {
+            NSLog(@"推送已添加成功 %@", requestIdentifier);
+            
+        }
+    }];
+    
     //开启一个后台任务，优先级较低，假如系统要关闭应用，首先考虑这个任务
     /*
     UIBackgroundTaskIdentifier ID = [application beginBackgroundTaskWithExpirationHandler:^{
@@ -140,6 +210,27 @@
     [self saveContext];
 }
 
+
+//App通知的点击事件
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler
+{
+    NSString *actionIdentifierStr = response.actionIdentifier;
+    if ([response isKindOfClass:[UNTextInputNotificationResponse class]]) {
+        
+    } else {
+        if ([actionIdentifierStr isEqualToString:@"action.write"]) {
+            self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+            
+            [MRTRootVCPicker chooseRootVC:self.window quickLaunchType:MRTQuickLaunchTypeWrite];
+            
+            self.window.backgroundColor = [UIColor whiteColor];
+            [self.window makeKeyAndVisible];
+        } else if ([actionIdentifierStr isEqualToString:@"action.cancel"]) {
+            
+        }
+    }
+    
+}
 
 #pragma mark - Core Data stack
 
