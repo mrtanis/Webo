@@ -10,7 +10,7 @@
 
 @interface MRTPictureView : UIView
 
-@property (nonatomic, strong) NSArray *pic_urls;
+@property (nonatomic, copy) NSArray *pic_urls;
 @property (nonatomic) CGSize onePicSize;
 @property (nonatomic, strong) UIImage *firstImage;
 

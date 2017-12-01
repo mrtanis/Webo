@@ -10,7 +10,7 @@
 
 @interface MRTCommentResult : NSObject
 //评论
-@property (nonatomic, strong) NSArray *comments;
+@property (nonatomic, copy) NSArray *comments;
 
 
 @end

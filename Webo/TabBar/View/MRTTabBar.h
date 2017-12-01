@@ -19,7 +19,7 @@
 @end
 
 @interface MRTTabBar : UIView
-@property (nonatomic, strong) NSArray *items;
+@property (nonatomic, copy) NSArray *items;
 //委托者申明一个属性,委托者里得有一个属性代表被委托者, 注意这个属性是弱引用
 @property (nonatomic, weak) id <MRTTabBarDelegate> delegate;
 @end

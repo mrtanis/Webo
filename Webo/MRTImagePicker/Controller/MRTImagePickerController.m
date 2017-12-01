@@ -17,12 +17,12 @@
 
 @interface MRTImagePickerController () <UINavigationControllerDelegate, MRTImagePickerCellDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, copy) NSMutableArray *collections;
+@property (nonatomic, strong) NSMutableArray *collections;
 @property (nonatomic, strong) PHFetchResult *assets;
 
-@property (nonatomic, copy) NSMutableArray *assetsArray;
-@property (nonatomic, copy) NSMutableArray *selectedIndexes;
-@property (nonatomic, copy) NSMutableArray *previewSelectedIndexes;
+@property (nonatomic, strong) NSMutableArray *assetsArray;
+@property (nonatomic, strong) NSMutableArray *selectedIndexes;
+@property (nonatomic, strong) NSMutableArray *previewSelectedIndexes;
 
 @property (nonatomic, weak) UIButton *rightButton;
 @property (nonatomic, weak) UIButton *previewRightButton;

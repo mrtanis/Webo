@@ -32,8 +32,8 @@
 @property (nonatomic, weak) UIView *rightButtonBG;
 
 
-@property (nonatomic, copy) NSMutableArray *photos;
-@property (nonatomic, copy) NSMutableArray *photoViews;
+@property (nonatomic, strong) NSMutableArray *photos;
+@property (nonatomic, strong) NSMutableArray *photoViews;
 
 
 

@@ -17,7 +17,7 @@
 @property (nonatomic, copy) NSString *idstr;
 @property (nonatomic, copy) NSString *text;
 //建立一个属性字符串
-@property (nonatomic, copy) NSMutableAttributedString *attrText;
+@property (nonatomic, strong) NSMutableAttributedString *attrText;
 @property (nonatomic, copy) NSString *source;
 //从正文中提取的短连接
 @property (nonatomic, copy) NSString *urlStr;

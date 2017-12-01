@@ -21,7 +21,7 @@
 #import <Photos/Photos.h>
 
 @interface MRTTabBarController () <MRTTabBarDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MRTImagePickerDelegate>//遵守代理协议
-@property (nonatomic, copy) NSMutableArray *items;
+@property (nonatomic, strong) NSMutableArray *items;
 
 @property (nonatomic, weak) MRTHomeViewController *homeVC;
 @property (nonatomic, weak) MRTMessageViewController *messageVC;

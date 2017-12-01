@@ -14,6 +14,6 @@
 - (void)setImageWithUrl:(NSURL *)url;
 
 @property (nonatomic, strong) MRTPictureWithTag *pictureView;
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *text;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *text;
 @end

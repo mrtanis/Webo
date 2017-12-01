@@ -19,7 +19,7 @@
 @property (nonatomic, copy) NSString *idstr;
 @property (nonatomic, copy) NSString *text;
 //建立一个属性字符串
-@property (nonatomic, copy) NSMutableAttributedString *attrText;
+@property (nonatomic, strong) NSMutableAttributedString *attrText;
 
 @property (nonatomic, copy) NSString *source;
 @property (nonatomic, strong) MRTUser *user;

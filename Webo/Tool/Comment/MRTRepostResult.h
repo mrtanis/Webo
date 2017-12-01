@@ -10,5 +10,5 @@
 
 @interface MRTRepostResult : NSObject
 //转发
-@property (nonatomic, strong) NSArray *reposts;
+@property (nonatomic, copy) NSArray *reposts;
 @end

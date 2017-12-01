@@ -30,8 +30,8 @@
 @interface MRTCommentViewController ()<UITableViewDataSource,UITableViewDelegate, MRTCommentToolBarDelegate, MRTSwitchBarDelegate, MRTCommentPopMenuDelegate, MRTStatusCellDelegate, MRTVideoPlayerDelegate>
 
 @property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic, copy) NSMutableArray *commentFrames;
-@property (nonatomic, copy) NSMutableArray *repostFrames;
+@property (nonatomic, strong) NSMutableArray *commentFrames;
+@property (nonatomic, strong) NSMutableArray *repostFrames;
 @property (nonatomic, weak) MRTCommentToolBar *toolBar;
 
 @property (nonatomic, strong) MRTSwitchBar *switchBarOnTableView;

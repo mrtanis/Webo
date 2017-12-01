@@ -72,7 +72,6 @@
 		264A7BC21F76F98C0067BDA7 /* MRTImageViewerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 264A7BC11F76F98C0067BDA7 /* MRTImageViewerCell.m */; };
 		264C00B81F2218D500702E83 /* MRTMessageSwitchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 264C00B71F2218D500702E83 /* MRTMessageSwitchBar.m */; };
 		264CD12E1FA235EC00DEA351 /* MRTVideoURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 264CD12D1FA235EC00DEA351 /* MRTVideoURL.m */; };
-		264CD1311FA473BF00DEA351 /* MRTStatusTestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 264CD1301FA473BF00DEA351 /* MRTStatusTestCell.m */; };
 		26509E6B1F923F5E000FF6E9 /* MRTProfileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26509E6A1F923F5E000FF6E9 /* MRTProfileCell.xib */; };
 		26509E731F924BD0000FF6E9 /* MRTProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 26509E721F924BD0000FF6E9 /* MRTProfileCell.m */; };
 		2651F1B91FC41B67009FB7E7 /* IMG_0029.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2651F1B81FC41B66009FB7E7 /* IMG_0029.jpg */; };
@@ -336,8 +335,6 @@
 		264C00B71F2218D500702E83 /* MRTMessageSwitchBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTMessageSwitchBar.m; path = Message/View/MRTMessageSwitchBar.m; sourceTree = "<group>"; };
 		264CD12C1FA235EC00DEA351 /* MRTVideoURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTVideoURL.h; path = Home/Model/MRTVideoURL.h; sourceTree = "<group>"; };
 		264CD12D1FA235EC00DEA351 /* MRTVideoURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTVideoURL.m; path = Home/Model/MRTVideoURL.m; sourceTree = "<group>"; };
-		264CD12F1FA473BF00DEA351 /* MRTStatusTestCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTStatusTestCell.h; path = Home/View/Cell/MRTStatusTestCell.h; sourceTree = "<group>"; };
-		264CD1301FA473BF00DEA351 /* MRTStatusTestCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTStatusTestCell.m; path = Home/View/Cell/MRTStatusTestCell.m; sourceTree = "<group>"; };
 		26509E6A1F923F5E000FF6E9 /* MRTProfileCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MRTProfileCell.xib; path = Profile/View/MRTProfileCell.xib; sourceTree = "<group>"; };
 		26509E711F924BD0000FF6E9 /* MRTProfileCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MRTProfileCell.h; path = Profile/View/MRTProfileCell.h; sourceTree = "<group>"; };
 		26509E721F924BD0000FF6E9 /* MRTProfileCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MRTProfileCell.m; path = Profile/View/MRTProfileCell.m; sourceTree = "<group>"; };
@@ -1287,8 +1284,6 @@
 			children = (
 				267A0C591ED49F2800855520 /* MRTStatusCell.h */,
 				267A0C5A1ED49F2800855520 /* MRTStatusCell.m */,
-				264CD12F1FA473BF00DEA351 /* MRTStatusTestCell.h */,
-				264CD1301FA473BF00DEA351 /* MRTStatusTestCell.m */,
 				267A0C5C1ED4E60E00855520 /* MRTOriginalView.h */,
 				267A0C5D1ED4E60E00855520 /* MRTOriginalView.m */,
 				267A0C5F1ED4E63A00855520 /* MRTRetweetView.h */,
@@ -1774,7 +1769,6 @@
 				2671DEA71EC61416002F3D26 /* MRTPopMenu.m in Sources */,
 				266896D81EC9118E009CCC25 /* MRTNewFeatureController.m in Sources */,
 				265394091FA8C5B3008562F2 /* MRTVideoTransition.m in Sources */,
-				264CD1311FA473BF00DEA351 /* MRTStatusTestCell.m in Sources */,
 				265ECC231F28EA9F0077EADB /* MRTMessageRetweetStatusView.m in Sources */,
 				26D2EA281ECE5B9C00B733EB /* MRTPicture.m in Sources */,
 				267A0C5B1ED49F2800855520 /* MRTStatusCell.m in Sources */,

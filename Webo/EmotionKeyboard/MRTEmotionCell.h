@@ -10,6 +10,6 @@
 
 @interface MRTEmotionCell : UICollectionViewCell
 
-@property (nonatomic, strong) NSDictionary *emoDic;
+@property (nonatomic, copy) NSDictionary *emoDic;
 
 @end

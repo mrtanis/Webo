@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface MRTTextViewController : UIViewController
-@property (nonatomic, copy) NSMutableArray *photoAssets;
+@property (nonatomic, strong) NSMutableArray *photoAssets;
 @property (nonatomic) BOOL originalMode; //原图模式
 
 @property (nonatomic, strong) UIImage *photoFromCamera;

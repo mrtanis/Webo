@@ -18,7 +18,7 @@ typedef void(^photosBlock)(NSMutableArray *, BOOL);
 @interface MRTImagePickerController : UICollectionViewController
 @property (nonatomic, weak) id <MRTImagePickerDelegate> delegate;
 @property (nonatomic, strong) photosBlock photosBlock;
-@property (nonatomic, copy) NSMutableArray *selectedAssets;
+@property (nonatomic, strong) NSMutableArray *selectedAssets;
 @property (nonatomic) BOOL originalMode;
 //只能选择一张图的模式，此模式下不显示chooseButton(扫描照片二维码)
 @property (nonatomic) BOOL singleImageMode;

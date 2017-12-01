@@ -38,7 +38,7 @@
 
 
 
-@property (nonatomic, copy) NSMutableArray *statusFrames;
+@property (nonatomic, strong) NSMutableArray *statusFrames;
 @property (nonatomic, weak) MRTVideoPlayer *videoView;
 @property (nonatomic) BOOL ignoreScrollJudge;
 

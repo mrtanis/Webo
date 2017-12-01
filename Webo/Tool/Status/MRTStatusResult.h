@@ -10,7 +10,7 @@
 
 @interface MRTStatusResult : NSObject
 
-@property (nonatomic, strong) NSArray *statuses;
+@property (nonatomic, copy) NSArray *statuses;
 
 @property (nonatomic) int totalNumber;
 

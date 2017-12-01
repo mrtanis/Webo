@@ -242,12 +242,12 @@
     //开始分词
     NSString *str = self.text;
     CFStringTokenizerRef ref = CFStringTokenizerCreate(NULL, (__bridge CFStringRef)str, CFRangeMake(0, str.length), kCFStringTokenizerUnitWord, NULL);
-    NSInteger m;
+    /*NSInteger m;
     if (location >= 3) {
         m = 3;
     } else {
         m = location;
-    }
+    }*/
     CFStringTokenizerGoToTokenAtIndex(ref, location);
     CFRange range = CFStringTokenizerGetCurrentTokenRange(ref);
     NSLog(@"第一次range(%ld,%ld), location:%ld", range.location, range.length, location);

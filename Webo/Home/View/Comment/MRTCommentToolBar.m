@@ -14,8 +14,8 @@
 @property (nonatomic, weak) UIButton *commentBtn;
 @property (nonatomic, weak) UIButton *likeBtn;
 
-@property (nonatomic, copy) NSMutableArray *buttons;
-@property (nonatomic, copy) NSMutableArray *divideViews;
+@property (nonatomic, strong) NSMutableArray *buttons;
+@property (nonatomic, strong) NSMutableArray *divideViews;
 
 @end
 

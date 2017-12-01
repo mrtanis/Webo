@@ -10,8 +10,8 @@
 
 @interface MRTRelation : NSObject
 
-@property (nonatomic, strong) NSString *uid;
-@property (nonatomic, strong) NSString *screen_name;
+@property (nonatomic, copy) NSString *uid;
+@property (nonatomic, copy) NSString *screen_name;
 @property (nonatomic) BOOL followed_by;
 @property (nonatomic) BOOL following;
 @property (nonatomic) BOOL notifications_enabled;

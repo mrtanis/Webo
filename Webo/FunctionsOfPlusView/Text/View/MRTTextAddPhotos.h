@@ -16,6 +16,6 @@
 @interface MRTTextAddPhotos : UIView
 @property (nonatomic, weak) id <MRTTextAddPhotosDelegate> delegate;
 @property (nonatomic, strong) UIImage *image;
-@property (nonatomic, copy) NSMutableArray *images;
+@property (nonatomic, strong) NSMutableArray *images;
 
 @end
