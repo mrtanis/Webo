@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>id</key>
+	<string>com.sina.default</string>
+	<key>version</key>
+	<integer>2</integer>
+	<key>group_name_cn</key>
+	<string>浪小花</string>
+	<key>group_name_tw</key>
+	<string>浪小花</string>
+	<key>group_name_en</key>
+	<string>Huahua</string>
+	<key>group_icon_name</key>
+	<string>compose_emotion_table_hot</string>
+	<key>display_only</key>
+	<integer>0</integer>
+	<key>group_type</key>
+	<integer>0</integer>
+	<key>emoticons</key>
+	<array/>
+</dict>
+</plist>
