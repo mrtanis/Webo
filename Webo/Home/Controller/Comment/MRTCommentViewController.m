@@ -99,6 +99,10 @@
     tableView.delegate = self;
     _tableView = tableView;
     
+    self.tableView.estimatedRowHeight = 0;
+    self.tableView.estimatedSectionHeaderHeight = 0;
+    self.tableView.estimatedSectionFooterHeight = 0;
+    
     //设置导航栏
     [self setUpNavigationBar];
     //设置工具栏

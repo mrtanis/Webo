@@ -987,7 +987,7 @@
             if (_AVItem.playbackBufferEmpty) {
                 NSLog(@"正在缓冲");
                 _isBuffering = YES;
-                [self bufferingSomeSecond];
+                //[self bufferingSomeSecond];
                 [MBProgressHUD showHUDToView:_playerView];
             }
             
@@ -995,6 +995,11 @@
             // 当缓冲好的时候
             if (_AVItem.playbackLikelyToKeepUp && _isBuffering){
                 NSLog(@"缓冲完成");
+                
+                if (!self.isPauseByUser && _isBuffering) {
+                    [self play];
+                }
+                
                 _isBuffering = NO;
                 [MBProgressHUD hideHUDForView:_playerView];
             }
@@ -1206,7 +1211,7 @@
 - (void)panGesture:(UIGestureRecognizer *)gesture
 {
     //全屏时禁用滑动删除手势
-    if (_isLandscape) return;
+    if (_isLandscape || (_miniPortrait == NO && _allowRotate == NO)) return;
     
     if (gesture.state == UIGestureRecognizerStateBegan) {
         CGPoint location = [gesture locationInView:_playerView];

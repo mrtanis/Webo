@@ -18,11 +18,11 @@
 + (void)initialize
 {
     //获取当前类下的UIBarButtonItem
-    UIBarButtonItem *item = [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[self]];
+    //UIBarButtonItem *item = [UIBarButtonItem appearanceWhenContainedInInstancesOfClasses:@[self]];
     
     //设置导航条按钮的文字颜色,同样通过富文本设置
-    NSMutableDictionary *titleNormal = [NSMutableDictionary dictionary];
-    titleNormal[NSForegroundColorAttributeName] = [UIColor darkTextColor];
+    //NSMutableDictionary *titleNormal = [NSMutableDictionary dictionary];
+    //titleNormal[NSForegroundColorAttributeName] = [UIColor darkTextColor];
     //[item setTitleTextAttributes:titleNormal forState:UIControlStateNormal];
     //NSMutableDictionary *titleHighlighted = [NSMutableDictionary dictionary];
     //titleHighlighted[NSForegroundColorAttributeName] = [UIColor orangeColor];

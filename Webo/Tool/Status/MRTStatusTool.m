@@ -39,7 +39,7 @@
     //发送GET请求
     [MRTHttpTool GET:@"https://api.weibo.com/2/statuses/home_timeline.json" parameters:parameter.mj_keyValues progress:nil success:^(NSURLSessionDataTask * _Nullable task, id  _Nullable responseObject) {
         
-        //NSLog(@"%@", responseObject);
+        NSLog(@"%@", responseObject);
       
             //新建返回数据模型
             MRTStatusResult *result = [MRTStatusResult mj_objectWithKeyValues:responseObject];
@@ -47,7 +47,6 @@
             //将result.statuses作为实参传递给success block
             if (success) success(result.statuses);
         //}
-        
         
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError *_Nullable error) {

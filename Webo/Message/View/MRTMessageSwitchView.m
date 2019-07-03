@@ -158,6 +158,11 @@
         UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(MRTScreen_Width * i, 0, MRTScreen_Width, scrollView.height) style:UITableViewStylePlain];
         tableView.tag = i;
         tableView.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1];
+        
+        tableView.estimatedRowHeight = 0;
+        tableView.estimatedSectionHeaderHeight = 0;
+        tableView.estimatedSectionFooterHeight = 0;
+        
         //添加下拉刷新控件
         tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
         //[self loadNewDataCheckCache:YES];

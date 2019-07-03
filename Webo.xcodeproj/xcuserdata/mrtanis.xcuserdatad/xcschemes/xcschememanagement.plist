@@ -9,7 +9,17 @@
 			<key>orderHint</key>
 			<integer>12</integer>
 		</dict>
+		<key>MRTNotificationContentExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
 		<key>MRTNotificationServiceExtension.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
+		<key>MRTNotificationServiceExtension.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>13</integer>

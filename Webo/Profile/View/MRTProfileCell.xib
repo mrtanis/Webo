@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NfP-q7-rBd">
-                        <rect key="frame" x="27.5" y="28" width="80" height="40"/>
+                        <rect key="frame" x="28" y="28" width="80" height="40"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="58m-g2-bxO"/>
                             <constraint firstAttribute="height" constant="40" id="8Iq-BG-XwF"/>
@@ -42,7 +42,7 @@
                         </state>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ltz-Nh-x3a">
-                        <rect key="frame" x="267.5" y="28" width="80" height="40"/>
+                        <rect key="frame" x="268" y="28" width="80" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="CPx-P8-HS4"/>
                             <constraint firstAttribute="width" constant="80" id="gQ0-o7-WBB"/>
@@ -53,7 +53,7 @@
                         </state>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnJ-d9-7OQ">
-                        <rect key="frame" x="112" y="329.5" width="150" height="40"/>
+                        <rect key="frame" x="112" y="330" width="150" height="40"/>
                         <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="150" id="1cf-Wz-lgv"/>

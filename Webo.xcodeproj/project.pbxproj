@@ -1427,7 +1427,6 @@
 				2619E0FE1EAEA3C3004CE6DD /* Sources */,
 				2619E0FF1EAEA3C3004CE6DD /* Frameworks */,
 				2619E1001EAEA3C3004CE6DD /* Resources */,
-				31E0A8FB789A7EF4DB509F28 /* [CP] Embed Pods Frameworks */,
 				4A35F0A5853F77241DD3C352 /* [CP] Copy Pods Resources */,
 				2651F1D11FC41C62009FB7E7 /* Embed App Extensions */,
 			);
@@ -1569,8 +1568,10 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 2619E0F91EAEA3C3004CE6DD;
 			productRefGroup = 2619E1031EAEA3C3004CE6DD /* Products */;
@@ -1637,39 +1638,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		31E0A8FB789A7EF4DB509F28 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Webo/Pods-Webo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		4A35F0A5853F77241DD3C352 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Webo/Pods-Webo-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Webo/Pods-Webo-resources.sh",
 				"${PODS_ROOT}/MJPhotoBrowser/MJPhotoBrowser/MJPhotoBrowser/MJPhotoBrowser.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJPhotoBrowser.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Webo/Pods-Webo-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Webo/Pods-Webo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E44C346C755AAE72B63B1583 /* [CP] Check Pods Manifest.lock */ = {
@@ -2033,7 +2021,7 @@
 				DEVELOPMENT_TEAM = 8K5W74R456;
 				INFOPLIST_FILE = Webo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = mrtanis.Webo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrtanis.webo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -2052,7 +2040,7 @@
 				DEVELOPMENT_TEAM = 8K5W74R456;
 				INFOPLIST_FILE = Webo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = mrtanis.Webo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrtanis.webo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
@@ -2122,7 +2110,7 @@
 				INFOPLIST_FILE = MRTNotificationContentExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = mrtanis.Webo.MRTNotificationContentExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrtanis.webo.MRTNotificationContentExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2143,7 +2131,7 @@
 				INFOPLIST_FILE = MRTNotificationContentExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = mrtanis.Webo.MRTNotificationContentExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrtanis.webo.MRTNotificationContentExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2163,7 +2151,7 @@
 				INFOPLIST_FILE = MRTNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = mrtanis.Webo.MRTNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrtanis.webo.MRTNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2183,7 +2171,7 @@
 				INFOPLIST_FILE = MRTNotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = mrtanis.Webo.MRTNotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrtanis.webo.MRTNotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";

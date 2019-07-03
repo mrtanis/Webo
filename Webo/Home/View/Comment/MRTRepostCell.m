@@ -26,7 +26,7 @@
         //添加子控件
         [self setUpAllChildView];
         //清空cell背景颜色
-        self.backgroundColor = [UIColor clearColor];
+        //self.backgroundColor = [UIColor clearColor];
         //设置分割线长度
         self.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0);
     }

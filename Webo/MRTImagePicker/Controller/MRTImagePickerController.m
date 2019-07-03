@@ -290,7 +290,7 @@ static NSString * const reuseIdentifierCamera = @"cameraCell";
                         //将符合条件的collection加入数组
                         [self.collections addObject:assetCollection];
                         //保存相机胶卷的assets（默认显示相机胶卷的照片)
-                        if ([assetCollection.localizedTitle isEqualToString:@"相机胶卷"]) {
+                        if ([assetCollection.localizedTitle isEqualToString:@"相机胶卷"] || [assetCollection.localizedTitle isEqualToString:@"Camera Roll"]) {
                             NSLog(@"保存相机胶卷");
                             _assets = assetsResult;
                             for (PHAsset *asset in strongSelf.selectedAssets) {
@@ -1013,6 +1013,7 @@ static NSString * const reuseIdentifierCamera = @"cameraCell";
     if ([visibleIndexPaths containsObject:[NSIndexPath indexPathForItem:realIndexPath.item inSection:0]]) {
         currentMiniRect = [self.collectionView convertRect:pickerCell.frame toView:self.view];
     } else {
+        NSLog(@"实际index%ld, 最大index%ld", realIndexPath.item, bigestIndex);
         if (realIndexPath.item > bigestIndex) {
             currentMiniRect = CGRectMake(MRTScreen_Width * 0.5 - pickerCell.width * 0.5, MRTScreen_Height, pickerCell.width, pickerCell.height);
         } else {

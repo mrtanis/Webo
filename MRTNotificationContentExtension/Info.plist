@@ -26,10 +26,10 @@
 		<dict>
 			<key>UNNotificationExtensionCategory</key>
 			<string>Webo_Category</string>
-			<key>UNNotificationExtensionInitialContentSizeRatio</key>
-			<real>1.05</real>
 			<key>UNNotificationExtensionDefaultContentHidden</key>
 			<true/>
+			<key>UNNotificationExtensionInitialContentSizeRatio</key>
+			<real>1.05</real>
 			<key>UNNotificationExtensionOverridesDefaultTitle</key>
 			<false/>
 		</dict>

@@ -29,7 +29,7 @@
         //添加子控件
         [self setUpAllChildView];
         //清空cell背景颜色
-        self.backgroundColor = [UIColor clearColor];
+        //self.backgroundColor = [UIColor clearColor];
         
     }
     

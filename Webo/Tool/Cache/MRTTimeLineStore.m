@@ -19,8 +19,16 @@
 
 + (void)deleteTimeLine
 {
-    NSData *data = [NSData data];
-    [data writeToFile:[self timelineArchivePath] atomically:YES];
+    //NSData *data = [NSData data];
+    //[data writeToFile:[self timelineArchivePath] atomically:YES];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error = nil;
+    if ([fileManager removeItemAtPath:[self timelineArchivePath] error:&error]) {
+        NSLog(@"成功删除首页时间线数据");
+    } else {
+        NSLog(@"删除首页时间线数据失败%@", error);
+    }
+    
 }
 
 + (NSString *)timelineArchivePath
@@ -86,8 +94,15 @@
     for (int i = 0; i < 4; i++) {
         NSString *path = [self timelineArchivePathWithIndex:i];
         
-        NSData *data = [NSData data];
-        [data writeToFile:path atomically:YES];
+        //NSData *data = [NSData data];
+        //[data writeToFile:path atomically:YES];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSError *error = nil;
+        if ([fileManager removeItemAtPath:path error:&error]) {
+            NSLog(@"成功删除@me时间线数据");
+        } else {
+            NSLog(@"删除@me时间线数据失败%@", error);
+        }
     }
 }
 @end

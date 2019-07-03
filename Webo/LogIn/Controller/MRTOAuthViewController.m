@@ -138,11 +138,15 @@
         [MRTTimeLineStore deleteTimeLineOfAtMe];
         NSLog(@"进入新特性界面或者主界面");
         
-        
-        [self dismissViewControllerAnimated:NO completion:^{
+        if (self.navigationController == nil) {
             //进入新特性界面或者主界面
             [MRTRootVCPicker chooseRootVC:MRTKeyWindow quickLaunchType:MRTQuickLaunchTypeFinished];
-        }];
+        } else {
+            [self dismissViewControllerAnimated:NO completion:^{
+                //进入新特性界面或者主界面
+                [MRTRootVCPicker chooseRootVC:MRTKeyWindow quickLaunchType:MRTQuickLaunchTypeFinished];
+            }];
+        }
         
         
     } failure:^(NSError *error) {

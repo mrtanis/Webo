@@ -67,6 +67,10 @@
     }
     //添加上拉刷新旧微博控件
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreList)];
+    
+    self.tableView.estimatedRowHeight = 0;
+    self.tableView.estimatedSectionHeaderHeight = 0;
+    self.tableView.estimatedSectionFooterHeight = 0;
 }
 
 - (void)didReceiveMemoryWarning {
